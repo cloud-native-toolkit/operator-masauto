@@ -1,0 +1,6 @@
+apiVersion: masauto.ibm.com/v1alpha1
+kind: Masauto
+metadata:
+  name: masauto-sample
+spec:
+  # TODO(user): Add fields here

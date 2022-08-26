@@ -1,0 +1,20 @@
+# permissions for end users to view masautoes.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: masauto-viewer-role
+rules:
+- apiGroups:
+  - masauto.ibm.com
+  resources:
+  - masautoes
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - masauto.ibm.com
+  resources:
+  - masautoes/status
+  verbs:
+  - get
