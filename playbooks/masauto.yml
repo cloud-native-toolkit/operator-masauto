@@ -48,5 +48,15 @@
           last_name: "{{ uds_contact.last_name }}"
         uds_storage_class: "{{ uds_storage_class }}"
 
-    # 5. Generate a Workspace
+    # 5. Generate a Workspace config for MAS
     - role: ibm.mas_devops.gencfg_workspace
+    
+    # 6. Install & configure MAS
+    - role: ibm.mas_devops.suite_dns
+    - role: ibm.mas_devops.suite_install
+      vars:
+        mas_entitlement_key: "{{ ibm_entitlement_key }}"
+    - role: ibm.mas_devops.suite_config
+    - role: ibm.mas_devops.suite_verify
+      vars:
+        mas_hide_superuser_credentials: true

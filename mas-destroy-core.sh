@@ -64,10 +64,10 @@ fi
 oc delete deployment mongodb-kubernetes-operator -n ${MONGONAME}
 
 #remove bas
-oc delete AnalyticsProxy ${SUITENAME} -n ${BASNAME}
-oc delete GenerateKey bas-api-key -n ${BASNAME}
+oc delete AnalyticsProxy analyticsproxy -n ${BASNAME}
+oc delete GenerateKey uds-api-key -n ${BASNAME}
 oc delete Dashboard dashboard -n ${BASNAME}
-oc delete csv behavior-analytics-services-operator-certified.v1.1.4 -n ${BASNAME}
+oc delete csv postgresoperator.v5.1.3 -n ${BASNAME}
 
 oc delete deployment amq-streams-cluster-operator-v1.7.3 -n ${BASNAME}
 
@@ -82,28 +82,37 @@ oc delete deployment simple-reverse-proxy -n ${BASNAME}
 oc delete deployment store-api-deployment -n ${BASNAME}
 
 
-oc delete operandbindinfo ibm-licensing-bindinfo -n ibm-common-services >/dev/null 2>&1 &
-resp=$(kubectl get operandbindinfo/ibm-licensing-bindinfo -n ibm-common-services --no-headers 2>/dev/null | wc -l)
+# remove operator binding info CR's
+oc delete operandbindinfo ibm-uds-bindinfo -n ibm-common-services >/dev/null 2>&1 &
+resp=$(kubectl get operandbindinfo/ibm-uds-bindinfo -n ibm-common-services --no-headers 2>/dev/null | wc -l)
 
 if [[ "${resp}" != "0" ]]; then
     echo "patching operandbinding..."
-    kubectl patch operandbindinfo/ibm-licensing-bindinfo -p '{"metadata":{"finalizers":[]}}' --type=merge -n ibm-common-services 2>/dev/null
+    kubectl patch operandbindinfo/ibm-uds-bindinfo -p '{"metadata":{"finalizers":[]}}' --type=merge -n ibm-common-services 2>/dev/null
 fi
 
-oc delete operandrequest common-service -n ${NAMESPACE} >/dev/null 2>&1 &
-resp=$(kubectl get operandrequest/ibm-licensing-bindinfo -n ${NAMESPACE} --no-headers 2>/dev/null | wc -l)
+oc delete operandrequest common-service -n ibm-common-services >/dev/null 2>&1 &
+resp=$(kubectl get operandrequest/common-service -n ibm-common-services --no-headers 2>/dev/null | wc -l)
 
 if [[ "${resp}" != "0" ]]; then
     echo "patching operandrequest common-service..."
-    kubectl patch operandrequest/common-service -p '{"metadata":{"finalizers":[]}}' --type=merge -n ${NAMESPACE} 2>/dev/null
+    kubectl patch operandrequest/common-service -p '{"metadata":{"finalizers":[]}}' --type=merge -n ibm-common-services 2>/dev/null
 fi
 
-oc delete operandrequest common-service-cert-manager -n ${NAMESPACE} >/dev/null 2>&1 &
-resp=$(kubectl get operandrequest/common-service-cert-manager -n ${NAMESPACE} --no-headers 2>/dev/null | wc -l)
+oc delete operandrequest events-operator-request -n ibm-common-services >/dev/null 2>&1 &
+resp=$(kubectl get operandrequest/events-operator-request -n ibm-common-services --no-headers 2>/dev/null | wc -l)
 
 if [[ "${resp}" != "0" ]]; then
-    echo "patching operandrequestcommon-service-cert-manager..."
-    kubectl patch operandrequest/common-service-cert-manager -p '{"metadata":{"finalizers":[]}}' --type=merge -n ${NAMESPACE} 2>/dev/null
+    echo "patching operandrequest events-operator-request..."
+    kubectl patch operandrequest/events-operator-request -p '{"metadata":{"finalizers":[]}}' --type=merge -n ibm-common-services 2>/dev/null
+fi
+
+oc delete operandrequest user-data-services -n ibm-common-services >/dev/null 2>&1 &
+resp=$(kubectl get operandrequest/user-data-services -n ibm-common-services --no-headers 2>/dev/null | wc -l)
+
+if [[ "${resp}" != "0" ]]; then
+    echo "patching operandrequest user-data-services..."
+    kubectl patch operandrequest/user-data-services -p '{"metadata":{"finalizers":[]}}' --type=merge -n ibm-common-services 2>/dev/null
 fi
 
 
@@ -113,14 +122,8 @@ oc get crd -o jsonpath='{range .items[*]}{.metadata.name}{"\n"}{end}' | grep cer
 
 #remove sls
 oc delete licenseservice sls -n ${SLSNAME}
-oc delete csv ibm-sls.v3.3.0 -n ${SLSNAME}
+oc delete csv ibm-sls.v3.4.1 -n ${SLSNAME}
 
-
-#remove jet stack cert-manager if used
-#oc delete deployment cert-manager -n cert-manager
-#oc delete deployment cert-manager-cainjetor -n cert-manager
-#oc delete deployment cert-manager-webhook -n cert-manager
-#oc delete namespace cert-manager
 
 #remove namespaces
 oc delete namespace ${MONGONAME}
