@@ -22,3 +22,6 @@ subjects:
 - kind: ServiceAccount
   name: masauto-operator-controller-manager
   namespace: ibm-sls
+- kind: ServiceAccount
+  name: masauto-operator-controller-manager
+  namespace: mas-inst1-core
