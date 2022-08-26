@@ -1,0 +1,7 @@
+---
+# Use the 'create api' subcommand to add watches to this file.
+- version: v1alpha1
+  group: masauto.ibm.com
+  kind: Masauto
+  playbook: playbooks/masauto.yml
+#+kubebuilder:scaffold:watch
