@@ -1,0 +1,24 @@
+# permissions for end users to edit manages.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: manage-editor-role
+rules:
+- apiGroups:
+  - masauto.ibm.com
+  resources:
+  - manages
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - masauto.ibm.com
+  resources:
+  - manages/status
+  verbs:
+  - get

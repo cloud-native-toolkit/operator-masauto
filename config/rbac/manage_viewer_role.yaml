@@ -1,0 +1,20 @@
+# permissions for end users to view manages.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: manage-viewer-role
+rules:
+- apiGroups:
+  - masauto.ibm.com
+  resources:
+  - manages
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - masauto.ibm.com
+  resources:
+  - manages/status
+  verbs:
+  - get

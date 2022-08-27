@@ -3,4 +3,5 @@
 # It should be run by config/default
 resources:
 - bases/masauto.ibm.com_masautoes.yaml
+- bases/masauto.ibm.com_manages.yaml
 #+kubebuilder:scaffold:crdkustomizeresource
