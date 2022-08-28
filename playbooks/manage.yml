@@ -13,7 +13,6 @@
     ibm_entitlement_key: "{{ ibm_entitlement_key }}"
     mas_instance_id: "{{ mas_instance_id }}"
     
-    
     # Application Dependencies
     db2_instance_name: "{{ db2_instance_name | default('db2w-shared', true) }}"
 
