@@ -115,6 +115,13 @@ if [[ "${resp}" != "0" ]]; then
     kubectl patch operandrequest/user-data-services -p '{"metadata":{"finalizers":[]}}' --type=merge -n ibm-common-services 2>/dev/null
 fi
 
+oc delete operandbindinfo ibm-licensing-bindinfo -n ibm-common-services >/dev/null 2>&1 &
+resp=$(kubectl get operandbindinfo/ibm-licensing-bindinfo -n ibm-common-services --no-headers 2>/dev/null | wc -l)
+
+if [[ "${resp}" != "0" ]]; then
+    echo "patching operandbindinfo ibm-licensing-bindinfo..."
+    kubectl patch operandbindinfo/ibm-licensing-bindinfo -p '{"metadata":{"finalizers":[]}}' --type=merge -n ibm-common-services 2>/dev/null
+fi
 
 # remove crd's
 oc get crd -o jsonpath='{range .items[*]}{.metadata.name}{"\n"}{end}' | grep ibm.com | while read crd; do oc delete "crd/$crd"; done
