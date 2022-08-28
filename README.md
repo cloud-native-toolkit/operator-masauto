@@ -7,7 +7,7 @@ Sample CR's can be found in the `/config/samples` directory.
 
 Present state recommending taking defaults for mas instance name: `inst1` otherwise will need to change the role binding, this will be changed when we move to full OLM / custom catalog install.
 
-**To run:**
+**TO RUN:**
 
 1.  Clone or download the repo to a local directory, login to openshift cluster via login token
 2.  Set IMG var (check out the repo and pick the latest image tag - at time of writing its v0.2.0)
