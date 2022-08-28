@@ -10,9 +10,9 @@ Present state recommending taking defaults for mas instance name: `inst1` otherw
 **TO RUN:**
 
 1.  Clone or download the repo to a local directory, login to openshift cluster via login token
-2.  Set IMG var (check out the repo and pick the latest image tag - at time of writing its v0.2.0)
+2.  Set IMG var (check out the repo and pick the latest image tag - at time of writing its v0.3.0)
 
-`export IMG=docker.io/tcskill/masauto:v0.2.0`
+`export IMG=docker.io/tcskill/masauto:v0.3.0`
 
 3.  Install Operator into cluster
 
