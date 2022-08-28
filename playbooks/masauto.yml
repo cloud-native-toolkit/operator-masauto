@@ -10,7 +10,7 @@
   vars: 
   # Cluster-wide dependencies for MAS 
     ibm_entitlement_key: "{{ ibm_entitlement_key }}"
-    mas_instance_id: "{{ mas_instance_id }}"
+    mas_instance_id: "{{ mas_instance_id | default('inst1', true) }}"
     mas_workspace_id: "{{ mas_workspace_id | default('masdev', true) }}"
     mas_workspace_name: "{{ mas_workspace_name | default('MAS Development', true) }}"    
     mas_config_dir: "~/masconfig" #using this as it's created in the operator image
@@ -22,7 +22,6 @@
       assert:
         that:
           - ibm_entitlement_key is defined and ibm_entitlement_key != ""
-          - mas_instance_id is defined and mas_instance_id != ""
         fail_msg: "One or more required variables are not defined"
 
   roles:

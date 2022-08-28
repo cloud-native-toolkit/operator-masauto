@@ -25,3 +25,9 @@ subjects:
 - kind: ServiceAccount
   name: masauto-operator-controller-manager
   namespace: mas-inst1-core
+- kind: ServiceAccount
+  name: masauto-operator-controller-manager
+  namespace: mas-inst1-manage
+- kind: ServiceAccount
+  name: masauto-operator-controller-manager
+  namespace: mas-inst1-health

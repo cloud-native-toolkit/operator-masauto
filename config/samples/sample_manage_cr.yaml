@@ -1,0 +1,11 @@
+apiVersion: masauto.ibm.com/v1alpha1
+kind: Manage
+metadata:
+  name: masauto-manage
+spec:
+  ibm_entitlement_key: "eyJhbGciOiJIUzI1NiJ9........YOUR key goes here"
+  mas_instance_id: "inst1"
+  mas_workspace_id: "masdev"
+  db2_meta_storage_class: "ocs-storagecluster-cephfs"
+  db2_data_storage_class: "ibmc-vpcblock-odf-10iops"
+  mas_appws_components: "base=latest,health=latest"

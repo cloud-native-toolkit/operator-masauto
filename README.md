@@ -26,3 +26,6 @@ Present state recommending taking defaults for mas instance name: `inst1` otherw
 **TO DO:**
 - Add other app playbooks (currently have: core, manage)
 - Add OLM, custom catalog
+- Update Core CRD to reflect Core in the Kind
+- Update role binding to instance variable instead of default inst1
+
