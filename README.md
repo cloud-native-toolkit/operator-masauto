@@ -22,10 +22,13 @@ Present state recommending taking defaults for mas instance name: `inst1` otherw
 
 5.  Watch the magic! - you can check the progress of the ansible by looking at the operator pod logs
 
+**DESTROY INSTALL**
+
+`./mas-destroy-core.sh inst1 ibm-sls mongoce`
 
 **TO DO:**
 - Add other app playbooks (currently have: core, manage)
 - Add OLM, custom catalog
 - Update Core CRD to reflect Core in the Kind
 - Update role binding to instance variable instead of default inst1
-
+- Add destroy script for other apps (core only right now)

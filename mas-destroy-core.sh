@@ -1,8 +1,8 @@
 
 SUITENAME="$1"
-BASNAME="$2"
-SLSNAME="$3"
-MONGONAME="$4"
+BASNAME="ibm-common-services"
+SLSNAME="$2"
+MONGONAME="$3"
 
 NAMESPACE="mas-${SUITENAME}-core"
 
