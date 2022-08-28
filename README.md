@@ -22,7 +22,7 @@ Present state recommending taking defaults for mas instance name: `inst1` otherw
 
 5.  Watch the magic! - you can check the progress of the ansible by looking at the operator pod logs
 
-**DESTROY INSTALL**
+**TO DESTROY INSTALL:**
 
 `./mas-destroy-core.sh inst1 ibm-sls mongoce`
 
