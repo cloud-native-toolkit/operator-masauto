@@ -21,8 +21,8 @@
     - name: Check for required environment variables
       assert:
         that:
-          - ibm_entitlement_key != ""
-          - mas_instance_id != ""
+          - ibm_entitlement_key is defined and ibm_entitlement_key != ""
+          - mas_instance_id is defined and mas_instance_id != ""
         fail_msg: "One or more required variables are not defined"
 
   roles:
