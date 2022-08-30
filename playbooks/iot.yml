@@ -32,6 +32,9 @@
         that:
           - ibm_entitlement_key is defined and ibm_entitlement_key != ""
           - mas_instance_id is defined and mas_instance_id != ""
+          - kafka_storage_class is defined and kafka_storage_class != ""
+          - db2_meta_storage_class is defined and db2_meta_storage_class != ""
+          - db2_data_storage_class is defined and db2_data_storage_class != ""
         fail_msg: "One or more required variables are not defined"
 
   roles:
@@ -47,6 +50,4 @@
       vars:
         mas_entitlement_key: "{{ ibm_entitlement_key }}"
     - role: ibm.mas_devops.suite_app_config
-
-
 
