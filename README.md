@@ -7,12 +7,17 @@ Sample CR's can be found in the `/config/samples` directory.
 
 Present state recommending taking defaults for mas instance name: `inst1` otherwise will need to change the role binding, this will be changed when we move to full OLM / custom catalog install.
 
+Current list of MAS components supported with this install:
+- Core
+- Manage
+- IoT
+
 **TO RUN:**
 
 1.  Clone or download the repo to a local directory, login to openshift cluster via login token
-2.  Set IMG var (check out the repo and pick the latest image tag - at time of writing its v0.3.0)
+2.  Set IMG var (check out the repo and pick the latest image tag - at time of writing its v0.4.0)
 
-`export IMG=docker.io/tcskill/masauto:v0.3.0`
+`export IMG=docker.io/tcskill/masauto:v0.4.0`
 
 3.  Install Operator into cluster
 
@@ -27,7 +32,7 @@ Present state recommending taking defaults for mas instance name: `inst1` otherw
 `./mas-destroy-core.sh inst1 ibm-sls mongoce`
 
 **TO DO:**
-- Add other app playbooks (currently have: core, manage)
+- Add other MAS app playbooks/api's
 - Determine best defaults to set for manage components var: mas_appws_components
 - Add OLM, custom catalog
 - Update Core CRD to reflect Core in the Kind

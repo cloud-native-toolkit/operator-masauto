@@ -11,6 +11,7 @@ spec:
   mas_app_channel: "8.4.x"
   db2_meta_storage_class: "ocs-storagecluster-cephfs"
   db2_data_storage_class: "ibmc-vpcblock-odf-10iops"
+  #for just manage change app components to: "{\"base\":{\"version\":\"latest\"}}"
   mas_appws_components: "{\"base\":{\"version\":\"latest\"},\"health\":{\"version\":\"latest\"}}"
   mas_app_settings_demodata: "true"
   
