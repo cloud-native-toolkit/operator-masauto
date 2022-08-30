@@ -31,3 +31,9 @@ subjects:
 - kind: ServiceAccount
   name: masauto-operator-controller-manager
   namespace: mas-inst1-health
+- kind: ServiceAccount
+  name: masauto-operator-controller-manager
+  namespace: mas-inst1-iot
+- kind: ServiceAccount
+  name: masauto-operator-controller-manager
+  namespace: mas-inst1-monitor    

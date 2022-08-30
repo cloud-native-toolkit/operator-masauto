@@ -8,4 +8,8 @@
   group: masauto.ibm.com
   kind: Manage
   playbook: playbooks/manage.yml
+- version: v1alpha1
+  group: masauto.ibm.com
+  kind: IoT
+  playbook: playbooks/iot.yml
 #+kubebuilder:scaffold:watch
