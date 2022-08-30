@@ -2,6 +2,7 @@
 collections:
   - name: community.kubernetes
     version: "<1.2.2"
+  - name: community.general  
   - name: operator_sdk.util
     version: "0.4.0"
   - name: kubernetes.core
@@ -10,4 +11,4 @@ collections:
     version: "2.1.1"
   - name: ibm.cloudcollection
     version: ">=1.37.1,<2.0.0"
-  - ibm.mas_devops
+  - name: ibm.mas_devops

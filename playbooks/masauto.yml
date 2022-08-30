@@ -2,6 +2,7 @@
   any_errors_fatal: true
   collections:
     - community.kubernetes
+    - community.general
     - operator_sdk.util
     - kubernetes.core
     - ibm.mas_devops
@@ -10,11 +11,11 @@
   vars: 
   # Cluster-wide dependencies for MAS 
     ibm_entitlement_key: "{{ ibm_entitlement_key }}"
-    mas_instance_id: "{{ mas_instance_id | default('inst1', true) }}"
-    mas_workspace_id: "{{ mas_workspace_id | default('masdev', true) }}"
-    mas_workspace_name: "{{ mas_workspace_name | default('MAS Development', true) }}"    
+    mas_instance_id: "{{ mas_instance_id | default('inst1') }}"
+    mas_workspace_id: "{{ mas_workspace_id | default('masdev') }}"
+    mas_workspace_name: "{{ mas_workspace_name | default('MAS Development') }}"    
     mas_config_dir: "~/masconfig" #using this as it's created in the operator image
-    mas_channel: "{{ mas_channel | default('8.8.x', true) }}"
+    mas_channel: "{{ mas_channel | default('8.8.x') }}"
 
   pre_tasks:
     # For the full set of supported environment variables refer to the playbook documentation
