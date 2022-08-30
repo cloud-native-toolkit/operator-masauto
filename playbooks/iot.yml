@@ -24,7 +24,6 @@
     # Application Configuration
     mas_workspace_id: "{{ mas_workspace_id | default('masdev') }}"
 
-
   pre_tasks:
     # For the full set of supported environment variables refer to the playbook documentation
     - name: Check for required environment variables
