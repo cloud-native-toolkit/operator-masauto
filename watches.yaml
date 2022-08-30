@@ -4,4 +4,8 @@
   group: masauto.ibm.com
   kind: Masauto
   playbook: playbooks/masauto.yml
+- version: v1alpha1
+  group: masauto.ibm.com
+  kind: Manage
+  playbook: playbooks/manage.yml
 #+kubebuilder:scaffold:watch

@@ -1,0 +1,17 @@
+apiVersion: masauto.ibm.com/v1alpha1
+kind: Masauto
+metadata:
+  name: masauto-core
+  namespace: masauto-operator-system
+spec:
+  mas_channel: "8.8.x"
+  ibm_entitlement_key: "eyJhbGciOiJIUzI1NiJ9........YOUR key goes here"
+  mas_instance_id: "inst1"
+  mas_workspace_id: "masdev"
+  mas_workspace_name: "MAS Development"
+  mongodb_storage_class: "ibmc-vpcblock-odf-10iops"
+  uds_contact:
+    email: "tskill@us.ibm.com"
+    first_name: "tom"
+    last_name: "skill"  
+  uds_storage_class: "ibmc-vpcblock-odf-10iops"
