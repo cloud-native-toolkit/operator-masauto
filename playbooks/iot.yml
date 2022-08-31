@@ -1,3 +1,8 @@
+# Add IoT latest application to an existing MAS Core 8.8.x installation
+#
+# Dependencies:
+# - Core is installed
+#
 - hosts: localhost
   any_errors_fatal: true
   collections:

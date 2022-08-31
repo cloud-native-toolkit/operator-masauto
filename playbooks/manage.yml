@@ -1,3 +1,8 @@
+# Add Manage latest application to an existing MAS Core 8.8.x installation
+#
+# Dependencies:
+# - Core
+#
 - hosts: localhost
   any_errors_fatal: true
   collections:

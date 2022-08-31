@@ -2,6 +2,10 @@
 #
 # Monitor will be configured to use the same db2 instance that IoT is using
 #
+# Dependencies:
+# - Core is installed
+# - IoT is installed
+#
 - hosts: localhost
   any_errors_fatal: true
   collections:
@@ -13,6 +17,11 @@
     - ibm.cloudcollection
 
   vars:
+    # Cluster-wide dependencies for MAS 
+    mas_config_dir: "~/masconfig"
+    ibm_entitlement_key: "{{ ibm_entitlement_key }}"
+    mas_instance_id: "{{ mas_instance_id | default('inst1') }}"
+    
     # Application Installation
     mas_app_id: monitor
     mas_app_channel: "{{ mas_app_channel | default('8.8.x') }}"
