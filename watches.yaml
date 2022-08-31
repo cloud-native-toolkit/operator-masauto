@@ -4,12 +4,15 @@
   group: masauto.ibm.com
   kind: Masauto
   playbook: playbooks/masauto.yml
+  reconcilePeriod: 0s
 - version: v1alpha1
   group: masauto.ibm.com
   kind: Manage
   playbook: playbooks/manage.yml
+  reconcilePeriod: 0s
 - version: v1alpha1
   group: masauto.ibm.com
   kind: IoT
   playbook: playbooks/iot.yml
+  reconcilePeriod: 0s
 #+kubebuilder:scaffold:watch
