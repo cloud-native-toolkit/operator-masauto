@@ -5,23 +5,23 @@
   kind: Masauto
   playbook: playbooks/masauto.yml
   reconcilePeriod: 0s
-  watchDependentResources: False
+  watchDependentResources: True
 - version: v1alpha1
   group: masauto.ibm.com
   kind: Manage
   playbook: playbooks/manage.yml
   reconcilePeriod: 0s
-  watchDependentResources: False
+  watchDependentResources: True
 - version: v1alpha1
   group: masauto.ibm.com
   kind: IoT
   playbook: playbooks/iot.yml
   reconcilePeriod: 0s
-  watchDependentResources: False
+  watchDependentResources: True
 - version: v1alpha1
   group: masauto.ibm.com
   kind: Monitor
   playbook: playbooks/monitor.yml
   reconcilePeriod: 0s
-  watchDependentResources: False
+  watchDependentResources: True
 #+kubebuilder:scaffold:watch
