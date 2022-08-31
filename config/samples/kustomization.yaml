@@ -2,4 +2,8 @@
 resources:
 - masauto_v1alpha1_masauto.yaml
 - masauto_v1alpha1_manage.yaml
+- masauto_v1alpha1_iot.yaml
+- sample_core_dr.yaml
+- sample_manage_cr.yaml
+- sample_iot_cr.yaml
 #+kubebuilder:scaffold:manifestskustomizesamples

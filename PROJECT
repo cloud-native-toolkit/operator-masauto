@@ -21,4 +21,11 @@ resources:
   group: masauto
   kind: Manage
   version: v1alpha1
+- api:
+    crdVersion: v1
+    namespaced: true
+  domain: ibm.com
+  group: masauto
+  kind: IoT
+  version: v1alpha1
 version: "3"
