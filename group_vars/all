@@ -1,0 +1,11 @@
+# Default configuration variables for MAS install
+
+# Cluster-wide dependencies for MAS 
+mas_instance_id: "inst1"
+mas_workspace_id: "masdev"
+mas_workspace_name: "MAS Development"    
+mas_channel: "8.8.x"
+
+# For Manage 
+mas_app_settings_demodata: false
+

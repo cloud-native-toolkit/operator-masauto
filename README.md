@@ -11,19 +11,22 @@ Current list of MAS components supported with this install:
 - Core
 - Manage
 - IoT
+- Monitor
 
 **TO RUN:**
 
 1.  Clone or download the repo to a local directory, login to openshift cluster via login token
-2.  Set IMG var (check out the repo and pick the latest image tag - at time of writing its v0.4.0)
+2.  Set IMG var (check out the repo and pick the latest image tag - at time of writing its v0.5.0)
 
-`export IMG=docker.io/tcskill/masauto:v0.4.0`
+`export IMG=docker.io/tcskill/masauto:v0.5.0`
 
 3.  Install Operator into cluster
 
 `make install deploy`
 
-4.  Customize your CR and install on the cluster (obviously install core CR first, then the others: manage, monitor, etc.)
+4.  Customize your CR and install on the cluster (obviously install core CR first, then the others: manage, iot, monitor, etc.) Sample CR's are foundin the `/config/samples` directory of this repo.
+
+`oc apply -f core_cr.yaml`
 
 5.  Watch the magic! - you can check the progress of the ansible by looking at the operator pod logs
 

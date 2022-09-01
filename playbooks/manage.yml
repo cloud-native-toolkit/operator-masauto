@@ -1,3 +1,8 @@
+# Add Manage latest application to an existing MAS Core 8.8.x installation
+#
+# Dependencies:
+# - Core
+#
 - hosts: localhost
   any_errors_fatal: true
   collections:
@@ -12,19 +17,19 @@
     # Cluster-wide dependencies for MAS 
     mas_config_dir: "~/masconfig"
     ibm_entitlement_key: "{{ ibm_entitlement_key }}"
-    mas_instance_id: "{{ mas_instance_id | default('inst1') }}"
+    mas_instance_id: "{{ mas_instance_id }}"
     
     # Application Dependencies
-    db2_instance_name: "{{ db2_instance_name | default('db2w-shared') }}"
+    db2_instance_name: "{{ db2_instance_name }}"
 
     # Application Installation
-    # mas_app_id can be set to "health" to install manage in the "Health standalone" mode from this same playbook.
+    # set mas_app_id to "manage" OR set to "health" to install manage in the "Health standalone" mode from this same playbook.
     # default to latest channel release for manage. for Manage with health install set in: mas_appws_components base=latest,health=latest
-    mas_app_id: "{{ mas_app_id | default('manage') }}"
-    mas_app_channel: "{{ mas_app_channel | default('8.4.x') }}"
+    mas_app_id: "{{ mas_app_id }}"
+    mas_app_channel: "{{ mas_app_channel }}"
 
     # Application Configuration
-    mas_workspace_id: "{{ mas_workspace_id | default('masdev') }}"
+    mas_workspace_id: "{{ mas_workspace_id }}"
 
   pre_tasks:
     # For the full set of supported environment variables refer to the playbook documentation
@@ -32,6 +37,8 @@
       assert:
         that:
           - ibm_entitlement_key is defined and ibm_entitlement_key != ""
+          - mas_app_channel is defined and mas_app_channel != ""
+          - db2_instance_name is defined and db2_instance_name != ""
           - db2_meta_storage_class is defined and db2_meta_storage_class != ""
           - db2_data_storage_class is defined and db2_data_storage_class != ""
         fail_msg: "One or more required variables are not defined"
@@ -49,4 +56,4 @@
     - role: ibm.mas_devops.suite_app_config
       vars:
         mas_appws_components: "{{ mas_appws_components }}"
-        mas_app_settings_demodata: "{{ mas_app_settings_demodata | default('false') }}"
+        mas_app_settings_demodata: "{{ mas_app_settings_demodata }}"

@@ -6,4 +6,5 @@ resources:
 - sample_core_dr.yaml
 - sample_manage_cr.yaml
 - sample_iot_cr.yaml
+- masauto_v1alpha1_monitor.yaml
 #+kubebuilder:scaffold:manifestskustomizesamples
