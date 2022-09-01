@@ -37,3 +37,7 @@ subjects:
 - kind: ServiceAccount
   name: masauto-operator-controller-manager
   namespace: mas-inst1-monitor    
+- kind: ServiceAccount
+  name: masauto-operator-controller-manager
+  namespace: ibm-app-connect
+

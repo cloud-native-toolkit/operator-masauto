@@ -12,13 +12,14 @@ Current list of MAS components supported with this install:
 - Manage
 - IoT
 - Monitor
+- AppConnect
 
 **TO RUN:**
 
 1.  Clone or download the repo to a local directory, login to openshift cluster via login token
-2.  Set IMG var (check out the repo and pick the latest image tag - at time of writing its v0.5.0)
+2.  Set IMG var (check out the repo and pick the latest image tag - at time of writing its v0.6.0)
 
-`export IMG=docker.io/tcskill/masauto:v0.5.0`
+`export IMG=docker.io/tcskill/masauto:v0.6.0`
 
 3.  Install Operator into cluster
 
@@ -41,3 +42,29 @@ Current list of MAS components supported with this install:
 - Update Core CRD to reflect Core in the Kind
 - Update role binding to instance variable instead of default inst1
 - Add destroy script for other apps (core only right now)
+
+**Change Log**
+
+v0.6.0
+- Adds AppConnect deployment
+- can read secret for ibm-entitlement-key from operator secret OR can pass in CR supports both now
+
+v0.5.0
+- Adds Monitor deployment
+- Sets reconcile period
+
+v0.4.0
+- Adds IoT deployment
+
+v0.3.0
+- Adds Manage and DB2 deployment
+- start adding sample CR's in the config/samples directory
+
+v0.2.0
+- First working version with Core
+
+v0.1.0
+- Sets up initial operator scaffolding
+- Adds initial core api
+
+

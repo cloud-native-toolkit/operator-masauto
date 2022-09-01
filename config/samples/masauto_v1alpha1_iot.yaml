@@ -1,6 +1,0 @@
-apiVersion: masauto.ibm.com/v1alpha1
-kind: IoT
-metadata:
-  name: iot-sample
-spec:
-  # TODO(user): Add fields here

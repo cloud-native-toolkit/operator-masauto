@@ -1,0 +1,24 @@
+# permissions for end users to edit appcons.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: appcon-editor-role
+rules:
+- apiGroups:
+  - masauto.ibm.com
+  resources:
+  - appcons
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - masauto.ibm.com
+  resources:
+  - appcons/status
+  verbs:
+  - get
