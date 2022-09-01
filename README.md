@@ -41,4 +41,3 @@ Current list of MAS components supported with this install:
 - Update Core CRD to reflect Core in the Kind
 - Update role binding to instance variable instead of default inst1
 - Add destroy script for other apps (core only right now)
-- Add reconciliation 

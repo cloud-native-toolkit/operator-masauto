@@ -2,6 +2,8 @@ apiVersion: masauto.ibm.com/v1alpha1
 kind: IoT
 metadata:
   name: masauto-iot
+annotations:
+  ansible.operator-sdk/reconcile-period: "0s"    
 spec:
   ibm_entitlement_key: "eyJhbGciOiJIUzI1NiJ9........YOUR key goes here"
   mas_instance_id: "inst1"

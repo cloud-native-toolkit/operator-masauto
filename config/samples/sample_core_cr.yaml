@@ -3,6 +3,8 @@ kind: Masauto
 metadata:
   name: masauto-core
   namespace: masauto-operator-system
+annotations:
+  ansible.operator-sdk/reconcile-period: "0s"    
 spec:
   mas_channel: "8.8.x"
   ibm_entitlement_key: "eyJhbGciOiJIUzI1NiJ9........YOUR key goes here"
