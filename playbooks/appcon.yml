@@ -20,7 +20,7 @@
     mas_instance_id: "{{ mas_instance_id }}"
 
     # Entitlement key can be passed by either the key or a secret name
-    ibm_entitlement_key_secret: "{{ ibm_entitlement_key_secret }}"
+    ibm_entitlement_secret: "{{ ibm_entitlement_secret }}"
 
     # For AppConnect - these defaults are for a MAS v8.8 install
     appconnect_channel: "v4.0"
@@ -31,12 +31,12 @@
   pre_tasks:
     # Lookup entitlement key via secret if it's declared and the ibm_entitlement_key isn't
     - name: "Lookup IBM Entitlement Key credentials"
-      when: (ibm_entitlement_key_secret is defined and ibm_entitlement_key_secret != "") and
-            (ibm_entitlement_key is not defined)
+      when: (ibm_entitlement_secret is defined and ibm_entitlement_secret != "") and
+            (ibm_entitlement_key is not defined and ibm_entitlement_key != "")
       kubernetes.core.k8s_info:
         api_version: v1
         kind: Secret
-        name: "ibm-entitlement-key"
+        name: "{{ ibm_entitlement_secret }}"
         namespace: "masauto-operator-system"
       register: entitlement_credentials 
     
