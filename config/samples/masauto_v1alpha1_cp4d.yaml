@@ -1,6 +1,0 @@
-apiVersion: masauto.ibm.com/v1alpha1
-kind: CP4D
-metadata:
-  name: cp4d-sample
-spec:
-  # TODO(user): Add fields here
