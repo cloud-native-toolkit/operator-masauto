@@ -8,3 +8,12 @@ mas_channel: "8.8.x"
 
 # For Manage 
 mas_app_settings_demodata: false
+
+# For CP4D - very specific versions of CP4D and components are needed
+install_cp4d_platform: "False"
+install_watson_studio: "False"
+install_watson_machine_learning: "False"
+install_analytics_engine: "False"
+install_watson_openscale: "False"
+install_watson_discovery: "False"
+cpd_product_version: "4.0.9"
