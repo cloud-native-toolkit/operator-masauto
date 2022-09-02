@@ -6,4 +6,5 @@ resources:
 - bases/masauto.ibm.com_manages.yaml
 - bases/masauto.ibm.com_iots.yaml
 - bases/masauto.ibm.com_monitors.yaml
+- bases/masauto.ibm.com_appcons.yaml
 #+kubebuilder:scaffold:crdkustomizeresource
