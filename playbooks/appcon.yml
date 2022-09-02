@@ -32,7 +32,7 @@
     # Lookup entitlement key via secret if it's declared and the ibm_entitlement_key isn't
     - name: "Lookup IBM Entitlement Key credentials"
       when: (ibm_entitlement_secret is defined and ibm_entitlement_secret != "") and
-            (ibm_entitlement_key is not defined and ibm_entitlement_key != "")
+            (ibm_entitlement_key is not defined)
       kubernetes.core.k8s_info:
         api_version: v1
         kind: Secret
