@@ -1,0 +1,20 @@
+# permissions for end users to view cp4ds.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: cp4d-viewer-role
+rules:
+- apiGroups:
+  - masauto.ibm.com
+  resources:
+  - cp4ds
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - masauto.ibm.com
+  resources:
+  - cp4ds/status
+  verbs:
+  - get

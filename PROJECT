@@ -42,4 +42,11 @@ resources:
   group: masauto
   kind: AppCon
   version: v1alpha1
+- api:
+    crdVersion: v1
+    namespaced: true
+  domain: ibm.com
+  group: masauto
+  kind: CP4D
+  version: v1alpha1
 version: "3"
