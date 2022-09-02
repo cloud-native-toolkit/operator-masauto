@@ -22,7 +22,7 @@
     # Entitlement key can be passed by either the key or a secret name
     ibm_entitlement_secret: "{{ ibm_entitlement_secret }}"
 
-    # For AppConnect - these defaults are for a MAS v8.8 install
+    # For AppConnect - these defaults are for a MAS v8.8 install and should be used for v8.8 install core
     appconnect_channel: "v4.0"
     appconnect_dashboard_name: "dashboard-12040r2"
     appconnect_license_id: "L-APEH-C9NCK6"
