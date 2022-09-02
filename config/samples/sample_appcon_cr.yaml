@@ -5,6 +5,6 @@ metadata:
 annotations:
   ansible.operator-sdk/reconcile-period: "0s"  
 spec:
-  ibm_entitlement_secret: "ibm-entitlement-key"
+  ibm_entitlement_secret: "ibm-entitlement-key" #secret where your ibm-entitlement-key is stored in operator namespace
   mas_instance_id: "inst1"
   appconnect_storage_class: "ocs-storagecluster-cephfs" #file storage class

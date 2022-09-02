@@ -21,9 +21,14 @@ Current list of MAS components supported with this install:
 
 `export IMG=docker.io/tcskill/masauto:v0.6.0`
 
-3.  Install Operator into cluster
+3.  Install Operator into cluster and add your entitlement key
 
 `make install deploy`
+
+*IBM Entitlement Key*
+Create a secret to hold your ibm entitlement key:
+
+`oc create secret generic "ibm-entitlement-key" -n masauto-operator-system --from-literal="username=cp" --from-literal="password=YOUR-KEY-GOES-HERE"`
 
 4.  Customize your CR and install on the cluster (obviously install core CR first, then the others: manage, iot, monitor, etc.) Sample CR's are foundin the `/config/samples` directory of this repo.
 
