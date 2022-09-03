@@ -8,3 +8,11 @@ spec:
   ibm_entitlement_secret: "ibm-entitlement-key" #secret where your ibm-entitlement-key is stored in operator namespace
   cpd_primary_storage_class: "ocs-storagecluster-cephfs" # file
   cpd_metadata_storage_class: "ibmc-vpcblock-odf-10iops" # block
+  install_cp4d_platform: "True"
+
+  install_watson_studio: "False"
+  install_watson_machine_learning: "False"
+  install_analytics_engine: "False"
+  install_watson_openscale: "False"
+  install_watson_discovery: "False"  
+
