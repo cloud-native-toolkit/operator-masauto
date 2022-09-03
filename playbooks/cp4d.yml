@@ -31,7 +31,6 @@
     cpd_primary_storage_class: "{{ cpd_primary_storage_class }}" # file
     cpd_metadata_storage_class: "{{ cpd_metadata_storage_class }}" # block
 
-
   pre_tasks:
     # Lookup entitlement key via secret if it's declared and the ibm_entitlement_key isn't
     - name: "Lookup IBM Entitlement Key credentials"
@@ -67,3 +66,33 @@
       when: install_cp4d_platform == true
     - role: ibm.mas_devops.cp4d
       when: install_cp4d_platform == true
+
+    # Watson Studio (~3 hours)
+    - role: ibm.mas_devops.cp4d_service
+      when: install_watson_studio == true
+      vars:
+        cpd_service_name: wsl
+
+    # Watson Machine Learning (~2 1/2 hours)
+    - role: ibm.mas_devops.cp4d_service
+      when: install_watson_machine_learning == true
+      vars:
+        cpd_service_name: wml
+
+    # Analytics Engine Powered by Apache Spark (~30 minutes)
+    - role: ibm.mas_devops.cp4d_service
+      when: install_analytics_engine == true
+      vars:
+        cpd_service_name: spark
+
+    # Watson OpenScale (~1 hour)
+    - role: ibm.mas_devops.cp4d_service
+      when: install_watson_openscale == true
+      vars:
+        cpd_service_name: aiopenscale
+
+    # Watson Discovery (~1 hour)
+    - role: ibm.mas_devops.cp4d_service
+      when: install_watson_discovery == true
+      vars:
+        cpd_service_name: wd
