@@ -17,9 +17,9 @@ Current list of MAS components supported with this install:
 **TO RUN:**
 
 1.  Clone or download the repo to a local directory, login to openshift cluster via login token
-2.  Set IMG var (check out the repo and pick the latest image tag - at time of writing its v0.6.0)
+2.  Set IMG var (check out the repo and pick the latest image tag - at time of writing its v0.7.0)
 
-`export IMG=docker.io/tcskill/masauto:v0.6.0`
+`export IMG=docker.io/tcskill/masauto:v0.7.0`
 
 3.  Install Operator into cluster and add your entitlement key
 
@@ -49,6 +49,8 @@ Create a secret to hold your ibm entitlement key:
 - Add destroy script for other apps (core only right now)
 
 **Change Log**
+v0.7.0
+- Adds CP4D deployment
 
 v0.6.0
 - Adds AppConnect deployment

@@ -15,4 +15,3 @@ spec:
   install_analytics_engine: "False"
   install_watson_openscale: "False"
   install_watson_discovery: "False"  
-
