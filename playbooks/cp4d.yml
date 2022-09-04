@@ -54,7 +54,6 @@
       assert:
         that:
           - ibm_entitlement_key is defined and ibm_entitlement_key != ""
-          - appconnect_storage_class is defined and appconnect_storage_class != ""
         fail_msg: "One or more required variables are not defined"
 
   roles:
