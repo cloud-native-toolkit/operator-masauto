@@ -66,31 +66,31 @@
       when: install_cp4d_platform|bool
 
     # Watson Studio (~3 hours)
-   # - role: ibm.mas_devops.cp4d_service
-   #   when: install_watson_studio|bool
-   #   vars:
-   #     cpd_service_name: wsl
+    - role: ibm.mas_devops.cp4d_service
+      when: install_watson_studio|bool
+      vars:
+        cpd_service_name: wsl
 
     # Watson Machine Learning (~2 1/2 hours)
-   # - role: ibm.mas_devops.cp4d_service
-   #   when: install_watson_machine_learning|bool
-   #   vars:
-   #     cpd_service_name: wml
+    - role: ibm.mas_devops.cp4d_service
+      when: install_watson_machine_learning|bool
+      vars:
+        cpd_service_name: wml
 
     # Analytics Engine Powered by Apache Spark (~30 minutes)
-   # - role: ibm.mas_devops.cp4d_service
-   #   when: install_analytics_engine|bool
-   #   vars:
-   #     cpd_service_name: spark
+    - role: ibm.mas_devops.cp4d_service
+      when: install_analytics_engine|bool
+      vars:
+        cpd_service_name: spark
 
     # Watson OpenScale (~1 hour)
-   # - role: ibm.mas_devops.cp4d_service
-   #   when: install_watson_openscale|bool
-   #   vars:
-   #     cpd_service_name: aiopenscale
+    - role: ibm.mas_devops.cp4d_service
+      when: install_watson_openscale|bool
+      vars:
+        cpd_service_name: aiopenscale
 
     # Watson Discovery (~1 hour)
-   # - role: ibm.mas_devops.cp4d_service
-   #   when: install_watson_discovery|bool
-   #   vars:
-   #     cpd_service_name: wd
+    - role: ibm.mas_devops.cp4d_service
+      when: install_watson_discovery|bool
+      vars:
+        cpd_service_name: wd
