@@ -13,6 +13,7 @@ Current list of MAS components supported with this install:
 - IoT
 - Monitor
 - AppConnect
+- CP4D (foundation and services)
 
 **TO RUN:**
 
