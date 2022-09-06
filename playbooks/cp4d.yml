@@ -16,6 +16,8 @@
   vars:
     # Cluster-wide dependencies for MAS 
     ibm_entitlement_key: "{{ ibm_entitlement_key }}"
+    mas_config_dir: "~/masconfig"
+    mas_instance_id: "{{ mas_instance_id }}"
 
     # Entitlement key can be passed by either the key or a secret name
     ibm_entitlement_secret: "{{ ibm_entitlement_secret }}"
