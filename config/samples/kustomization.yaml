@@ -6,4 +6,5 @@ resources:
 - sample_appcon_cr.yaml
 - sample_cp4d_cr.yaml
 - sample_cp4d_wsl_cr.yaml
+- masauto_v1alpha1_hpu.yaml
 #+kubebuilder:scaffold:manifestskustomizesamples

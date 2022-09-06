@@ -36,4 +36,10 @@
   playbook: playbooks/cp4d.yml
   reconcilePeriod: 0s
   watchDependentResources: True
+- version: v1alpha1
+  group: masauto.ibm.com
+  kind: HPU
+  playbook: playbooks/hpu.yml
+  reconcilePeriod: 0s
+  watchDependentResources: True
 #+kubebuilder:scaffold:watch

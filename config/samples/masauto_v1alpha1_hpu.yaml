@@ -1,0 +1,6 @@
+apiVersion: masauto.ibm.com/v1alpha1
+kind: HPU
+metadata:
+  name: hpu-sample
+spec:
+  # TODO(user): Add fields here
