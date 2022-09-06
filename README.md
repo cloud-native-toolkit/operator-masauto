@@ -7,20 +7,21 @@ Sample CR's can be found in the `/config/samples` directory.
 
 Present state recommending taking defaults for mas instance name: `inst1` otherwise will need to change the role binding, this will be changed when we move to full OLM / custom catalog install.
 
-Current list of MAS components supported with this install:
+Current list of MAS components supported with this operator install:
 - Core
 - Manage
 - IoT
 - Monitor
 - AppConnect
 - CP4D (foundation and services: wsl, wml, spark, aiopenscale, wd)
+- Health Predict & Utilities
 
 **TO RUN:**
 
 1.  Clone or download the repo to a local directory, login to openshift cluster via login token
-2.  Set IMG var (check out the repo and pick the latest image tag - at time of writing its v0.7.0)
+2.  Set IMG var (check out the repo and pick the latest image tag - at time of writing its v0.8.0)
 
-`export IMG=docker.io/tcskill/masauto:v0.7.0`
+`export IMG=docker.io/tcskill/masauto:v0.8.0`
 
 3.  Install Operator into cluster and add your entitlement key
 
@@ -51,6 +52,10 @@ Create a secret to hold your ibm entitlement key:
 - Add destroy script for other apps (core only right now)
 
 **Change Log**
+
+v0.8.0
+- Adds Health Predict & Utilities deployment
+
 v0.7.0
 - Adds CP4D deployment (foundation)
 - Adds CP4D services: wsl, wml, spark, aiopenscale, wd
