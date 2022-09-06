@@ -30,4 +30,10 @@
   playbook: playbooks/appcon.yml
   reconcilePeriod: 0s
   watchDependentResources: True
+- version: v1alpha1
+  group: masauto.ibm.com
+  kind: CP4D
+  playbook: playbooks/cp4d.yml
+  reconcilePeriod: 0s
+  watchDependentResources: True
 #+kubebuilder:scaffold:watch

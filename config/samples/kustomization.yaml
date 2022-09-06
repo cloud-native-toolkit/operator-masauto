@@ -4,4 +4,6 @@ resources:
 - sample_manage_cr.yaml
 - sample_iot_cr.yaml
 - sample_appcon_cr.yaml
+- sample_cp4d_cr.yaml
+- sample_cp4d_wsl_cr.yaml
 #+kubebuilder:scaffold:manifestskustomizesamples

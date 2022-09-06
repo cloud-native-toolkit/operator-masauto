@@ -40,4 +40,9 @@ subjects:
 - kind: ServiceAccount
   name: masauto-operator-controller-manager
   namespace: ibm-app-connect
-
+- kind: ServiceAccount
+  name: masauto-operator-controller-manager
+  namespace: ibm-cpd-operators
+- kind: ServiceAccount
+  name: masauto-operator-controller-manager
+  namespace: ibm-cpd
