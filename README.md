@@ -13,7 +13,7 @@ Current list of MAS components supported with this install:
 - IoT
 - Monitor
 - AppConnect
-- CP4D (foundation and services)
+- CP4D (foundation and services: wsl, wml, spark, aiopenscale, wd)
 
 **TO RUN:**
 
@@ -43,15 +43,17 @@ Create a secret to hold your ibm entitlement key:
 
 **TO DO:**
 - Add other MAS app playbooks/api's
+- Update Core,io,manage to pull from entitlement
+- Update Core CRD to reflect Core in the Kind
 - Determine best defaults to set for manage components var: mas_appws_components
 - Add OLM, custom catalog
-- Update Core CRD to reflect Core in the Kind
-- Update role binding to instance variable instead of default inst1
+- Update role binding to instance variable instead of default inst1 (this will be based on deployment method which is tbd)
 - Add destroy script for other apps (core only right now)
 
 **Change Log**
 v0.7.0
-- Adds CP4D deployment
+- Adds CP4D deployment (foundation)
+- Adds CP4D services: wsl, wml, spark, aiopenscale, wd
 
 v0.6.0
 - Adds AppConnect deployment
@@ -74,5 +76,3 @@ v0.2.0
 v0.1.0
 - Sets up initial operator scaffolding
 - Adds initial core api
-
-
