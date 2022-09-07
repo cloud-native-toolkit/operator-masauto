@@ -1,0 +1,67 @@
+# Adds HP&U latest release to an existing MAS Core 8.8.x 
+#
+# Dependencies:
+# - Core is installed
+# - Health is installed
+# - CP4D/WSL
+# - AppConnect
+#
+- hosts: localhost
+  any_errors_fatal: true
+  collections:
+    - community.kubernetes
+    - community.general
+    - operator_sdk.util
+    - kubernetes.core
+    - ibm.mas_devops
+    - ibm.cloudcollection
+
+  vars:
+    # Cluster-wide dependencies for MAS 
+    mas_config_dir: "~/masconfig"
+    ibm_entitlement_key: "{{ ibm_entitlement_key }}"
+    mas_instance_id: "{{ mas_instance_id }}"
+
+    # Entitlement key can be passed by either the key or a secret name
+    ibm_entitlement_secret: "{{ ibm_entitlement_secret }}"
+    
+    # Application Installation
+    mas_app_id: hputilities
+    mas_app_channel: "{{ mas_app_channel }}"
+
+    # Application Configuration
+    mas_workspace_id: "{{ mas_workspace_id }}"
+
+  pre_tasks:
+    # Lookup entitlement key via secret if it's declared and the ibm_entitlement_key isn't
+    - name: "Lookup IBM Entitlement Key credentials"
+      when: (ibm_entitlement_secret is defined and ibm_entitlement_secret != "")
+      ignore_errors: true      
+      kubernetes.core.k8s_info:
+        api_version: v1
+        kind: Secret
+        name: "{{ ibm_entitlement_secret }}"
+        namespace: "masauto-operator-system"
+      register: entitlement_credentials 
+    
+    - name: "Set entitllement based on secret"
+      when: (entitlement_credentials.api_found) and
+            (ibm_entitlement_secret is defined and ibm_entitlement_secret != "")
+      ignore_errors: true
+      set_fact:
+        ibm_entitlement_key: "{{ entitlement_credentials.resources[0].data.password | b64decode }}"
+
+    # For the full set of supported environment variables refer to the playbook documentation
+    - name: Check for required environment variables
+      assert:
+        that:
+          - ibm_entitlement_key is defined and ibm_entitlement_key != ""
+          - mas_app_channel is defined and mas_app_channel != ""
+        fail_msg: "One or more required variables are not defined"
+
+  roles:
+    - role: ibm.mas_devops.suite_config
+    - role: ibm.mas_devops.suite_app_install
+      vars:
+        mas_entitlement_key: "{{ ibm_entitlement_key }}"
+    - role: ibm.mas_devops.suite_app_config
