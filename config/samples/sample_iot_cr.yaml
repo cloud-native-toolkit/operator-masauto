@@ -5,7 +5,7 @@ metadata:
 annotations:
   ansible.operator-sdk/reconcile-period: "0s"    
 spec:
-  ibm_entitlement_key: "eyJhbGciOiJIUzI1NiJ9........YOUR key goes here"
+  ibm_entitlement_secret: "ibm-entitlement-key" #secret where your ibm-entitlement-key is stored in operator namespace
   mas_instance_id: "inst1"
   mas_workspace_id: "masdev"
   db2_instance_name: "db2w-shared"

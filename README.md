@@ -53,6 +53,10 @@ Create a secret to hold your ibm entitlement key:
 
 **Change Log**
 
+v0.8.1
+- Adds read of entitlement key from secret now in all playbooks
+- updates samples to support entitlment key secret
+
 v0.8.0
 - Adds Health Predict & Utilities deployment
 

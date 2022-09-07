@@ -7,7 +7,7 @@ annotations:
   ansible.operator-sdk/reconcile-period: "0s"    
 spec:
   mas_channel: "8.8.x"
-  ibm_entitlement_key: "eyJhbGciOiJIUzI1NiJ9........YOUR key goes here"
+  ibm_entitlement_secret: "ibm-entitlement-key" #secret where your ibm-entitlement-key is stored in operator namespace
   mas_instance_id: "inst1"
   mas_workspace_id: "masdev"
   mas_workspace_name: "MAS Development"
