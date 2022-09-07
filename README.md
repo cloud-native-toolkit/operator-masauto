@@ -44,7 +44,6 @@ Create a secret to hold your ibm entitlement key:
 
 **TO DO:**
 - Add other MAS app playbooks/api's
-- Update Core,io,manage to pull from entitlement
 - Update Core CRD to reflect Core in the Kind
 - Determine best defaults to set for manage components var: mas_appws_components
 - Add OLM, custom catalog
