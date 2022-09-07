@@ -44,7 +44,6 @@ Create a secret to hold your ibm entitlement key:
 
 **TO DO:**
 - Add other MAS app playbooks/api's
-- Update Core,io,manage to pull from entitlement
 - Update Core CRD to reflect Core in the Kind
 - Determine best defaults to set for manage components var: mas_appws_components
 - Add OLM, custom catalog
@@ -52,6 +51,10 @@ Create a secret to hold your ibm entitlement key:
 - Add destroy script for other apps (core only right now)
 
 **Change Log**
+
+v0.8.1
+- Adds read of entitlement key from secret now in all playbooks
+- updates samples to support entitlment key secret
 
 v0.8.0
 - Adds Health Predict & Utilities deployment
