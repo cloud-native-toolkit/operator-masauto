@@ -9,4 +9,5 @@ resources:
 - bases/masauto.ibm.com_appcons.yaml
 - bases/masauto.ibm.com_cp4ds.yaml
 - bases/masauto.ibm.com_hpus.yaml
+- bases/masauto.ibm.com_cores.yaml
 #+kubebuilder:scaffold:crdkustomizeresource

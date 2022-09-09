@@ -42,4 +42,10 @@
   playbook: playbooks/hpu.yml
   reconcilePeriod: 0s
   watchDependentResources: True
+- version: v1alpha1
+  group: masauto.ibm.com
+  kind: Core
+  playbook: playbooks/core.yml
+  reconcilePeriod: 0s
+  watchDependentResources: True
 #+kubebuilder:scaffold:watch

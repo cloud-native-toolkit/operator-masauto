@@ -1,16 +1,19 @@
 apiVersion: masauto.ibm.com/v1alpha1
-kind: IoT
+kind: Masauto
 metadata:
-  name: masauto-iot
+  name: masauto-core
   namespace: masauto-operator-system
 annotations:
   ansible.operator-sdk/reconcile-period: "0s"    
 spec:
+  mas_channel: "8.8.x"
   ibm_entitlement_secret: "ibm-entitlement-key" #secret where your ibm-entitlement-key is stored in operator namespace
   mas_instance_id: "inst1"
   mas_workspace_id: "masdev"
-  db2_instance_name: "db2w-shared"
-  mas_app_channel: "8.5.x"
-  db2_meta_storage_class: "ocs-storagecluster-cephfs"
-  db2_data_storage_class: "ibmc-vpcblock-odf-10iops"
-  kafka_storage_class: "ibmc-vpcblock-odf-10iops"
+  mas_workspace_name: "MAS Development"
+  mongodb_storage_class: "ibmc-vpcblock-odf-10iops"
+  uds_contact:
+    email: "tskill@us.ibm.com"
+    first_name: "tom"
+    last_name: "skill"  
+  uds_storage_class: "ibmc-vpcblock-odf-10iops"

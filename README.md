@@ -19,9 +19,9 @@ Current list of MAS components supported with this operator install:
 **TO RUN:**
 
 1.  Clone or download the repo to a local directory, login to openshift cluster via login token
-2.  Set IMG var (check out the repo and pick the latest image tag - at time of writing its v0.8.0)
+2.  Set IMG var (check out the repo and pick the latest image tag - at time of writing its v0.8.2)
 
-`export IMG=docker.io/tcskill/masauto:v0.8.0`
+`export IMG=docker.io/tcskill/masauto:v0.8.2`
 
 3.  Install Operator into cluster and add your entitlement key
 
@@ -43,14 +43,16 @@ Create a secret to hold your ibm entitlement key:
 `./mas-destroy-core.sh inst1 ibm-sls mongoce`
 
 **TO DO:**
-- Add other MAS app playbooks/api's
-- Update Core CRD to reflect Core in the Kind
-- Determine best defaults to set for manage components var: mas_appws_components
-- Add OLM, custom catalog
-- Update role binding to instance variable instead of default inst1 (this will be based on deployment method which is tbd)
-- Add destroy script for other apps (core only right now)
+
+- section moved to repo issues
+
 
 **Change Log**
+
+v0.8.2
+- Adds Core api (masauto still there for the moment but will be removed)
+- Updated CP4D playbook for suite config
+- Updated sample CRs
 
 v0.8.1
 - Adds read of entitlement key from secret now in all playbooks

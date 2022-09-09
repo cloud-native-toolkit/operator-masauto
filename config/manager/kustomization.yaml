@@ -13,4 +13,4 @@ kind: Kustomization
 images:
 - name: controller
   newName: docker.io/tcskill/masauto
-  newTag: 80a
+  newTag: v0.8.0

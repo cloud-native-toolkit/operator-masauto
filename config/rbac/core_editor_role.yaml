@@ -1,0 +1,24 @@
+# permissions for end users to edit cores.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: core-editor-role
+rules:
+- apiGroups:
+  - masauto.ibm.com
+  resources:
+  - cores
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - masauto.ibm.com
+  resources:
+  - cores/status
+  verbs:
+  - get

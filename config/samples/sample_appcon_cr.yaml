@@ -2,6 +2,7 @@ apiVersion: masauto.ibm.com/v1alpha1
 kind: AppCon
 metadata:
   name: masauto-appcon
+  namespace: masauto-operator-system
 annotations:
   ansible.operator-sdk/reconcile-period: "0s"  
 spec:

@@ -1,0 +1,92 @@
+- hosts: localhost
+  any_errors_fatal: true
+  collections:
+    - community.kubernetes
+    - community.general
+    - operator_sdk.util
+    - kubernetes.core
+    - ibm.mas_devops
+    - ibm.cloudcollection
+
+  vars: 
+  # Cluster-wide dependencies for MAS 
+    ibm_entitlement_key: "{{ ibm_entitlement_key }}"
+    mas_instance_id: "{{ mas_instance_id }}"
+    mas_workspace_id: "{{ mas_workspace_id }}"
+    mas_workspace_name: "{{ mas_workspace_name }}"    
+    mas_config_dir: "~/masconfig" #using this as it's created in the operator image
+    mas_channel: "{{ mas_channel }}"
+
+    # Entitlement key can be passed by either the key or a secret name
+    ibm_entitlement_secret: "{{ ibm_entitlement_secret }}"
+    
+  pre_tasks:
+    # Lookup entitlement key via secret if it's declared and the ibm_entitlement_key isn't
+    - name: "Lookup IBM Entitlement Key credentials"
+      when: (ibm_entitlement_secret is defined and ibm_entitlement_secret != "")
+      ignore_errors: true      
+      kubernetes.core.k8s_info:
+        api_version: v1
+        kind: Secret
+        name: "{{ ibm_entitlement_secret }}"
+        namespace: "masauto-operator-system"
+      register: entitlement_credentials 
+    
+    - name: "Set entitllement based on secret"
+      when: (entitlement_credentials.api_found) and
+            (ibm_entitlement_secret is defined and ibm_entitlement_secret != "")
+      ignore_errors: true
+      set_fact:
+        ibm_entitlement_key: "{{ entitlement_credentials.resources[0].data.password | b64decode }}"
+
+    # For the full set of supported environment variables refer to the playbook documentation
+    - name: Check for required environment variables
+      assert:
+        that:
+          - ibm_entitlement_key is defined and ibm_entitlement_key != ""
+        fail_msg: "One or more required variables are not defined"
+
+  roles:
+    # 1. Install cluster-scoped dependencies (e.g. SBO, Cert-Manager, Operator Catalogs) & cluster monitoring
+    - role: ibm.mas_devops.ibm_catalogs
+    - role: ibm.mas_devops.common_services
+    - role: ibm.mas_devops.cert_manager
+    ##- ibm.mas_devops.sbo
+    ## current version of sbo v1.10 is breaking mas so need to remove this for now
+    ## SBO isn't needed for MAS v8.8 so commenting it out for now
+
+    # 2. Install MongoDb
+    - role: ibm.mas_devops.mongodb
+      vars:
+        mongodb_storage_class: "{{ mongodb_storage_class }}"
+    
+    # 3. Install SLS
+    # Set sls_url, sls_tls_crt_local_file_path, sls_registration_key variables to skip install and set up SLSCfg for
+    # an existing installation of SLS
+    - role: ibm.mas_devops.sls
+      vars:
+        sls_mongodb_cfg_file: "~/masconfig/mongo-mongoce.yml"
+
+    # 4. Install UDS
+    # Set uds_endpoint_url, uds_tls_crt_local_file_path, uds_api_key variables to skip install and set up BASCfg for
+    # an existing installation of UDS
+    - role: ibm.mas_devops.uds
+      vars:
+        uds_contact:
+          email: "{{ uds_contact.email }}"
+          first_name: "{{ uds_contact.first_name}}"
+          last_name: "{{ uds_contact.last_name }}"
+        uds_storage_class: "{{ uds_storage_class }}"
+
+    # 5. Generate a Workspace config for MAS
+    - role: ibm.mas_devops.gencfg_workspace
+    
+    # 6. Install & configure MAS
+    - role: ibm.mas_devops.suite_dns
+    - role: ibm.mas_devops.suite_install
+      vars:
+        mas_entitlement_key: "{{ ibm_entitlement_key }}"
+    - role: ibm.mas_devops.suite_config
+    - role: ibm.mas_devops.suite_verify
+      vars:
+        mas_hide_superuser_credentials: true

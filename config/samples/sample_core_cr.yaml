@@ -1,5 +1,5 @@
 apiVersion: masauto.ibm.com/v1alpha1
-kind: Masauto
+kind: Core
 metadata:
   name: masauto-core
   namespace: masauto-operator-system
