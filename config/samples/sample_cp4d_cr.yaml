@@ -2,6 +2,7 @@ apiVersion: masauto.ibm.com/v1alpha1
 kind: CP4D
 metadata:
   name: masauto-cp4d-foundation
+  namespace: masauto-operator-system
 annotations:
   ansible.operator-sdk/reconcile-period: "0s"  
 spec:

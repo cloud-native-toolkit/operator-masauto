@@ -2,6 +2,7 @@ apiVersion: masauto.ibm.com/v1alpha1
 kind: Manage
 metadata:
   name: masauto-manage
+  namespace: masauto-operator-system
 annotations:
   ansible.operator-sdk/reconcile-period: "0s"    
 spec:
