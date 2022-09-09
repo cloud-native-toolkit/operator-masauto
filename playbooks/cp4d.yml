@@ -97,3 +97,6 @@
       when: install_watson_discovery|bool
       vars:
         cpd_service_name: wd
+
+    - role: ibm.mas_devops.suite_config
+    
