@@ -49,3 +49,6 @@ subjects:
 - kind: ServiceAccount
   name: masauto-operator-controller-manager
   namespace: mas-inst1-hputilities
+- kind: ServiceAccount
+  name: masauto-operator-controller-manager
+  namespace: mas-inst1-predict

@@ -10,4 +10,5 @@ resources:
 - bases/masauto.ibm.com_cp4ds.yaml
 - bases/masauto.ibm.com_hpus.yaml
 - bases/masauto.ibm.com_cores.yaml
+- bases/masauto.ibm.com_predicts.yaml
 #+kubebuilder:scaffold:crdkustomizeresource
