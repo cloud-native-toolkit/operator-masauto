@@ -62,6 +62,7 @@
         fail_msg: "One or more required variables are not defined"
 
   roles:
+    # run the suite config incase a dependency was installed and didn't get configured yet
     - role: ibm.mas_devops.suite_config
     - role: ibm.mas_devops.suite_app_install
       vars:
