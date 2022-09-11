@@ -15,13 +15,14 @@ Current list of MAS components supported with this operator install:
 - AppConnect
 - CP4D (foundation and services: wsl, wml, spark, aiopenscale, wd)
 - Health Predict & Utilities
+- Predict
 
 **TO RUN:**
 
 1.  Clone or download the repo to a local directory, login to openshift cluster via login token
-2.  Set IMG var (check out the repo and pick the latest image tag - at time of writing its v0.8.2)
+2.  Set IMG var (check out the repo and pick the latest image tag - at time of writing its v0.9.0)
 
-`export IMG=docker.io/tcskill/masauto:v0.8.2`
+`export IMG=docker.io/tcskill/masauto:v0.9.0`
 
 3.  Install Operator into cluster and add your entitlement key
 
@@ -48,6 +49,9 @@ Create a secret to hold your ibm entitlement key:
 
 
 **Change Log**
+
+v0.9.0
+- Adds Predict deployment
 
 v0.8.2
 - Adds Core api (masauto still there for the moment but will be removed)
