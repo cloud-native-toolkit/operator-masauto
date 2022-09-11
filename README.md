@@ -43,10 +43,6 @@ Create a secret to hold your ibm entitlement key:
 
 `./mas-destroy-core.sh inst1 ibm-sls mongoce`
 
-**TO DO:**
-
-- section moved to repo issues
-
 
 **Change Log**
 
