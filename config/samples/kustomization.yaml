@@ -3,9 +3,10 @@ resources:
 - sample_core_dr.yaml
 - sample_manage_cr.yaml
 - sample_iot_cr.yaml
+- sample_monitor_cr.yaml
 - sample_appcon_cr.yaml
 - sample_cp4d_cr.yaml
 - sample_cp4d_wsl_cr.yaml
 - sample_hpu_cr.yaml
-- masauto_v1alpha1_core.yaml
+- sample_predict_cr.yaml
 #+kubebuilder:scaffold:manifestskustomizesamples
