@@ -20,9 +20,9 @@ Current list of MAS components supported with this operator install:
 **TO RUN:**
 
 1.  Clone or download the repo to a local directory, login to openshift cluster via login token
-2.  Set IMG var (check out the repo and pick the latest image tag - at time of writing its v0.9.0)
+2.  Set IMG var (check out the repo and pick the latest image tag - at time of writing its v0.9.4)
 
-`export IMG=docker.io/tcskill/masauto:v0.9.0`
+`export IMG=docker.io/tcskill/masauto:v0.9.4`
 
 3.  Install Operator into cluster and add your entitlement key
 
@@ -45,6 +45,9 @@ Create a secret to hold your ibm entitlement key:
 
 
 **Change Log**
+
+v0.9.4
+- Service account and rbac updates for multi namespaces
 
 v0.9.0
 - Adds Predict deployment
