@@ -1,6 +1,6 @@
 ## Append samples you want in your CSV to this file as resources ##
 resources:
-- sample_core_dr.yaml
+- sample_core_cr.yaml
 - sample_manage_cr.yaml
 - sample_iot_cr.yaml
 - sample_monitor_cr.yaml

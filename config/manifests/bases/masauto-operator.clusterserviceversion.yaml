@@ -1,0 +1,45 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: ClusterServiceVersion
+metadata:
+  annotations:
+    alm-examples: '[]'
+    capabilities: Basic Install
+  name: masauto-operator.v0.0.0
+  namespace: placeholder
+spec:
+  apiservicedefinitions: {}
+  customresourcedefinitions: {}
+  description: This operator will install all components of the Maximo App Suite (MAS).
+  displayName: Maximo App Suite Automation
+  icon:
+  - base64data: ""
+    mediatype: ""
+  install:
+    spec:
+      deployments: null
+    strategy: ""
+  installModes:
+  - supported: false
+    type: OwnNamespace
+  - supported: false
+    type: SingleNamespace
+  - supported: false
+    type: MultiNamespace
+  - supported: true
+    type: AllNamespaces
+  keywords:
+  - Maximo
+  - MAS
+  links:
+  - name: Masauto Operator
+    url: https://masauto-operator.domain
+  maintainers:
+  - email: tskill@us.ibm.com
+    name: Tom Skill
+  - email: seansund@us.ibm.com
+    name: Sean Sundberg
+  maturity: alpha
+  provider:
+    name: IBM Ecosystem Engineering
+    url: https://modules.cloudnativetoolkit.dev/
+  version: 0.0.0
