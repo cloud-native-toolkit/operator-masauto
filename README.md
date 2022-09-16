@@ -23,7 +23,11 @@ This has moved to an Operator - OLM based install.
 
 1.  Create a namespace and operator group for the operator (see samples directory)
 2.  Add the Ecosystem Engineering catalog to your cluster
-3.  Deploy the operator
+3.  Create a ibm-entitlement-key secret
+
+`oc create secret generic "ibm-entitlement-key" -n masauto-operator-system --from-literal="username=cp" --from-literal="password=<your-secret-goes-here>" `
+
+4.  Deploy the operator
 
 
 ### TO DESTROY INSTALL
