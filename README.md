@@ -17,34 +17,28 @@ Current list of MAS components supported with this operator install:
 - Health Predict & Utilities
 - Predict
 
-**TO RUN:**
+### TO RUN
 
-1.  Clone or download the repo to a local directory, login to openshift cluster via login token
-2.  Set IMG var (check out the repo and pick the latest image tag - at time of writing its v0.9.4)
+This has moved to an Operator - OLM based install.
 
-`export IMG=docker.io/tcskill/masauto:v0.9.4`
+1.  Create a namespace and operator group for the operator (see samples directory)
+2.  Add the Ecosystem Engineering catalog to your cluster
+3.  Create a ibm-entitlement-key secret
 
-3.  Install Operator into cluster and add your entitlement key
+`oc create secret generic "ibm-entitlement-key" -n masauto-operator-system --from-literal="username=cp" --from-literal="password=<your-secret-goes-here>" `
 
-`make install deploy`
+4.  Deploy the operator
 
-*IBM Entitlement Key*
-Create a secret to hold your ibm entitlement key:
 
-`oc create secret generic "ibm-entitlement-key" -n masauto-operator-system --from-literal="username=cp" --from-literal="password=YOUR-KEY-GOES-HERE"`
-
-4.  Customize your CR and install on the cluster (obviously install core CR first, then the others: manage, iot, monitor, etc.) Sample CR's are foundin the `/config/samples` directory of this repo.
-
-`oc apply -f core_cr.yaml`
-
-5.  Watch the magic! - you can check the progress of the ansible by looking at the operator pod logs
-
-**TO DESTROY INSTALL:**
+### TO DESTROY INSTALL
 
 `./mas-destroy-core.sh inst1 ibm-sls mongoce`
 
 
-**Change Log**
+### CHANGE LOG
+
+v0.10.2
+- Adds bundle for OLM and custom catalog deployment
 
 v0.9.4
 - Service account and rbac updates for multi namespaces

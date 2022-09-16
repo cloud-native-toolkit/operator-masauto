@@ -1,0 +1,22 @@
+apiVersion: masauto.ibm.com/v1alpha1
+kind: HPU
+metadata:
+  name: masauto-hpu
+  namespace: masauto-operator-system
+annotations:
+  ansible.operator-sdk/reconcile-period: "0s"  
+spec:
+  ibm_entitlement_secret: "ibm-entitlement-key" #secret where your ibm-entitlement-key is stored in operator namespace
+  mas_instance_id: "inst1"
+  mas_workspace_id: "masdev"
+  mas_app_channel: "8.4.x"
+
+## this cr assumes you have been using the defaults of this automation
+## and in the masconfig dir you have a wsl project yaml and project id 
+## file already created.  If so nothing else is needed.  If you did NOT take
+## the defaults used in this automation then you will need to define the following
+## variables as well:
+##
+## cpd_ws_project_name: "" ## value found in cp4d ui projects location
+## cpd_ws_project_id: "" ## value found in masconfigdir/wsl-mas-inst1-hputilities.id
+
