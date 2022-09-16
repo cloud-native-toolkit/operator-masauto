@@ -189,7 +189,7 @@ metadata:
     capabilities: Basic Install
     operators.operatorframework.io/builder: operator-sdk-v1.22.0-ocp
     operators.operatorframework.io/project_layout: ansible.sdk.operatorframework.io/v1
-  name: masauto-operator.v0.0.1
+  name: masauto-operator.v0.10.1
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
@@ -284,7 +284,7 @@ spec:
                 env:
                 - name: ANSIBLE_GATHERING
                   value: explicit
-                image: docker.io/tcskill/masauto:v0.10.0
+                image: docker.io/tcskill/masauto:v0.10.1
                 livenessProbe:
                   httpGet:
                     path: /healthz
@@ -336,4 +336,4 @@ spec:
   provider:
     name: IBM Ecosystem Engineering
     url: https://modules.cloudnativetoolkit.dev/
-  version: 0.0.1
+  version: 0.10.1
