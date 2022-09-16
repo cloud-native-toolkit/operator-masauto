@@ -33,7 +33,7 @@ This has moved to an Operator - OLM based install.
 
 ### CHANGE LOG
 
-v0.10.0
+v0.10.2
 - Adds bundle for OLM and custom catalog deployment
 
 v0.9.4
