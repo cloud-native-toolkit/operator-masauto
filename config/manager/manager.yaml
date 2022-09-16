@@ -38,6 +38,7 @@ spec:
         - --leader-elect
         - --leader-election-id=masauto-operator
         image: controller:latest
+        imagePullPolicy: Always
         name: manager
         env:
         - name: ANSIBLE_GATHERING
