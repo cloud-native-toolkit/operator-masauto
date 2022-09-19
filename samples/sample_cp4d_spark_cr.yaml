@@ -1,0 +1,20 @@
+apiVersion: masauto.ibm.com/v1alpha1
+kind: CP4D
+metadata:
+  name: masauto-cp4d-spark
+  namespace: masauto-operator-system
+annotations:
+  ansible.operator-sdk/reconcile-period: "0s"  
+spec:
+  ibm_entitlement_secret: "ibm-entitlement-key" #secret where your ibm-entitlement-key is stored in operator namespace
+  cpd_primary_storage_class: "ocs-storagecluster-cephfs" #file
+  cpd_metadata_storage_class: "ibmc-vpcblock-odf-10iops" #block
+  install_cp4d_platform: "false" #(~1 1/2 hours)
+
+  install_watson_studio: "false" #(~3 hours)
+  mas_instance_id: "inst1" ## instance_id only needed for wsl install
+
+  install_watson_machine_learning: "false" #(~2 1/2 hours)
+  install_analytics_engine: "true" #(~30 minutes)
+  install_watson_openscale: "false" #(~1 hour)
+  install_watson_discovery: "false" #(~1 hour) 

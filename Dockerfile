@@ -1,3 +1,6 @@
+# The automation collection requires ansible 2.10+, RH documentation sees 2.10 as an interim release and not recommended
+# so using v2.11 (currently in preview) to satisfy ansible version requirement of the automation. Collection has been tested and
+# works with this version.  
 FROM quay.io/operator-framework/ansible-operator-2.11-preview:v1.16
 
 COPY requirements.yml ${HOME}/requirements.yml

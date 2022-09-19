@@ -37,6 +37,9 @@ This has moved to an Operator - OLM based install.
 
 ### CHANGE LOG
 
+v0.11.1
+- Multiple updates to prepare for release
+
 v0.10.2
 - Adds bundle for OLM and custom catalog deployment
 
