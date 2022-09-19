@@ -9,7 +9,7 @@ metadata:
 spec:
   apiservicedefinitions: {}
   customresourcedefinitions: {}
-  description: This operator will install all components of the Maximo App Suite (MAS)
+  description: This operator will install all components of the Maximo Application Suite (MAS)
     via Ansible.
   displayName: IBM Maximo Application Suite Automation
   icon:
