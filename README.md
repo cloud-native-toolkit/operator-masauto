@@ -21,9 +21,10 @@ Current list of MAS components supported with this operator install:
 
 This has moved to an Operator - OLM based install.
 
-1.  Create a namespace and operator group for the operator (see samples directory)
-2.  Add the Ecosystem Engineering catalog to your cluster
-3.  Create a ibm-entitlement-key secret
+1.  Add the Ecosystem Engineering catalog to your cluster (see sample catalog source in samples directoy)
+(note when deploying the operator take the default namespace)
+
+2.  Create a ibm-entitlement-key secret
 
 `oc create secret generic "ibm-entitlement-key" -n masauto-operator-system --from-literal="username=cp" --from-literal="password=<your-secret-goes-here>" `
 
@@ -36,6 +37,10 @@ This has moved to an Operator - OLM based install.
 
 
 ### CHANGE LOG
+
+v0.11.2
+- Updates CP4D sample CRs
+- Updates bundle for deployment to quay.io
 
 v0.11.1
 - Multiple updates to prepare for release

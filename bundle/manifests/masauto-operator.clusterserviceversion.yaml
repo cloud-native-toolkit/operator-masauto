@@ -39,7 +39,8 @@ metadata:
             "install_watson_discovery": "false",
             "install_watson_machine_learning": "false",
             "install_watson_openscale": "false",
-            "install_watson_studio": "false"
+            "install_watson_studio": "false",
+            "mas_instance_id": "inst1"
           }
         },
         {
@@ -190,7 +191,7 @@ metadata:
     operatorframework.io/suggested-namespace: masauto-operator-system
     operators.operatorframework.io/builder: operator-sdk-v1.22.0-ocp
     operators.operatorframework.io/project_layout: ansible.sdk.operatorframework.io/v1
-  name: masauto-operator.v0.11.1
+  name: masauto-operator.v0.11.2
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
@@ -286,7 +287,7 @@ spec:
                 env:
                 - name: ANSIBLE_GATHERING
                   value: explicit
-                image: docker.io/tcskill/masauto:v0.11.1
+                image: quay.io/cloudnativetoolkit/masauto:v0.11.2
                 imagePullPolicy: Always
                 livenessProbe:
                   httpGet:
@@ -339,4 +340,4 @@ spec:
   provider:
     name: IBM Ecosystem Engineering
     url: https://modules.cloudnativetoolkit.dev/
-  version: 0.11.1
+  version: 0.11.2
