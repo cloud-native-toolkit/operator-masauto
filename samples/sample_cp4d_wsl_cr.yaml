@@ -12,7 +12,7 @@ spec:
   install_cp4d_platform: "false" #(~1 1/2 hours)
 
   install_watson_studio: "true" #(~3 hours)
-  mas_instance_id: "inst1" ## instance_id only needed for wsl install
+  mas_instance_id: "inst1"
 
   install_watson_machine_learning: "false" #(~2 1/2 hours)
   install_analytics_engine: "false" #(~30 minutes)

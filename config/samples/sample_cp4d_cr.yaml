@@ -10,6 +10,8 @@ spec:
   cpd_primary_storage_class: "ocs-storagecluster-cephfs" #file
   cpd_metadata_storage_class: "ibmc-vpcblock-odf-10iops" #block
   install_cp4d_platform: "true" #(~1 1/2 hours)
+  
+  mas_instance_id: "inst1"
 
   install_watson_studio: "false" #(~3 hours)
   install_watson_machine_learning: "false" #(~2 1/2 hours)
