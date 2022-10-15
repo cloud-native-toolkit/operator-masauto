@@ -7,7 +7,7 @@ spec:
   displayName: ecosystem-engineering-catalog
   publisher: IBM
   sourceType: grpc
-  image: quay.io/cloudnativetoolkit/ecosysengineer-catalog:v0.4.2
+  image: quay.io/cloudnativetoolkit/ecosysengineer-catalog:latest
   updateStrategy:
     registryPoll:
       interval: 90m

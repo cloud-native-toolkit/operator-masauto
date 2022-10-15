@@ -38,6 +38,9 @@ This has moved to an Operator - OLM based install.
 
 ### CHANGE LOG
 
+v0.11.3
+- Updates operator catalog source sample
+
 v0.11.2
 - Updates CP4D sample CRs
 - Updates bundle for deployment to quay.io
