@@ -38,6 +38,9 @@ This has moved to an Operator - OLM based install.
 
 ### CHANGE LOG
 
+v0.11.4
+- Updates the spec for manage add-on deployment
+
 v0.11.3
 - Updates operator catalog source sample
 
