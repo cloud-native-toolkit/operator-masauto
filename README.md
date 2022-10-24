@@ -19,14 +19,12 @@ Current list of MAS components supported with this operator install:
 
 ### TO RUN
 
-This has moved to an Operator - OLM based install.
-
-1.  Add the Ecosystem Engineering catalog to your cluster (see sample catalog source in samples directoy)
+1.  Add the Ecosystem Engineering catalog to your cluster (see sample catalog source `sample_catalog_source.yaml` in samples directoy)
 (note when deploying the operator take the default namespace)
 
 2.  Create a ibm-entitlement-key secret
 
-`oc create secret generic "ibm-entitlement-key" -n masauto-operator-system --from-literal="username=cp" --from-literal="password=<your-secret-goes-here>" `
+`oc create secret generic "ibm-entitlement-key" -n masauto-operator-system --from-literal="username=cp" --from-literal="password=<your-ibm-entitlement-key-goes-here>" `
 
 4.  Deploy the operator
 
@@ -39,7 +37,7 @@ This has moved to an Operator - OLM based install.
 ### CHANGE LOG
 
 v0.11.4
-- Updates the spec for manage add-on deployment
+- Simplifies the spec for manage add-on deployment
 
 v0.11.3
 - Updates operator catalog source sample
