@@ -36,6 +36,9 @@ Current list of MAS components supported with this operator install:
 
 ### CHANGE LOG
 
+v0.12.0
+- Separates DB for manage and monitor/iot
+
 v0.11.4
 - Simplifies the spec for manage add-on deployment
 

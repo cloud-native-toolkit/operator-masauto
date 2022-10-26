@@ -8,9 +8,11 @@ annotations:
 spec:
   ibm_entitlement_secret: "ibm-entitlement-key" #secret where your ibm-entitlement-key is stored in operator namespace
   mas_instance_id: "inst1"
-  mas_workspace_id: "masdev"
-  db2_instance_name: "db2w-shared"
   mas_app_channel: "8.5.x"
+  mas_workspace_id: "masdev"
+  db2_instance_name: "db2w-iot"
+  db2_dbname: "MASIOT"
+  mas_config_scope: "ws" #keep as ws to separate database from manage which is at system scope
   db2_meta_storage_class: "ocs-storagecluster-cephfs"
   db2_data_storage_class: "ibmc-vpcblock-odf-10iops"
   kafka_storage_class: "ibmc-vpcblock-odf-10iops"
