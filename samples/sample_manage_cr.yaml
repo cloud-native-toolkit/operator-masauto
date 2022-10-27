@@ -9,9 +9,12 @@ spec:
   ibm_entitlement_secret: "ibm-entitlement-key" #secret where your ibm-entitlement-key is stored in operator namespace  
   mas_instance_id: "inst1"
   mas_workspace_id: "masdev"
-  db2_instance_name: "db2w-shared"
+  db2_instance_name: "db2w-manage"
   mas_app_id: "manage"
   mas_app_channel: "8.4.x"
+  db2_dbname: "MANAGE"
+  mas_config_scope: "wsapp"
+  mas_appws_jdbc_binding: "workspace-application"
   db2_meta_storage_class: "ocs-storagecluster-cephfs"
   db2_data_storage_class: "ibmc-vpcblock-odf-10iops"
   mas_app_settings_demodata: "true"

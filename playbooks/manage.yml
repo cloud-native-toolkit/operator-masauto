@@ -63,6 +63,9 @@
           - db2_meta_storage_class is defined and db2_meta_storage_class != ""
           - db2_data_storage_class is defined and db2_data_storage_class != ""
           - mas_appws_components is defined and mas_appws_components != ""
+          - db2_dbname is defined and db2_dbname != ""
+          - mas_config_scope is defined and mas_config_scope != ""
+          - mas_appws_jdbc_binding is defined and mas_appws_jdbc_binding != ""
         fail_msg: "One or more required variables are not defined"
 
   roles:
@@ -70,6 +73,8 @@
       vars:
         db2_meta_storage_class: "{{ db2_meta_storage_class }}" #file storage class
         db2_data_storage_class: "{{ db2_data_storage_class }}" #block storage class
+        mas_config_scope: "{{ mas_config_scope }}"
+        db2_dbname: "{{ db2_dbname }}"
     - role: ibm.mas_devops.suite_db2_setup_for_manage
     - role: ibm.mas_devops.suite_config
     - role: ibm.mas_devops.suite_app_install
@@ -79,3 +84,4 @@
       vars:
         mas_appws_components: "{{ mas_appws_components | to_json }}"
         mas_app_settings_demodata: "{{ mas_app_settings_demodata }}"
+        mas_appws_jdbc_binding: "{{ mas_appws_jdbc_binding }}"
