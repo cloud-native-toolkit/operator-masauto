@@ -7,15 +7,16 @@ Sample CR's can be found in the `/config/samples` directory.
 
 Present state recommending taking defaults for mas instance name: `inst1` otherwise will need to change the role binding, this will be changed when we move to full OLM / custom catalog install.
 
-Current list of MAS components supported with this operator install:
+Current list of MAS components supported with this operator install as well as recommended order if installing the stack:
 - Core
 - Manage
 - IoT
 - Monitor
 - AppConnect
 - CP4D (foundation and services: wsl, wml, spark, aiopenscale, wd)
-- Health Predict & Utilities
 - Predict
+- Health Predict & Utilities
+
 
 ### TO RUN
 
@@ -36,7 +37,7 @@ Current list of MAS components supported with this operator install:
 
 ### CHANGE LOG
 
-v0.12.0
+v0.12.2
 - Separates DB for manage and monitor/iot
 
 v0.11.4
