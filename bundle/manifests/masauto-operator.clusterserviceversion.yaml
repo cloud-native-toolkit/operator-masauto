@@ -226,9 +226,6 @@ spec:
     - kind: Manage
       name: manages.masauto.ibm.com
       version: v1alpha1
-    - kind: Masauto
-      name: masautoes.masauto.ibm.com
-      version: v1alpha1
     - kind: Monitor
       name: monitors.masauto.ibm.com
       version: v1alpha1

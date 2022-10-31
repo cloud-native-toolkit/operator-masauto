@@ -12,13 +12,6 @@ resources:
     namespaced: true
   domain: ibm.com
   group: masauto
-  kind: Masauto
-  version: v1alpha1
-- api:
-    crdVersion: v1
-    namespaced: true
-  domain: ibm.com
-  group: masauto
   kind: Manage
   version: v1alpha1
 - api:
