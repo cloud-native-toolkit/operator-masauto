@@ -18,5 +18,6 @@ spec:
 ## variables as well:
 ##
 ## cpd_ws_project_name: "" ## value found in cp4d ui projects location
-## cpd_ws_project_id: "" ## value found in masconfigdir/wsl-mas-inst1-hputilities.id
+## cpd_ws_project_id: "" ## value found in cp4d url, open the ws project, id is number after the "project" in the url
+
 
