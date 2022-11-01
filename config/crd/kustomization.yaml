@@ -2,7 +2,6 @@
 # since it depends on service name and namespace that are out of this kustomize package.
 # It should be run by config/default
 resources:
-- bases/masauto.ibm.com_masautoes.yaml
 - bases/masauto.ibm.com_manages.yaml
 - bases/masauto.ibm.com_iots.yaml
 - bases/masauto.ibm.com_monitors.yaml

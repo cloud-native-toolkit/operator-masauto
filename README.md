@@ -37,6 +37,9 @@ Current list of MAS components supported with this operator install as well as r
 
 ### CHANGE LOG
 
+v0.12.3
+- Removes Masauto API (functionality moved to Core api)
+
 v0.12.2
 - Separates DB for manage and monitor/iot
 
