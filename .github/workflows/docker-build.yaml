@@ -1,14 +1,12 @@
 name: Docker build
 
 # Controls when the workflow will run
+# Currently just running on release publish
 on:
   release:
     types:
       - published
-#  pull_request:
-#    branches:
-#      - main
-
+      
 jobs:
   build:
     runs-on: ubuntu-latest
