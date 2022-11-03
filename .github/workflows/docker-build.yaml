@@ -13,19 +13,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        base:
-          - alpine
-          - fedora
-        terraform:
-          - 1.0.11
-          - 1.1.9
-          - 1.2.8
-
-    env:
-      TERRAFORM_LATEST: "1.2"
-
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -37,12 +24,6 @@ jobs:
         id: buildx
         uses: docker/setup-buildx-action@v2
 
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKER_USER }}
-          password: ${{ secrets.DOCKER_TOKEN }}
-
       - name: Login to CNTK Quay
         uses: docker/login-action@v2
         with:
@@ -50,88 +31,44 @@ jobs:
           username: ${{ secrets.QUAY_CNTK_USERNAME }}
           password: ${{ secrets.QUAY_CNTK_TOKEN }}
 
-      - name: Setup variables ${{ matrix.base }}:${{ matrix.terraform }}
-        id: variables
-        shell: bash
-        run: |
-          SHORT_TERRAFORM=$(echo ${{ matrix.terraform }} | sed -E "s/([0-9]+[.][0-9]+)[.][0-9]+/\1/g")
-          
-          SHORT_TAG_ENABLED="false"
-          if [[ "${{ matrix.base }}" == "alpine" ]]; then
-            SHORT_TAG_ENABLED="true"
-          fi
-          
-          BASE_ENABLED="false"
-          LATEST_ENABLED="false"
-          if [[ "${SHORT_TERRAFORM}" == "${TERRAFORM_LATEST}" ]]; then
-            BASE_ENABLED="true"
-            
-            if [[ "${{ matrix.base }}" == "alpine" ]]; then
-              LATEST_ENABLED="true"
-            fi
-          fi
-          
-          RELEASE_TAG=${GITHUB_REF#refs/tags/}
-          RELEASE_TAG_ENABLED="false"
-          RELEASE_TAG_SHORT_ENABLED="false"
-          if [[ "${GITHUB_REF}" =~ refs/tags ]] && [[ "${RELEASE_TAG}" != "main" ]]; then
-            RELEASE_TAG_ENABLED="true"
-          
-            if [[ "${{ matrix.base }}" == "alpine" ]]; then
-              RELEASE_TAG_SHORT_ENABLED="true"
-            fi
-          else
-            RELEASE_TAG="main"
-          fi
-          
-          echo "Short terraform: ${SHORT_TERRAFORM}"
-          echo "::set-output name=terraform::$SHORT_TERRAFORM"
-          
-          echo "Short tag enabled: $SHORT_TAG_ENABLED"
-          echo "::set-output name=short-enabled::$SHORT_TAG_ENABLED"
-          
-          echo "Release tag: ${RELEASE_TAG}"
-          echo "::set-output name=release-tag::$RELEASE_TAG"
-          
-          echo "Release tag enabled: $RELEASE_TAG_ENABLED"
-          echo "::set-output name=release-tag-enabled::$RELEASE_TAG_ENABLED"
-          
-          echo "Release tag short enabled: $RELEASE_TAG_SHORT_ENABLED"
-          echo "::set-output name=release-tag-short-enabled::$RELEASE_TAG_SHORT_ENABLED"
-          
-          echo "Base enabled: $BASE_ENABLED"
-          echo "::set-output name=base-enabled::$BASE_ENABLED"
-          
-          echo "Latest enabled: $LATEST_ENABLED"
-          echo "::set-output name=latest-enabled::$LATEST_ENABLED"
-
-      - name: Docker CNTK meta ${{ matrix.base }}:${{ matrix.terraform }}
-        id: cntk-meta
-        uses: docker/metadata-action@v4
+      - name: Docker Module meta
+        id: module-meta
+        uses: docker/metadata-action@v4 
+        # use release tag from event
         with:
           # list of Docker images to use as base name for tags
           images: |
-            quay.io/cloudnativetoolkit/terraform
-          # Docker tags based on the following events/attributes
-          tags: |
-            type=raw,value=v${{ steps.variables.outputs.terraform }}-${{ matrix.base }}
-            type=raw,value=v${{ steps.variables.outputs.terraform }},enable=${{ steps.variables.outputs.short-enabled }}
-            type=raw,value=v${{ steps.variables.outputs.terraform }}-${{ steps.variables.outputs.release-tag }}-${{ matrix.base }},enable=${{ steps.variables.outputs.release-tag-enabled }}
-            type=raw,value=v${{ steps.variables.outputs.terraform }}-${{ steps.variables.outputs.release-tag }},enable=${{ steps.variables.outputs.release-tag-short-enabled }}
-            type=raw,value=${{ matrix.base }},enable=${{ steps.variables.outputs.base-enabled }}
-            type=raw,value=latest,enable=${{ steps.variables.outputs.latest-enabled }}
+            quay.io/cloudnativetoolkit/masauto
 
-      - name: Build and push ${{ matrix.base }}:${{ matrix.terraform }}
+      - name: Docker Bundle meta
+        id: bundle-meta
+        uses: docker/metadata-action@v4 
+        # use release tag from event
+        with:
+          # list of Docker images to use as base name for tags
+          images: |
+
+      - name: Build and push Module
         uses: docker/build-push-action@v3
         with:
           context: .
-          file: Containerfile-${{ matrix.base }}
-          build-args: |
-            TERRAFORM_VERSION=${{ matrix.terraform }}
+          file: Dockerfile
+
           push: ${{ github.event_name != 'pull_request' }}
           platforms: linux/amd64,linux/arm64
-          tags: ${{ steps.cntk-meta.outputs.tags }}
-          labels: ${{ steps.cntk-meta.outputs.labels }}
+          tags: ${{ steps.module-meta.outputs.tags }}
+          labels: ${{ steps.module-meta.outputs.labels }}
+
+      - name: Build and push Bundle
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          file: bundle.Dockerfile
+
+          push: ${{ github.event_name != 'pull_request' }}
+          platforms: linux/amd64,linux/arm64
+          tags: ${{ steps.bundle-meta.outputs.tags }}
+          labels: ${{ steps.bundle-meta.outputs.labels }}          
 
   verify:
     needs: build
@@ -141,23 +78,3 @@ jobs:
       - name: Verify
         run: |
           echo "Success"
-
-  notify:
-    needs: ["build"]
-    runs-on: ubuntu-latest
-    if: ${{ github.event_name != 'pull_request' }}
-
-    strategy:
-      matrix:
-        repo:
-          - cloud-native-toolkit/image-github-terraform-runner
-          - cloud-native-toolkit/image-cli-tools-core
-
-    steps:
-      - name: Repository dispatch ${{ matrix.repo }}
-        uses: cloud-native-toolkit/action-repository-dispatch@main
-        with:
-          notifyRepo: ${{ matrix.repo }}
-          eventType: released
-        env:
-          GITHUB_TOKEN: ${{ secrets.TOKEN }}
