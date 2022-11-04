@@ -45,6 +45,7 @@ jobs:
         with:
           # list of Docker images to use as base name for tags
           images: |
+            quay.io/cloudnativetoolkit/masauto-bundle
 
       - name: Build and push Module
         uses: docker/build-push-action@v3
