@@ -58,6 +58,14 @@ jobs:
           tags: ${{ steps.module-meta.outputs.tags }}
           labels: ${{ steps.module-meta.outputs.labels }}
 
+      # login to repo again to avoid 401 on token cache timeout
+      - name: Login to CNTK Quay
+        uses: docker/login-action@v2
+        with:
+          registry: quay.io
+          username: ${{ secrets.QUAY_CNTK_USERNAME }}
+          password: ${{ secrets.QUAY_CNTK_TOKEN }}
+
       - name: Build and push Bundle
         uses: docker/build-push-action@v3
         with:
