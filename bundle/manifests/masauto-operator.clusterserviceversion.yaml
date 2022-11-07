@@ -202,7 +202,7 @@ metadata:
     operatorframework.io/suggested-namespace: masauto-operator-system
     operators.operatorframework.io/builder: operator-sdk-v1.22.0-ocp
     operators.operatorframework.io/project_layout: ansible.sdk.operatorframework.io/v1
-  name: masauto-operator.v0.12.3
+  name: masauto-operator.v0.12.8
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
@@ -295,7 +295,7 @@ spec:
                 env:
                 - name: ANSIBLE_GATHERING
                   value: explicit
-                image: quay.io/cloudnativetoolkit/masauto:v0.12.3
+                image: quay.io/cloudnativetoolkit/masauto:latest
                 imagePullPolicy: Always
                 livenessProbe:
                   httpGet:
