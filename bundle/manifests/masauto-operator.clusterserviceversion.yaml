@@ -202,7 +202,7 @@ metadata:
     operatorframework.io/suggested-namespace: masauto-operator-system
     operators.operatorframework.io/builder: operator-sdk-v1.22.0-ocp
     operators.operatorframework.io/project_layout: ansible.sdk.operatorframework.io/v1
-  name: masauto-operator.v0.12.9
+  name: masauto-operator.v0.12.10
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
@@ -348,4 +348,4 @@ spec:
   provider:
     name: IBM Ecosystem Engineering
     url: https://modules.cloudnativetoolkit.dev/
-  version: 0.12.9
+  version: 0.12.10

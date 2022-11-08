@@ -37,7 +37,7 @@ Current list of MAS components supported with this operator install as well as r
 
 ### CHANGE LOG
 
-v0.12.4 - v0.12.9
+v0.12.4 - v0.12.10
 - Implementents github workflow automation in module and bundle to automate build/push to quay
 
 v0.12.3
