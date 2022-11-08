@@ -295,7 +295,7 @@ spec:
                 env:
                 - name: ANSIBLE_GATHERING
                   value: explicit
-                image: quay.io/cloudnativetoolkit/masauto:latest
+                image: controller:latest
                 imagePullPolicy: Always
                 livenessProbe:
                   httpGet:
