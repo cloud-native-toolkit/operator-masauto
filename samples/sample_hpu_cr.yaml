@@ -1,3 +1,11 @@
+# Adds HP&U latest release to an existing MAS Core 8.8.x 
+#
+# Dependencies:
+# - Core is installed
+# - Health is installed
+# - CP4D/WSL
+# - AppConnect
+#
 apiVersion: masauto.ibm.com/v1alpha1
 kind: HPU
 metadata:
