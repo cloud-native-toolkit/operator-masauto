@@ -1,3 +1,8 @@
+# Add IoT latest application to an existing MAS Core 8.8.x installation
+#
+# Dependencies:
+# - Core is installed
+#
 apiVersion: masauto.ibm.com/v1alpha1
 kind: IoT
 metadata:

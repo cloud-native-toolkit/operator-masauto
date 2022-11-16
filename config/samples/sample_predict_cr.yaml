@@ -1,3 +1,13 @@
+# Adds Predict latest release to an existing MAS v8.8.x installation
+#
+# Predict will be deployed and configured. Note this app has several dependencies
+#
+# Dependencies:
+# - CP4D Foundation
+# - CP4D Services: wsl, wml, spark, aiopenscale
+# - Maximo Monitor
+# - Maximo Health
+#
 apiVersion: masauto.ibm.com/v1alpha1
 kind: Predict
 metadata:

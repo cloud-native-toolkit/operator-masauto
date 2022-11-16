@@ -1,3 +1,10 @@
+# Adds CP4D to an existing MAS Core 8.8.x
+#
+# Dependencies:
+# - Core is installed
+#
+# Note: Install Foundation first then other components
+#
 apiVersion: masauto.ibm.com/v1alpha1
 kind: CP4D
 metadata:
