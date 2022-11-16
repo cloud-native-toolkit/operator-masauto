@@ -4,14 +4,21 @@ BASNAME="ibm-common-services"
 SLSNAME="$2"
 MONGONAME="$3"
 
+#checks for params
+if [ $# -ne 3 ]
+  then
+    echo "Usage: ./mas-destroy-core.sh <mas-suite-name> <sls-namespace> <mongo-namespace>"
+    exit 0
+fi
+
 NAMESPACE="mas-${SUITENAME}-core"
 
 ##
 ## MAS-Core cleanup script to remove installed resources from gitops deployment
 ##
 
-# remove argo apps 
-
+#remove the CR from the MAS Automation operator
+oc delete core masauto-core -n masauto-operator-system
 
 #remove ibm common services
 oc delete operandconfig common-service -n ibm-common-services
@@ -35,8 +42,24 @@ oc delete MutatingWebhookConfiguration cert-manager-webhook ibm-common-service-w
 oc delete namespace services
 oc delete nss --all
 
-# remove core
-oc delete suite ${SUITENAME} -n ${NAMESPACE}
+# remove core suite - it will most likely hang so remove finalizer
+oc delete suite ${SUITENAME} -n ${NAMESPACE} >/dev/null 2>&1 &
+resp=$(kubectl get suite ${SUITENAME} -n ${NAMESPACE} --no-headers 2>/dev/null | wc -l)
+
+if [[ "${resp}" != "0" ]]; then
+    echo "patching suite..."
+    kubectl patch suite/${SUITENAME} -p '{"metadata":{"finalizers":[]}}' --type=merge -n ${NAMESPACE} 2>/dev/null
+fi
+
+# remove core workspace - assume default install using masdev as workspace name
+oc delete workspace ${SUITENAME}-masdev -n ${NAMESPACE} >/dev/null 2>&1 &
+resp=$(kubectl get workspace ${SUITENAME}-masdev -n ${NAMESPACE} --no-headers 2>/dev/null | wc -l)
+
+if [[ "${resp}" != "0" ]]; then
+    echo "patching workspace..."
+    kubectl patch workspace/${SUITENAME}-masdev -p '{"metadata":{"finalizers":[]}}' --type=merge -n ${NAMESPACE} 2>/dev/null
+fi
+
 oc delete csv ibm-mas.v8.8 -n ${NAMESPACE}
 
 # remove truststore and dependencies
@@ -91,12 +114,12 @@ if [[ "${resp}" != "0" ]]; then
     kubectl patch operandbindinfo/ibm-uds-bindinfo -p '{"metadata":{"finalizers":[]}}' --type=merge -n ibm-common-services 2>/dev/null
 fi
 
-oc delete operandrequest common-service -n ibm-common-services >/dev/null 2>&1 &
-resp=$(kubectl get operandrequest/common-service -n ibm-common-services --no-headers 2>/dev/null | wc -l)
+oc delete operandrequest common-service -n ${NAMESPACE} >/dev/null 2>&1 &
+resp=$(kubectl get operandrequest/common-service -n ${NAMESPACE} --no-headers 2>/dev/null | wc -l)
 
 if [[ "${resp}" != "0" ]]; then
     echo "patching operandrequest common-service..."
-    kubectl patch operandrequest/common-service -p '{"metadata":{"finalizers":[]}}' --type=merge -n ibm-common-services 2>/dev/null
+    kubectl patch operandrequest/common-service -p '{"metadata":{"finalizers":[]}}' --type=merge -n ${NAMESPACE} 2>/dev/null
 fi
 
 oc delete operandrequest events-operator-request -n ibm-common-services >/dev/null 2>&1 &
@@ -129,6 +152,14 @@ resp=$(kubectl get operandregistry/common-service -n ibm-common-services --no-he
 if [[ "${resp}" != "0" ]]; then
     echo "patching operandregistry common-service..."
     kubectl patch operandregistry/common-service -p '{"metadata":{"finalizers":[]}}' --type=merge -n ibm-common-services 2>/dev/null
+fi
+
+oc delete slscfg ${SUITENAME}-sls-system -n ${NAMESPACE} >/dev/null 2>&1 &
+resp=$(kubectl get slscfg/${SUITENAME}-sls-system -n ${NAMESPACE} --no-headers 2>/dev/null | wc -l)
+
+if [[ "${resp}" != "0" ]]; then
+    echo "patching slscfg..."
+    kubectl patch slscfg/${SUITENAME}-sls-system -p '{"metadata":{"finalizers":[]}}' --type=merge -n ${NAMESPACE} 2>/dev/null
 fi
 
 # remove crd's
