@@ -17,6 +17,6 @@ jobs:
 
       - name: Check Notifications
         id: notif-check
-        run: bash ${GITHUB_WORKSPACE}/.github/workflows/scripts/check-notifications.sh "ibm-mas/ansible-devops"
+        run: bash ${GITHUB_WORKSPACE}/.github/workflows/scripts/check-notifications.sh "ibm-mas/ansible-devops" "cloud-native-toolkit/operator-masauto"
         env:
           NOTIFICATION_TOKEN: ${{ secrets.NOTIFICATION_TOKEN }}

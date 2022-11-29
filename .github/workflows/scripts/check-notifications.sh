@@ -13,8 +13,9 @@
 ##     from the repository it is watching
 ## 
 
-# repo string in format: "{org}/{repo}" to check for releases
-REPO_NAME="$1"
+# repo string in format: "{org}/{repo}" 
+REPO_NAME="$1" # repo to watch
+ISSUE_REPO="$2" # repo to create issues in
 
 # get the notifications for the repo
 resp=$(curl -H "Accept: application/vnd.github+json" \
@@ -47,7 +48,7 @@ EOF
         }
 
 # create the issue and mark notification as read
-        curl -X "POST" "https://api.github.com/repos/tcskill/mas-issue-automation/issues" \
+        curl -X "POST" "https://api.github.com/repos/${ISSUE_REPO}/issues" \
         -H "Accept: application/vnd.github+json" \
         -H "Authorization: Bearer ${NOTIFICATION_TOKEN}" \
         -d "$(_issue_data)"
