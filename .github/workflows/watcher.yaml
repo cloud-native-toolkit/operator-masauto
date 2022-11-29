@@ -1,0 +1,22 @@
+name: Check Notifications
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 4 * * *'
+
+jobs:
+  check_release:
+    name: Check For Release
+    runs-on: ubuntu-latest
+    permissions: write-all
+    steps:
+      - uses: actions/checkout@v2
+  
+    #check for release within target repository
+    #if a release is found, create and issue and mark notification as read
+
+      - name: Check Notifications
+        id: notif-check
+        run: bash ${GITHUB_WORKSPACE}/.github/workflows/scripts/check-notifications.sh "ibm-mas/ansible-devops" "cloud-native-toolkit/operator-masauto"
+        env:
+          NOTIFICATION_TOKEN: ${{ secrets.NOTIFICATION_TOKEN }}
