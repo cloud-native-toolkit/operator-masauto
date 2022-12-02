@@ -68,3 +68,5 @@
       vars:
         mas_entitlement_key: "{{ ibm_entitlement_key }}"
     - role: ibm.mas_devops.suite_app_config
+      vars:   
+        cpd_url: "{{ cpd_url }}"
