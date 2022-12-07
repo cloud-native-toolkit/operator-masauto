@@ -16,6 +16,8 @@
     mas_workspace_name: "{{ mas_workspace_name }}"    
     mas_config_dir: "~/masconfig" #using this as it's created in the operator image
     mas_channel: "{{ mas_channel }}"
+    sls_mode: "{{ lookup('env', 'sls_mode') | default('prd', true) }}"
+    sls_compliance_enforce: "{{ lookup('env', 'sls_compliance_enforce') | default('true', true) }}"
 
     # Entitlement key can be passed by either the key or a secret name
     ibm_entitlement_secret: "{{ ibm_entitlement_secret }}"
@@ -46,6 +48,12 @@
           - ibm_entitlement_key is defined and ibm_entitlement_key != ""
         fail_msg: "One or more required variables are not defined"
 
+    # Set SLS mode set if required
+    - name: "Set SLS config mode if required"
+      when: (sls_mode is defined and sls_mode == "dev")
+      set_fact:
+        sls_compliance_enforce: "false"
+      
   roles:
     # 1. Install cluster-scoped dependencies (e.g. SBO, Cert-Manager, Operator Catalogs) & cluster monitoring
     - role: ibm.mas_devops.ibm_catalogs

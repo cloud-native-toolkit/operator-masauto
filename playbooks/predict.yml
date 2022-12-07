@@ -59,6 +59,7 @@
         that:
           - ibm_entitlement_key is defined and ibm_entitlement_key != ""
           - mas_app_channel is defined and mas_app_channel != ""
+          - cpd_url is defined and cpd_url != ""
         fail_msg: "One or more required variables are not defined"
 
   roles:

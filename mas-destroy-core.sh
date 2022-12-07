@@ -114,6 +114,14 @@ if [[ "${resp}" != "0" ]]; then
     kubectl patch operandbindinfo/ibm-uds-bindinfo -p '{"metadata":{"finalizers":[]}}' --type=merge -n ibm-common-services 2>/dev/null
 fi
 
+oc delete operandrequest common-service -n ibm-common-services  >/dev/null 2>&1 &
+resp=$(kubectl get operandrequest/common-service -n ibm-common-services --no-headers 2>/dev/null | wc -l)
+
+if [[ "${resp}" != "0" ]]; then
+    echo "patching operandrequest common-service..."
+    kubectl patch operandrequest/common-service -p '{"metadata":{"finalizers":[]}}' --type=merge -n ibm-common-services 2>/dev/null
+fi
+
 oc delete operandrequest common-service -n ${NAMESPACE} >/dev/null 2>&1 &
 resp=$(kubectl get operandrequest/common-service -n ${NAMESPACE} --no-headers 2>/dev/null | wc -l)
 
