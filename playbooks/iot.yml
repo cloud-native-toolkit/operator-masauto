@@ -62,6 +62,9 @@
           - db2_dbname is defined and db2_dbname != ""
           - db2_meta_storage_class is defined and db2_meta_storage_class != ""
           - db2_data_storage_class is defined and db2_data_storage_class != ""
+          - grafana_instance_storage_class is defined and grafana_instance_storage_class != ""
+          - prometheus_alertmgr_storage_class is defined and prometheus_alertmgr_storage_class != ""
+          - prometheus_storage_class is defined and prometheus_storage_class != ""
         fail_msg: "One or more required variables are not defined"
 
   roles:
@@ -75,6 +78,11 @@
       vars:
         kafka_storage_class: "{{ kafka_storage_class }}"
     - role: ibm.mas_devops.suite_config
+    - role: ibm.mas_devops.cluster_monitoring
+      vars:
+        grafana_instance_storage_class: "{{ grafana_instance_storage_class }}"
+        prometheus_alertmgr_storage_class: "{{ prometheus_alertmgr_storage_class }}"
+        prometheus_storage_class: "{{ prometheus_storage_class }}"
     - role: ibm.mas_devops.suite_app_install
       vars:
         mas_entitlement_key: "{{ ibm_entitlement_key }}"

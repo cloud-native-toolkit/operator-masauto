@@ -17,4 +17,4 @@ spec:
     first_name: "yourfirstname"
     last_name: "yourlastname"  
   uds_storage_class: "ibmc-vpcblock-odf-10iops"
-  sls_mode: "dev"
+
