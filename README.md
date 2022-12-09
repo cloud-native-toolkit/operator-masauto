@@ -13,7 +13,7 @@ Current list of MAS components supported with this operator install as well as r
 - IoT
 - Monitor
 - AppConnect
-- CP4D (foundation and services: wsl, wml, spark, aiopenscale, wd)
+- CP4D (* see note below * - foundation and services: wsl, wml, spark, aiopenscale, wd)
 - Predict
 - Health Predict & Utilities
 
@@ -27,7 +27,9 @@ Current list of MAS components supported with this operator install as well as r
 
 `oc create secret generic "ibm-entitlement-key" -n masauto-operator-system --from-literal="username=cp" --from-literal="password=<your-ibm-entitlement-key-goes-here>" `
 
-4.  Deploy the operator
+Note: your entitlement key can be found [here](https://myibm.ibm.com/products-services/containerlibrary) 
+
+3.  Deploy the operator
 
 
 ### TO DESTROY INSTALL
@@ -35,6 +37,6 @@ Current list of MAS components supported with this operator install as well as r
 `./mas-destroy-core.sh inst1 ibm-sls mongoce`
 
 
-### CHANGE LOG
+### CP4D IMPORTANT NOTE
+BEFORE installing CP4D you currently must have a *global* pull secret defined on the cluster with your IBM Entitlement Key
 
-See the changelog.md in this repository
