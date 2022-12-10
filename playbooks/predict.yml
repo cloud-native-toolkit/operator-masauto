@@ -60,6 +60,7 @@
           - ibm_entitlement_key is defined and ibm_entitlement_key != ""
           - mas_app_channel is defined and mas_app_channel != ""
           - cpd_url is defined and cpd_url != ""
+          - cpd_product_version is defined and cpd_product_version != ""
         fail_msg: "One or more required variables are not defined"
 
   roles:
@@ -71,3 +72,4 @@
     - role: ibm.mas_devops.suite_app_config
       vars:   
         cpd_url: "{{ cpd_url }}"
+        cpd_product_version: "{{ cpd_product_version }}"
