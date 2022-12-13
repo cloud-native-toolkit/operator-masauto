@@ -11,7 +11,7 @@
   vars: 
   # Cluster-wide dependencies for MAS 
     ibm_entitlement_key: "{{ ibm_entitlement_key }}"
-    mas_instance_id: "{{ mas_instance_id }}"
+    mas_instance_id: "{{ lookup('env', 'mas_instance_id') | default('inst1', true) }}"
     mas_workspace_id: "{{ mas_workspace_id }}"
     mas_workspace_name: "{{ mas_workspace_name }}"    
     mas_config_dir: "~/masconfig" #using this as it's created in the operator image
@@ -23,6 +23,28 @@
     ibm_entitlement_secret: "{{ ibm_entitlement_secret }}"
     
   pre_tasks:
+    # Check if Core is already installed first.
+    - name: "Check if Suite exists"
+      kubernetes.core.k8s_info:
+        api_version: v1
+        name: "{{ mas_instance_id }}"
+        namespace: "mas-{{ mas_instance_id }}-core"
+        kind: Suite
+      register: suite_cr_result
+
+    # End the play if it's in Ready state.
+    - name: "Check if all components of Suite are deployed and Ready"
+      when: (suite_cr_result.resources[0].status.conditions is defined) and
+            (suite_cr_result.resources[0].status.conditions | selectattr('type', 'equalto', 'SystemDatabaseReady') | map(attribute='status') | list | length > 0) and
+            (suite_cr_result.resources[0].status.conditions | selectattr('type', 'equalto', 'SystemDatabaseReady') | map(attribute='status') | list | first == "True") and
+            (suite_cr_result.resources[0].status.conditions | selectattr('type', 'equalto', 'BASIntegrationReady') | map(attribute='status') | list | length > 0) and
+            (suite_cr_result.resources[0].status.conditions | selectattr('type', 'equalto', 'BASIntegrationReady') | map(attribute='status') | list | first == "True") and
+            (suite_cr_result.resources[0].status.conditions | selectattr('type', 'equalto', 'SLSIntegrationReady') | map(attribute='status') | list | length > 0) and
+            (suite_cr_result.resources[0].status.conditions | selectattr('type', 'equalto', 'SLSIntegrationReady') | map(attribute='status') | list | first == "True") and
+            (suite_cr_result.resources[0].status.conditions | selectattr('type', 'equalto', 'Ready') | map(attribute='status') | list | length > 0) and
+            (suite_cr_result.resources[0].status.conditions | selectattr('type', 'equalto', 'Ready') | map(attribute='status') | list | first == "True")
+      meta: end_play  
+  
     # Lookup entitlement key via secret if it's declared and the ibm_entitlement_key isn't
     - name: "Lookup IBM Entitlement Key credentials"
       when: (ibm_entitlement_secret is defined and ibm_entitlement_secret != "")
