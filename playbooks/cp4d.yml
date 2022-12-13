@@ -31,7 +31,7 @@
 
     cpd_primary_storage_class: "{{ cpd_primary_storage_class }}" # file
     cpd_metadata_storage_class: "{{ cpd_metadata_storage_class }}" # block
-    cpd_product_version: "4.0.9" # pin to this cp4d version for mas
+    cpd_product_version: "{{ lookup('env', 'cpd_product_version') | default('4.0.9', true) }}"
 
   pre_tasks:
     # Lookup entitlement key via secret if it's declared and the ibm_entitlement_key isn't
