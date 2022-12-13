@@ -22,7 +22,31 @@
     # Entitlement key can be passed by either the key or a secret name
     ibm_entitlement_secret: "{{ ibm_entitlement_secret }}"
 
+    # Set AppCon specifics for MAS install
+    appconnect_channel: "{{ lookup('env', 'appconnect_channel') | default('v4.2', true) }}"
+    appconnect_dashboard_name: "{{ lookup('env', 'appconnect_dashboard_name') | default('dashboard-12040r2', true) }}"
+    appconnect_license_id: "{{ lookup('env', 'appconnect_license_id') | default('L-APEH-C9NCK6', true) }}"
+    appconnect_namespace: "{{ lookup('env', 'appconnect_namespace') | default('ibm-app-connect', true) }}"
+
   pre_tasks:
+    # Check if AppConnect is already installed first.
+    - name: "Check for AppConnect already installed"
+      kubernetes.core.k8s_info:
+        api_version: appconnect.ibm.com/v1beta1
+        kind: Dashboard
+        name: "{{ appconnect_dashboard_name }}"
+        namespace: "{{ appconnect_namespace }}"
+      register: op_app_ws_cr_result
+
+    # End the play if it's in Ready state.
+    - name: "Check if all components are deployed and Ready"
+      when: (op_app_ws_cr_result.resources is defined) and
+            (op_app_ws_cr_result.resources | length == 1) and
+            (op_app_ws_cr_result.resources[0].status is defined) and
+            (op_app_ws_cr_result.resources[0].status.phase is defined) and
+            (op_app_ws_cr_result.resources[0].status.phase == 'Ready')
+      meta: end_play
+
     # Lookup entitlement key via secret if it's declared and the ibm_entitlement_key isn't
     - name: "Lookup IBM Entitlement Key credentials"
       when: (ibm_entitlement_secret is defined and ibm_entitlement_secret != "")
@@ -54,8 +78,8 @@
       vars:
         appconnect_entitlement_key: "{{ ibm_entitlement_key }}"
         # For AppConnect - these defaults are for a MAS v8.8 install and should be used for a v8.8 install core
-        appconnect_channel: "v4.2"
-        appconnect_dashboard_name: "dashboard-12040r2"
-        appconnect_license_id: "L-APEH-C9NCK6"
+        appconnect_channel: "{{ appconnect_channel }}"
+        appconnect_dashboard_name: "{{ appconnect_dashboard_name }}"
+        appconnect_license_id: "{{ appconnect_license_id }}"
         appconnect_storage_class: "{{ appconnect_storage_class }}" #file storage class
 
