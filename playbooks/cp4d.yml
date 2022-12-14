@@ -32,8 +32,29 @@
     cpd_primary_storage_class: "{{ cpd_primary_storage_class }}" # file
     cpd_metadata_storage_class: "{{ cpd_metadata_storage_class }}" # block
     cpd_product_version: "{{ lookup('env', 'cpd_product_version') | default('4.0.9', true) }}"
+    cpd_instance_namespace: "{{ lookup('env', 'cpd_instance_namespace') | default('ibm-cpd', true) }}"
 
   pre_tasks:
+    # Check for current install of CP4D components
+    - name: "Check for existing CP4D Foundation"
+      when: (install_cp4d_platform|bool) and
+            not (install_watson_studio|bool) and
+            not (install_watson_machine_learning|bool) and
+            not (install_analytics_engine|bool) and
+            not (install_watson_openscale|bool) and
+            not (install_watson_discovery|bool)
+      kubernetes.core.k8s_info:
+        api_version: zen.cpd.ibm.com/v1
+        name: lite-cr
+        namespace: "{{ cpd_instance_namespace }}"
+        kind: ZenService
+      register: op_zenservice_lookup
+
+    - name: "Check if CP4D Foundation is already in completed state"
+      when: (op_zenservice_lookup.resources[0].status.zenStatus is defined) and
+            (op_zenservice_lookup.resources[0].status.zenStatus == "Completed")
+      meta: end_play  
+
     # Lookup entitlement key via secret if it's declared and the ibm_entitlement_key isn't
     - name: "Lookup IBM Entitlement Key credentials"
       when: (ibm_entitlement_secret is defined and ibm_entitlement_secret != "")
