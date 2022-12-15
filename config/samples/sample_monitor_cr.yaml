@@ -1,11 +1,3 @@
-# Adds Monitor latest release to an existing MAS Core 8.8.x + IoT 8.5.x installation
-#
-# Monitor will be configured to use the same db2 instance that IoT is using
-#
-# Dependencies:
-# - Core is installed
-# - IoT is installed
-#
 apiVersion: masauto.ibm.com/v1alpha1
 kind: Monitor
 metadata:
