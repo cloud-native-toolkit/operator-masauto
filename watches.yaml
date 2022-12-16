@@ -5,47 +5,55 @@
   kind: Manage
   playbook: playbooks/manage.yml
   reconcilePeriod: 0s
-  watchDependentResources: True
+  manageStatus: False
+  watchDependentResources: False
 - version: v1alpha1
   group: masauto.ibm.com
   kind: IoT
   playbook: playbooks/iot.yml
   reconcilePeriod: 0s
-  watchDependentResources: True
+  manageStatus: False
+  watchDependentResources: False
 - version: v1alpha1
   group: masauto.ibm.com
   kind: Monitor
   playbook: playbooks/monitor.yml
   reconcilePeriod: 0s
-  watchDependentResources: True
+  manageStatus: False
+  watchDependentResources: False
 - version: v1alpha1
   group: masauto.ibm.com
   kind: AppCon
   playbook: playbooks/appcon.yml
   reconcilePeriod: 0s
-  watchDependentResources: True
+  manageStatus: False
+  watchDependentResources: False
 - version: v1alpha1
   group: masauto.ibm.com
   kind: CP4D
   playbook: playbooks/cp4d.yml
   reconcilePeriod: 0s
-  watchDependentResources: True
+  manageStatus: False
+  watchDependentResources: False
 - version: v1alpha1
   group: masauto.ibm.com
   kind: HPU
   playbook: playbooks/hpu.yml
   reconcilePeriod: 0s
-  watchDependentResources: True
+  manageStatus: False
+  watchDependentResources: False
 - version: v1alpha1
   group: masauto.ibm.com
   kind: Core
   playbook: playbooks/core.yml
   reconcilePeriod: 0s
-  watchDependentResources: True
+  manageStatus: False
+  watchDependentResources: False
 - version: v1alpha1
   group: masauto.ibm.com
   kind: Predict
   playbook: playbooks/predict.yml
   reconcilePeriod: 0s
-  watchDependentResources: True
+  manageStatus: False
+  watchDependentResources: False
 #+kubebuilder:scaffold:watch

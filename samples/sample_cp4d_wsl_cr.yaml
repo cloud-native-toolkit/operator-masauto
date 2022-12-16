@@ -1,4 +1,4 @@
-# Adds CP4D to an existing MAS Core 8.8.x
+# Adds Studio to an existing MAS Core 8.8.x
 #
 # Dependencies:
 # - Core is installed
@@ -14,6 +14,7 @@ spec:
   ibm_entitlement_secret: "ibm-entitlement-key" #secret where your ibm-entitlement-key is stored in operator namespace
   cpd_primary_storage_class: "ocs-storagecluster-cephfs" #file
   cpd_metadata_storage_class: "ibmc-vpcblock-odf-10iops" #block
+  cpd_product_version: "4.0.9"
   install_cp4d_platform: "false" #(~1 1/2 hours)
 
   install_watson_studio: "true" #(~3 hours)

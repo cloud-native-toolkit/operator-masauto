@@ -1,6 +1,9 @@
 # MAS automation operator
 
-**Defaults to latest v8.8 of MAS**
+(currently using MAS Ansible v12.3.1)
+
+**This will default to latest v8.8 of MAS**
+(Full MAS 8.9 support expected with MAS v8.9.1 release GA)
 
 This creates an operator that will kick off the ansible tasks when passed a CR for whatever MAS component you wish to be installed.
 Sample CR's can be found in the `/config/samples` directory.
@@ -13,7 +16,7 @@ Current list of MAS components supported with this operator install as well as r
 - IoT
 - Monitor
 - AppConnect
-- CP4D (foundation and services: wsl, wml, spark, aiopenscale, wd)
+- CP4D (* see note below * - foundation and services: wsl, wml, spark, aiopenscale, wd)
 - Predict
 - Health Predict & Utilities
 
@@ -27,7 +30,9 @@ Current list of MAS components supported with this operator install as well as r
 
 `oc create secret generic "ibm-entitlement-key" -n masauto-operator-system --from-literal="username=cp" --from-literal="password=<your-ibm-entitlement-key-goes-here>" `
 
-4.  Deploy the operator
+Note: your entitlement key can be found [here](https://myibm.ibm.com/products-services/containerlibrary) 
+
+3.  Deploy the operator
 
 
 ### TO DESTROY INSTALL
@@ -35,6 +40,8 @@ Current list of MAS components supported with this operator install as well as r
 `./mas-destroy-core.sh inst1 ibm-sls mongoce`
 
 
-### CHANGE LOG
+### CP4D IMPORTANT NOTE
+BEFORE installing CP4D you currently must have a *global* pull secret defined on the cluster with your IBM Entitlement Key
 
-See the changelog.md in this repository
+### Predict Important Note
+If Predict install fails with a configuration error message for the database or database not able to be connected to, then most likely you will need to increase the heap of your db2 MASIOT database.  You can edit the following: CustomResourceDefination-> Db2Cluster->Instances->MASIOT  in the yaml edit the pod resources limits section set cpu:8 and mem: 32Gi 

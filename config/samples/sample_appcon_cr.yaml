@@ -1,8 +1,3 @@
-# Adds AppConnect to an existing MAS Core 8.8.x
-#
-# Dependencies:
-# - Core is installed
-#
 apiVersion: masauto.ibm.com/v1alpha1
 kind: AppCon
 metadata:

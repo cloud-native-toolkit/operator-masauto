@@ -14,6 +14,7 @@ spec:
   ibm_entitlement_secret: "ibm-entitlement-key" #secret where your ibm-entitlement-key is stored in operator namespace
   cpd_primary_storage_class: "ocs-storagecluster-cephfs" #file
   cpd_metadata_storage_class: "ibmc-vpcblock-odf-10iops" #block
+  cpd_product_version: "4.0.9" 
   install_cp4d_platform: "true" #(~1 1/2 hours)
 
   mas_instance_id: "inst1"

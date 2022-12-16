@@ -13,7 +13,8 @@ spec:
   mas_workspace_name: "MAS Development"
   mongodb_storage_class: "ibmc-vpcblock-odf-10iops"
   uds_contact:
-    email: "tskill@us.ibm.com"
-    first_name: "tom"
-    last_name: "skill"  
+    email: "youremail@us.ibm.com"
+    first_name: "yourfirstname"
+    last_name: "yourlastname"  
   uds_storage_class: "ibmc-vpcblock-odf-10iops"
+
