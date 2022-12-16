@@ -43,3 +43,5 @@ Note: your entitlement key can be found [here](https://myibm.ibm.com/products-se
 ### CP4D IMPORTANT NOTE
 BEFORE installing CP4D you currently must have a *global* pull secret defined on the cluster with your IBM Entitlement Key
 
+### Predict Important Note
+If Predict install fails with a configuration error message for the database or database not able to be connected to, then most likely you will need to increase the heap of your db2 MASIOT database.  You can edit the following: CustomResourceDefination-> Db2Cluster->Instances->MASIOT  in the yaml edit the pod resources limits section set cpu:8 and mem: 32Gi 
