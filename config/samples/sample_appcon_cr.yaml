@@ -9,3 +9,7 @@ spec:
   ibm_entitlement_secret: "ibm-entitlement-key" #secret where your ibm-entitlement-key is stored in operator namespace
   mas_instance_id: "inst1"
   appconnect_storage_class: "ocs-storagecluster-cephfs" #file storage class
+  appconnect_channel: "v4.2"
+  appconnect_dashboard_name: "dashboard-12040r2"
+  appconnect_license_id: "L-APEH-C9NCK6"
+  appconnect_namespace: "ibm-app-connect"

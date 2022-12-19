@@ -31,8 +31,8 @@
 
     cpd_primary_storage_class: "{{ cpd_primary_storage_class }}" # file
     cpd_metadata_storage_class: "{{ cpd_metadata_storage_class }}" # block
-    cpd_product_version: "{{ lookup('env', 'cpd_product_version') | default('4.0.9', true) }}"
-    cpd_instance_namespace: "{{ lookup('env', 'cpd_instance_namespace') | default('ibm-cpd', true) }}"
+    cpd_product_version: "{{ cpd_product_version }}"
+    cpd_instance_namespace: ibm-cpd
 
   pre_tasks:
     # Check for current install of CP4D components
@@ -194,6 +194,7 @@
       assert:
         that:
           - ibm_entitlement_key is defined and ibm_entitlement_key != ""
+          - cpd_product_version is defined and cpd_product_version != ""
         fail_msg: "One or more required variables are not defined"
 
   roles:
