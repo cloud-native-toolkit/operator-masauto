@@ -1,0 +1,6 @@
+apiVersion: masauto.ibm.com/v1alpha1
+kind: Assist
+metadata:
+  name: assist-sample
+spec:
+  # TODO(user): Add fields here

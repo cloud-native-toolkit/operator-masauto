@@ -9,4 +9,5 @@ resources:
 - sample_cp4d_wsl_cr.yaml
 - sample_hpu_cr.yaml
 - sample_predict_cr.yaml
+- sample_assist_cr.yaml
 #+kubebuilder:scaffold:manifestskustomizesamples
