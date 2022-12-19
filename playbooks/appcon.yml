@@ -22,13 +22,19 @@
     # Entitlement key can be passed by either the key or a secret name
     ibm_entitlement_secret: "{{ ibm_entitlement_secret }}"
 
-    # Set AppCon specifics for MAS install
-    appconnect_channel: "{{ lookup('env', 'appconnect_channel') | default('v4.2', true) }}"
-    appconnect_dashboard_name: "{{ lookup('env', 'appconnect_dashboard_name') | default('dashboard-12040r2', true) }}"
-    appconnect_license_id: "{{ lookup('env', 'appconnect_license_id') | default('L-APEH-C9NCK6', true) }}"
-    appconnect_namespace: "{{ lookup('env', 'appconnect_namespace') | default('ibm-app-connect', true) }}"
-
   pre_tasks:
+    # For the full set of supported environment variables refer to the playbook documentation
+    - name: Check for required environment variables
+      assert:
+        that:
+          - ibm_entitlement_key is defined and ibm_entitlement_key != ""
+          - appconnect_storage_class is defined and appconnect_storage_class != ""
+          - appconnect_channel is defined and appconnect_channel != ""
+          - appconnect_dashboard_name is defined and appconnect_dashboard_name != ""
+          - appconnect_license_id is defined and appconnect_license_id != ""
+          - appconnect_namespace is defined and appconnect_namespace != ""
+        fail_msg: "One or more required variables are not defined"
+
     # Check if AppConnect is already installed first.
     - name: "Check for AppConnect already installed"
       kubernetes.core.k8s_info:
@@ -64,14 +70,6 @@
       ignore_errors: true
       set_fact:
         ibm_entitlement_key: "{{ entitlement_credentials.resources[0].data.password | b64decode }}"
-    
-    # For the full set of supported environment variables refer to the playbook documentation
-    - name: Check for required environment variables
-      assert:
-        that:
-          - ibm_entitlement_key is defined and ibm_entitlement_key != ""
-          - appconnect_storage_class is defined and appconnect_storage_class != ""
-        fail_msg: "One or more required variables are not defined"
 
   roles:
     - role: ibm.mas_devops.appconnect
