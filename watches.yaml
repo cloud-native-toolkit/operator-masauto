@@ -60,4 +60,7 @@
   group: masauto.ibm.com
   kind: Assist
   playbook: playbooks/assist.yml
+  reconcilePeriod: 0s
+  manageStatus: False
+  watchDependentResources: False
 #+kubebuilder:scaffold:watch
