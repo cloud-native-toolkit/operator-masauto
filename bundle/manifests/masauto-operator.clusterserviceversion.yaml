@@ -213,7 +213,7 @@ metadata:
     operatorframework.io/suggested-namespace: masauto-operator-system
     operators.operatorframework.io/builder: operator-sdk-v1.22.0-ocp
     operators.operatorframework.io/project_layout: ansible.sdk.operatorframework.io/v1
-  name: masauto-operator.v2.0.2
+  name: masauto-operator.v2.0.3
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
@@ -306,7 +306,7 @@ spec:
                 env:
                 - name: ANSIBLE_GATHERING
                   value: explicit
-                image: quay.io/cloudnativetoolkit/masauto:v2.0.2
+                image: quay.io/cloudnativetoolkit/masauto:v2.0.3
                 imagePullPolicy: Always
                 livenessProbe:
                   httpGet:
@@ -359,4 +359,4 @@ spec:
   provider:
     name: IBM Ecosystem Engineering
     url: https://modules.cloudnativetoolkit.dev/
-  version: 2.0.2
+  version: 2.0.3

@@ -27,7 +27,6 @@
     - name: Check for required environment variables
       assert:
         that:
-          - ibm_entitlement_key is defined and ibm_entitlement_key != ""
           - appconnect_storage_class is defined and appconnect_storage_class != ""
           - appconnect_channel is defined and appconnect_channel != ""
           - appconnect_dashboard_name is defined and appconnect_dashboard_name != ""
@@ -70,6 +69,12 @@
       ignore_errors: true
       set_fact:
         ibm_entitlement_key: "{{ entitlement_credentials.resources[0].data.password | b64decode }}"
+
+    - name: "Ensure entitlement is there"
+      assert:
+        that:
+          - ibm_entitlement_key is defined and ibm_entitlement_key != ""
+        fail_msg: "Entitlement key not defined"
 
   roles:
     - role: ibm.mas_devops.appconnect
