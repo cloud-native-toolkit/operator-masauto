@@ -32,7 +32,7 @@
     cpd_primary_storage_class: "{{ cpd_primary_storage_class }}" # file
     cpd_metadata_storage_class: "{{ cpd_metadata_storage_class }}" # block
     cpd_product_version: "{{ cpd_product_version }}"
-    cpd_instance_namespace: ibm-cpd
+    cpd_instance_namespace: "{{ cpd_instance_namespace }}"
 
   pre_tasks:
     # Check for current install of CP4D components
