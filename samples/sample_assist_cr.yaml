@@ -22,3 +22,4 @@ spec:
   cos_type: "ocs"
   cpd_product_version: "4.0.9"
   cpd_instance_namespace: "ibm-cpd"
+  activate_app: "false" #activate app in UI

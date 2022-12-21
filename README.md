@@ -19,7 +19,7 @@ Current list of MAS components supported with this operator install as well as r
 - CP4D (* see note below * - foundation and services: wsl, wml, spark, aiopenscale, wd)
 - Predict
 - Health Predict & Utilities
-- Assist (* see note below on requirements *)
+- Assist (* see note below on requirements and limitations *)
 
 
 ### TO RUN
@@ -50,4 +50,8 @@ If Predict install fails with a configuration error message for the database or 
 ### Assist Important Requirement
 Assist requires object storage (for Watson Discovery).  For a Watson Discovery install ensure you have a properly sized cluster.  If you plan on installing the entire stack here, you will need a minimum of 12 worker nodes, 16x64 on the vpc.
 
-IMPORTANT:  The current product ansible does not handle the creation of the objectstoragecfg CR certificate correctly.  It leaves the root certificate in the chain out.  This must be added manually right now to the objectstoragecfg CR to create the full certificate chain.  This root cert can be obtained from simply opening the url for the object storage referenced in the error - open that in a browser and download the root cert then add that in the CR or open the MAS UI config for object storage and add it there.
+IMPORTANT:  
+
+By Default the Assist install will install: cos, cpd/discovery, and Assist App.  It will not apply the configurations in MAS for cos or discovery, and will not activate the AssistWorkspace. This is due to the issue below.  You can activate Assist manually in the MAS UI, or you can set `activate_app="true"` and add the root cert as described below.
+
+The current product ansible does not handle the creation of the objectstoragecfg CR certificate correctly.  It leaves the root certificate in the chain out.  This must be added manually right now to the objectstoragecfg CR to create the full certificate chain.  This root cert can be obtained from simply opening the url for the object storage referenced in the error - open that in a browser and download the root cert then add that in the CR or open the MAS UI config for object storage and add it there.
