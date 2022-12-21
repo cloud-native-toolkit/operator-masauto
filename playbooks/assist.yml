@@ -86,7 +86,6 @@
 
   roles:
     - role: ibm.mas_devops.cos
-    - role: ibm.mas_devops.cp4d
     - role: ibm.mas_devops.cp4d_service
     - role: ibm.mas_devops.suite_config
     - role: ibm.mas_devops.suite_app_install
