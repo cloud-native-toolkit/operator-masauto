@@ -94,7 +94,6 @@
     - role: ibm.mas_devops.cp4d_service
 
     - role: ibm.mas_devops.suite_config
-      when: activate_app|bool # remove flag when obj store cfg product ansible is fixed until then will be manual activation
 
     - role: ibm.mas_devops.suite_app_install
       vars:
