@@ -10,6 +10,7 @@ spec:
   cpd_primary_storage_class: "ocs-storagecluster-cephfs" #file
   cpd_metadata_storage_class: "ibmc-vpcblock-odf-10iops" #block
   cpd_product_version: "4.0.9"
+  cpd_instance_namespace: "ibm-cpd"
   install_cp4d_platform: "false" #(~1 1/2 hours)
 
   install_watson_studio: "true" #(~3 hours)

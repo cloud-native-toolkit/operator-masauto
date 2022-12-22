@@ -1,0 +1,20 @@
+# permissions for end users to view assists.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: assist-viewer-role
+rules:
+- apiGroups:
+  - masauto.ibm.com
+  resources:
+  - assists
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - masauto.ibm.com
+  resources:
+  - assists/status
+  verbs:
+  - get

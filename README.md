@@ -19,6 +19,7 @@ Current list of MAS components supported with this operator install as well as r
 - CP4D (* see note below * - foundation and services: wsl, wml, spark, aiopenscale, wd)
 - Predict
 - Health Predict & Utilities
+- Assist (* see note below on requirements and limitations *)
 
 
 ### TO RUN
@@ -40,8 +41,17 @@ Note: your entitlement key can be found [here](https://myibm.ibm.com/products-se
 `./mas-destroy-core.sh inst1 ibm-sls mongoce`
 
 
-### CP4D IMPORTANT NOTE
+### CP4D Important Requirement
 BEFORE installing CP4D you currently must have a *global* pull secret defined on the cluster with your IBM Entitlement Key
 
-### Predict Important Note
-If Predict install fails with a configuration error message for the database or database not able to be connected to, then most likely you will need to increase the heap of your db2 MASIOT database.  You can edit the following: CustomResourceDefination-> Db2Cluster->Instances->MASIOT  in the yaml edit the pod resources limits section set cpu:8 and mem: 32Gi 
+### Predict Important Requirement
+If Predict install fails with a configuration error message for the database or database not able to be connected to, then most likely you will need to increase the heap of your db2 MASIOT database.  You can edit the following: CustomResourceDefination-> Db2Cluster->Instances->MASIOT  in the yaml edit the pod resources limits section set cpu:8 and mem: 32Gi
+
+### Assist Important Requirement
+Assist requires object storage (for Watson Discovery).  For a Watson Discovery install ensure you have a properly sized cluster.  If you plan on installing the entire stack here, you will need a minimum of 12 worker nodes, 16x64 on the vpc.
+
+IMPORTANT:  
+
+By Default the Assist install will install: cos, cpd/discovery, and Assist App.  It will not apply the configurations in MAS for cos or discovery, and will not activate the AssistWorkspace. This is due to the issue below.  You can activate Assist manually in the MAS UI, or you can set `activate_app="true"` and add the root cert as described below.
+
+The current product ansible does not handle the creation of the objectstoragecfg CR certificate correctly.  It leaves the root certificate in the chain out.  This must be added manually right now to the objectstoragecfg CR to create the full certificate chain.  This root cert can be obtained from simply opening the url for the object storage referenced in the error - open that in a browser and download the root cert then add that in the CR or open the MAS UI config for object storage and add it there.
