@@ -1,9 +1,8 @@
 # MAS automation operator
 
-(currently using MAS Ansible v12.3.1)
+(currently using MAS Ansible v12.5.1)
 
-**This will default to latest v8.8 of MAS**
-(Full MAS 8.9 support expected with MAS v8.9.1 release GA)
+**This will default to latest v8.9 of MAS**
 
 This creates an operator that will kick off the ansible tasks when passed a CR for whatever MAS component you wish to be installed.
 Sample CR's can be found in the `/config/samples` directory.
