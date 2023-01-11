@@ -1,6 +1,6 @@
 # MAS automation operator
 
-(currently using MAS Ansible v12.5.1)
+(currently using MAS Ansible v12.6.0)
 
 **This will default to latest v8.9 of MAS**
 
