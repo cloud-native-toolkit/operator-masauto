@@ -1,0 +1,24 @@
+# permissions for end users to edit optimizers.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: optimizer-editor-role
+rules:
+- apiGroups:
+  - masauto.ibm.com
+  resources:
+  - optimizers
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - masauto.ibm.com
+  resources:
+  - optimizers/status
+  verbs:
+  - get

@@ -10,4 +10,5 @@ resources:
 - sample_hpu_cr.yaml
 - sample_predict_cr.yaml
 - sample_assist_cr.yaml
+- sample_optimizer_cr.yaml
 #+kubebuilder:scaffold:manifestskustomizesamples
