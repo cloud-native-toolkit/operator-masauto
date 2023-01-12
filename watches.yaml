@@ -63,4 +63,11 @@
   reconcilePeriod: 0s
   manageStatus: False
   watchDependentResources: False
+- version: v1alpha1
+  group: masauto.ibm.com
+  kind: Optimizer
+  playbook: playbooks/optimizer.yml
+  reconcilePeriod: 0s
+  manageStatus: False
+  watchDependentResources: False
 #+kubebuilder:scaffold:watch
