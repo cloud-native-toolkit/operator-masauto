@@ -1,8 +1,8 @@
-# MAS automation operator
+# MAS Install Automation Operator
+(currently using MAS Ansible v12.7.2)
 
-(currently using MAS Ansible v12.6.0)
-
-**This will default to latest v8.9 of MAS**
+**This will default to latest v8.9.x of MAS**
+(Note: to install older versions of MAS, change the appropriate channel definitions in the CR that is being deployed)
 
 This creates an operator that will kick off the ansible tasks when passed a CR for whatever MAS component you wish to be installed.
 Sample CR's can be found in the `/config/samples` directory.
