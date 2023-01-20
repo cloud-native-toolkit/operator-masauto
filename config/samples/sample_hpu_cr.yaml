@@ -1,3 +1,11 @@
+# Adds HP&U latest release to an existing MAS Core 8.9.x 
+#
+# Dependencies:
+# - Core is installed
+# - Health is installed
+# - CP4D/WSL
+# - AppConnect
+#
 apiVersion: masauto.ibm.com/v1alpha1
 kind: HPU
 metadata:
@@ -9,4 +17,4 @@ spec:
   ibm_entitlement_secret: "ibm-entitlement-key" #secret where your ibm-entitlement-key is stored in operator namespace
   mas_instance_id: "inst1"
   mas_workspace_id: "masdev"
-  mas_app_channel: "8.4.x"
+  mas_app_channel: "8.5.x"

@@ -1,11 +1,8 @@
-# Adds Assist latest release to an existing MAS Core 8.9.x + IoT 8.6.x installation
+# Adds Optimizer latest release to an existing MAS Core 8.9.x installation
 #
-# Assist will be configured to use the same db2 instance that IoT is using
 #
 # Dependencies:
 # - Core is installed
-# - IoT is installed
-# - CP4D foundation installed (WD will be installed)
 #
 - hosts: localhost
   any_errors_fatal: true
@@ -24,53 +21,24 @@
     mas_instance_id: "{{ mas_instance_id }}"
     
     # Application Installation
-    mas_app_id: assist
+    mas_app_id: optimizer
     mas_app_channel: "{{ mas_app_channel }}"
-
-    cos_type: "{{ cos_type }}"
-    cpd_service_name: wd
-    cpd_product_version: "{{ cpd_product_version }}"
-    cpd_instance_namespace: "{{ cpd_instance_namespace }}"
-
+    
     # Application Configuration
     mas_workspace_id: "{{ mas_workspace_id }}"
 
     # Entitlement key can be passed by either the key or a secret name
     ibm_entitlement_secret: "{{ ibm_entitlement_secret }}"
 
-    ## We will remove this variable when the object storage config product ansible is fixed
-    ## until then the activate_app flag will default to false.
-    activate_app: "{{ activate_app }}"
+    # Application specific config
+    mas_app_plan: "{{ mas_app_plan }}"
     
   pre_tasks:
-
-    ## Check if Assist App is instlaled and activate is false
-    ## this will be removed when product ansible is fixed for
-    ## objectstorage cfg.
-    - name: "Check for Assist App already installed"
-      when: not (activate_app|bool)
+    # Check if optimizer is already installed first.
+    - name: "Check for Optimizer already installed"
       kubernetes.core.k8s_info:
         api_version: apps.mas.ibm.com/v1
-        kind: AssistApp
-        name: "{{ mas_instance_id }}"
-        namespace: "mas-{{ mas_instance_id }}-{{ mas_app_id }}"
-      register: op_app_ap_cr_result
-
-    ## End the play if it's in Ready state.
-    ## Remove when obectstorage cfg fixed.
-    - name: "Check if all components are deployed and Ready"
-      when: not (activate_app|bool) and
-            (op_app_ap_cr_result.resources is defined) and
-            (op_app_ap_cr_result.resources | length > 0) and
-            (op_app_ap_cr_result.resources | json_query('[*].status.conditions[?type==`Ready`][].status') | select ('match','True') | list | length == 1)
-      meta: end_play  
-
-
-    # Check if Assist is already installed first.
-    - name: "Check for Asstst already installed"
-      kubernetes.core.k8s_info:
-        api_version: apps.mas.ibm.com/v1
-        kind: AssistWorkspace
+        kind: OptimizerWorkspace
         name: "{{ mas_instance_id }}-{{ mas_workspace_id }}"
         namespace: "mas-{{ mas_instance_id }}-{{ mas_app_id }}"
       register: op_app_ws_cr_result
@@ -106,19 +74,11 @@
         that:
           - ibm_entitlement_key is defined and ibm_entitlement_key != ""
           - mas_app_channel is defined and mas_app_channel != ""
-          - cos_type is defined and cos_type != ""
-          - cpd_product_version is defined and cpd_product_version != ""
-          - cpd_instance_namespace is defined and cpd_instance_namespace != ""
-          - activate_app is defined and activate_app != "" # remove flag
         fail_msg: "One or more required variables are not defined"
 
   roles:
-    - role: ibm.mas_devops.cos
-    - role: ibm.mas_devops.cp4d_service
-    - role: ibm.mas_devops.suite_config
     - role: ibm.mas_devops.suite_app_install
       vars:
         mas_entitlement_key: "{{ ibm_entitlement_key }}"
-
+        mas_app_plan: "{{ mas_app_plan }}"
     - role: ibm.mas_devops.suite_app_config
-      when: activate_app|bool # remove flag when obj store cfg product ansible is fixed until then will be manual activation

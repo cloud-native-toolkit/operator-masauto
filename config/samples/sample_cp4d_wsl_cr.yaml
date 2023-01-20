@@ -1,3 +1,8 @@
+# Adds Studio to an existing MAS Core 8.9.x
+#
+# Dependencies:
+# - Core is installed
+# - CP4D Foundation is installed
 apiVersion: masauto.ibm.com/v1alpha1
 kind: CP4D
 metadata:
@@ -9,7 +14,7 @@ spec:
   ibm_entitlement_secret: "ibm-entitlement-key" #secret where your ibm-entitlement-key is stored in operator namespace
   cpd_primary_storage_class: "ocs-storagecluster-cephfs" #file
   cpd_metadata_storage_class: "ibmc-vpcblock-odf-10iops" #block
-  cpd_product_version: "4.0.9"
+  cpd_product_version: "4.5.0"
   cpd_instance_namespace: "ibm-cpd"
   install_cp4d_platform: "false" #(~1 1/2 hours)
 

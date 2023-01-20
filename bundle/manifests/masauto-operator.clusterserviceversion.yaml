@@ -38,9 +38,9 @@ metadata:
             "activate_app": "false",
             "cos_type": "ocs",
             "cpd_instance_namespace": "ibm-cpd",
-            "cpd_product_version": "4.0.9",
+            "cpd_product_version": "4.5.0",
             "ibm_entitlement_secret": "ibm-entitlement-key",
-            "mas_app_channel": "8.5.x",
+            "mas_app_channel": "8.6.x",
             "mas_instance_id": "inst1",
             "mas_workspace_id": "masdev"
           }
@@ -52,14 +52,14 @@ metadata:
           "apiVersion": "masauto.ibm.com/v1alpha1",
           "kind": "CP4D",
           "metadata": {
-            "name": "masauto-cp4d-platform",
+            "name": "masauto-cp4d-foundation",
             "namespace": "masauto-operator-system"
           },
           "spec": {
             "cpd_instance_namespace": "ibm-cpd",
             "cpd_metadata_storage_class": "ibmc-vpcblock-odf-10iops",
             "cpd_primary_storage_class": "ocs-storagecluster-cephfs",
-            "cpd_product_version": "4.0.9",
+            "cpd_product_version": "4.5.0",
             "ibm_entitlement_secret": "ibm-entitlement-key",
             "install_analytics_engine": "false",
             "install_cp4d_platform": "true",
@@ -84,7 +84,7 @@ metadata:
             "cpd_instance_namespace": "ibm-cpd",
             "cpd_metadata_storage_class": "ibmc-vpcblock-odf-10iops",
             "cpd_primary_storage_class": "ocs-storagecluster-cephfs",
-            "cpd_product_version": "4.0.9",
+            "cpd_product_version": "4.5.0",
             "ibm_entitlement_secret": "ibm-entitlement-key",
             "install_analytics_engine": "false",
             "install_cp4d_platform": "false",
@@ -107,7 +107,7 @@ metadata:
           },
           "spec": {
             "ibm_entitlement_secret": "ibm-entitlement-key",
-            "mas_channel": "8.8.x",
+            "mas_channel": "8.9.x",
             "mas_instance_id": "inst1",
             "mas_workspace_id": "masdev",
             "mas_workspace_name": "MAS Development",
@@ -132,7 +132,7 @@ metadata:
           },
           "spec": {
             "ibm_entitlement_secret": "ibm-entitlement-key",
-            "mas_app_channel": "8.4.x",
+            "mas_app_channel": "8.5.x",
             "mas_instance_id": "inst1",
             "mas_workspace_id": "masdev"
           }
@@ -155,7 +155,7 @@ metadata:
             "grafana_instance_storage_class": "ocs-storagecluster-cephfs",
             "ibm_entitlement_secret": "ibm-entitlement-key",
             "kafka_storage_class": "ibmc-vpcblock-odf-10iops",
-            "mas_app_channel": "8.5.x",
+            "mas_app_channel": "8.6.x",
             "mas_instance_id": "inst1",
             "mas_workspace_id": "masdev",
             "prometheus_alertmgr_storage_class": "ocs-storagecluster-cephfs",
@@ -178,7 +178,7 @@ metadata:
             "db2_instance_name": "db2w-manage",
             "db2_meta_storage_class": "ocs-storagecluster-cephfs",
             "ibm_entitlement_secret": "ibm-entitlement-key",
-            "mas_app_channel": "8.4.x",
+            "mas_app_channel": "8.5.x",
             "mas_app_id": "manage",
             "mas_app_settings_demodata": "true",
             "mas_appws_components": {
@@ -207,7 +207,25 @@ metadata:
           },
           "spec": {
             "ibm_entitlement_secret": "ibm-entitlement-key",
-            "mas_app_channel": "8.8.x",
+            "mas_app_channel": "8.9.x",
+            "mas_instance_id": "inst1",
+            "mas_workspace_id": "masdev"
+          }
+        },
+        {
+          "annotations": {
+            "ansible.operator-sdk/reconcile-period": "0s"
+          },
+          "apiVersion": "masauto.ibm.com/v1alpha1",
+          "kind": "Optimizer",
+          "metadata": {
+            "name": "masauto-optimizer",
+            "namespace": "masauto-operator-system"
+          },
+          "spec": {
+            "ibm_entitlement_secret": "ibm-entitlement-key",
+            "mas_app_channel": "8.3.x",
+            "mas_app_plan": "full",
             "mas_instance_id": "inst1",
             "mas_workspace_id": "masdev"
           }
@@ -223,10 +241,10 @@ metadata:
             "namespace": "masauto-operator-system"
           },
           "spec": {
-            "cpd_product_version": "4.0",
+            "cpd_product_version": "4.5.0",
             "cpd_url": "\u003chttps:// ... insert your cp4d_url\u003e",
             "ibm_entitlement_secret": "ibm-entitlement-key",
-            "mas_app_channel": "8.6.x",
+            "mas_app_channel": "8.7.x",
             "mas_instance_id": "inst1",
             "mas_workspace_id": "masdev"
           }
@@ -236,7 +254,7 @@ metadata:
     operatorframework.io/suggested-namespace: masauto-operator-system
     operators.operatorframework.io/builder: operator-sdk-v1.22.0-ocp
     operators.operatorframework.io/project_layout: ansible.sdk.operatorframework.io/v1
-  name: masauto-operator.v2.1.0
+  name: masauto-operator.v2.2.0
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
@@ -265,6 +283,9 @@ spec:
       version: v1alpha1
     - kind: Monitor
       name: monitors.masauto.ibm.com
+      version: v1alpha1
+    - kind: Optimizer
+      name: optimizers.masauto.ibm.com
       version: v1alpha1
     - kind: Predict
       name: predicts.masauto.ibm.com
@@ -332,7 +353,7 @@ spec:
                 env:
                 - name: ANSIBLE_GATHERING
                   value: explicit
-                image: quay.io/cloudnativetoolkit/masauto:v2.1.0
+                image: quay.io/cloudnativetoolkit/masauto:v2.2.0
                 imagePullPolicy: Always
                 livenessProbe:
                   httpGet:
@@ -385,4 +406,4 @@ spec:
   provider:
     name: IBM Ecosystem Engineering
     url: https://modules.cloudnativetoolkit.dev/
-  version: 2.1.0
+  version: 2.2.0
