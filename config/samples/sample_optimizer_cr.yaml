@@ -11,3 +11,4 @@ spec:
   mas_workspace_id: "masdev"
   mas_app_channel: "8.3.x"
   mas_app_plan: "full"
+  
