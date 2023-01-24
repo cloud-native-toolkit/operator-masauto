@@ -18,6 +18,7 @@
     mas_channel: "{{ mas_channel }}"
     sls_mode: "{{ lookup('env', 'sls_mode') | default('prd', true) }}"
     sls_compliance_enforce: "{{ lookup('env', 'sls_compliance_enforce') | default('true', true) }}"
+    mas_upgrade_strategy: "{{ lookup('vars', 'mas_upgrade_strategy') | default('Automatic', true) }}"
 
     # Entitlement key can be passed by either the key or a secret name
     ibm_entitlement_secret: "{{ ibm_entitlement_secret }}"
@@ -83,7 +84,7 @@
     - role: ibm.mas_devops.cert_manager
     ##- ibm.mas_devops.sbo
     ## current version of sbo v1.10 is breaking mas so need to remove this for now
-    ## SBO isn't needed for MAS v8.8 so commenting it out for now
+    ## SBO isn't needed for MAS v8.8/8.9 so commenting it out for now
 
     # 2. Install MongoDb
     - role: ibm.mas_devops.mongodb
@@ -116,6 +117,7 @@
     - role: ibm.mas_devops.suite_install
       vars:
         mas_entitlement_key: "{{ ibm_entitlement_key }}"
+        mas_upgrade_strategy: "{{ mas_upgrade_strategy }}"
     - role: ibm.mas_devops.suite_config
     - role: ibm.mas_devops.suite_verify
       vars:
