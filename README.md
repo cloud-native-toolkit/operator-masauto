@@ -6,7 +6,7 @@ Currently using MAS Ansible: v12.9.2
 **This will default to latest v8.9.x of MAS**
 (Note: to install older versions of MAS, change the appropriate channel definitions in the CR that is being deployed)
 
-This creates an operator that will run the MAS Product Lab ansible tasks to install MAS and it's applications.  Present state recommending taking defaults for mas instance name: `inst1` otherwise will need to change the role binding.  Other suitable defaults are provided in the [samples](..\samples) directory and the operator CR's.
+This creates an operator that will run the MAS Product Lab ansible tasks to install MAS and it's applications.  Present state recommending taking defaults for mas instance name: `inst1` otherwise will need to change the role binding.  Other suitable defaults are provided in the [samples](/samples) directory and the operator CR's.
 
 Current list of MAS components supported with this operator install as well as recommended order if installing the stack:
 - Core
@@ -36,7 +36,7 @@ Note: your entitlement key can be found [here](https://myibm.ibm.com/products-se
 
 3.  Deploy the operator - search for `Maximo` in the Operator Hub on the cluster and you will see the `Maximo Application Suite Automation operator`
 
-More detailed step by step instructions for deployment using the operator can be found [here](..\docs\MAS-Operator-Deployment.pdf)
+More detailed step by step instructions for deployment using the operator can be found [here](/docs/MAS-Operator-Deployment.pdf)
 
 ### CP4D Important Requirement
 BEFORE installing CP4D you currently must have a *global* pull secret defined on the cluster with your IBM Entitlement Key
