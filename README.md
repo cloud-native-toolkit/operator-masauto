@@ -53,7 +53,7 @@ By Default the Assist install will install: cos, cpd/discovery, and Assist App. 
 
 The current product lab ansible does not handle the creation of the objectstoragecfg CR certificate correctly.  It leaves the root certificate in the chain out.  This must be added manually right now to the objectstoragecfg CR to create the full certificate chain.  This root cert can be obtained from simply opening the url for the object storage referenced in the error - open that in a browser and download the root cert then add that in the CR or open the MAS UI config for object storage and add it there.
 
-### TO DESTROY INSTALL
+### To Destory a Core Install
 (this currently destroys a core install only)
 `./mas-destroy-core.sh inst1 ibm-sls mongoce`
 
