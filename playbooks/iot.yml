@@ -81,6 +81,7 @@
           - grafana_instance_storage_class is defined and grafana_instance_storage_class != ""
           - prometheus_alertmgr_storage_class is defined and prometheus_alertmgr_storage_class != ""
           - prometheus_storage_class is defined and prometheus_storage_class != ""
+          - zookeeper_storage_class is defined and zookeeper_storage_class != ""
         fail_msg: "One or more required variables are not defined"
 
   roles:
