@@ -1,0 +1,22 @@
+# Tasks to determine if core is already installed
+# Checks core/sls/bas(uds) all in ready state
+    - name: "Check if Suite exists"
+      kubernetes.core.k8s_info:
+        api_version: v1
+        name: "{{ mas_instance_id }}"
+        namespace: "mas-{{ mas_instance_id }}-core"
+        kind: Suite
+      register: suite_cr_result
+
+    # End the play if it's in Ready state.
+    - name: "Check if all components of Suite are deployed and Ready"
+      when: (suite_cr_result.resources[0].status.conditions is defined) and
+            (suite_cr_result.resources[0].status.conditions | selectattr('type', 'equalto', 'SystemDatabaseReady') | map(attribute='status') | list | length > 0) and
+            (suite_cr_result.resources[0].status.conditions | selectattr('type', 'equalto', 'SystemDatabaseReady') | map(attribute='status') | list | first == "True") and
+            (suite_cr_result.resources[0].status.conditions | selectattr('type', 'equalto', 'BASIntegrationReady') | map(attribute='status') | list | length > 0) and
+            (suite_cr_result.resources[0].status.conditions | selectattr('type', 'equalto', 'BASIntegrationReady') | map(attribute='status') | list | first == "True") and
+            (suite_cr_result.resources[0].status.conditions | selectattr('type', 'equalto', 'SLSIntegrationReady') | map(attribute='status') | list | length > 0) and
+            (suite_cr_result.resources[0].status.conditions | selectattr('type', 'equalto', 'SLSIntegrationReady') | map(attribute='status') | list | first == "True") and
+            (suite_cr_result.resources[0].status.conditions | selectattr('type', 'equalto', 'Ready') | map(attribute='status') | list | length > 0) and
+            (suite_cr_result.resources[0].status.conditions | selectattr('type', 'equalto', 'Ready') | map(attribute='status') | list | first == "True")
+      meta: end_play

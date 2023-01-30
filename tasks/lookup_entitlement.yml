@@ -1,0 +1,17 @@
+    # Lookup entitlement key via secret if it's declared and the ibm_entitlement_key isn't
+    - name: "Lookup IBM Entitlement Key credentials"
+      when: (ibm_entitlement_secret is defined and ibm_entitlement_secret != "")
+      ignore_errors: true      
+      kubernetes.core.k8s_info:
+        api_version: v1
+        kind: Secret
+        name: "{{ ibm_entitlement_secret }}"
+        namespace: "masauto-operator-system"
+      register: entitlement_credentials 
+    
+    - name: "Set entitllement based on secret"
+      when: (entitlement_credentials.api_found) and
+            (ibm_entitlement_secret is defined and ibm_entitlement_secret != "")
+      ignore_errors: true
+      set_fact:
+        ibm_entitlement_key: "{{ entitlement_credentials.resources[0].data.password | b64decode }}"
