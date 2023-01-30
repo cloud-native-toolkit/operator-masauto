@@ -20,7 +20,7 @@ Current list of MAS components supported with this operator install as well as r
 - Assist (**see note below** for requirements and limitations)
 - Optimizer
 
-## Pre-install Requirements
+### Pre-install Requirements
 MAS requires RWX storage on your cluster.  We test with ODF / OCS but other storage options are supported and can be found with other cluster requirements on the product [documentation](https://www.ibm.com/docs/en/mas-cd/continuous-delivery?topic=installing)
 
 ### To Run
