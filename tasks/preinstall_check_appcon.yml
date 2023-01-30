@@ -1,0 +1,17 @@
+    # Check if AppConnect is already installed first.
+    - name: "Check for AppConnect already installed"
+      kubernetes.core.k8s_info:
+        api_version: appconnect.ibm.com/v1beta1
+        kind: Dashboard
+        name: "{{ appconnect_dashboard_name }}"
+        namespace: "{{ appconnect_namespace }}"
+      register: op_app_ws_cr_result
+
+    # End the play if it's in Ready state.
+    - name: "Check if all components are deployed and Ready"
+      when: (op_app_ws_cr_result.resources is defined) and
+            (op_app_ws_cr_result.resources | length == 1) and
+            (op_app_ws_cr_result.resources[0].status is defined) and
+            (op_app_ws_cr_result.resources[0].status.phase is defined) and
+            (op_app_ws_cr_result.resources[0].status.phase == 'Ready')
+      meta: end_play

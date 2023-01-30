@@ -35,40 +35,10 @@
         fail_msg: "One or more required variables are not defined"
 
     # Check if AppConnect is already installed first.
-    - name: "Check for AppConnect already installed"
-      kubernetes.core.k8s_info:
-        api_version: appconnect.ibm.com/v1beta1
-        kind: Dashboard
-        name: "{{ appconnect_dashboard_name }}"
-        namespace: "{{ appconnect_namespace }}"
-      register: op_app_ws_cr_result
-
-    # End the play if it's in Ready state.
-    - name: "Check if all components are deployed and Ready"
-      when: (op_app_ws_cr_result.resources is defined) and
-            (op_app_ws_cr_result.resources | length == 1) and
-            (op_app_ws_cr_result.resources[0].status is defined) and
-            (op_app_ws_cr_result.resources[0].status.phase is defined) and
-            (op_app_ws_cr_result.resources[0].status.phase == 'Ready')
-      meta: end_play
+    - include_tasks: "{{ playbook_dir }}/../tasks/preinstall_check_appcon.yml"
 
     # Lookup entitlement key via secret if it's declared and the ibm_entitlement_key isn't
-    - name: "Lookup IBM Entitlement Key credentials"
-      when: (ibm_entitlement_secret is defined and ibm_entitlement_secret != "")
-      ignore_errors: true      
-      kubernetes.core.k8s_info:
-        api_version: v1
-        kind: Secret
-        name: "{{ ibm_entitlement_secret }}"
-        namespace: "masauto-operator-system"
-      register: entitlement_credentials 
-    
-    - name: "Set entitllement based on secret"
-      when: (entitlement_credentials.api_found) and
-            (ibm_entitlement_secret is defined and ibm_entitlement_secret != "")
-      ignore_errors: true
-      set_fact:
-        ibm_entitlement_key: "{{ entitlement_credentials.resources[0].data.password | b64decode }}"
+    - include_tasks: "{{ playbook_dir }}/../tasks/lookup_entitlement.yml"
 
     - name: "Ensure entitlement is there"
       assert:
