@@ -33,8 +33,9 @@ MAS requires RWX storage on your cluster.  We test with ODF / OCS but other stor
 3.  Create a ibm-entitlement-key secret
 
 `oc create secret generic "ibm-entitlement-key" -n masauto-operator-system --from-literal="username=cp" --from-literal="password=<your-ibm-entitlement-key-goes-here>" `
-
 Note: your entitlement key can be found [here](https://myibm.ibm.com/products-services/containerlibrary) 
+
+4.  When deploying any of the applications, it is best to use the **yaml** view on the operator page so you can edit the storage classes appropriately for your cluster and cloud platform.
 
 More detailed step by step instructions for deployment using the operator can be found [here](/docs/MAS-Operator-Deployment.pdf)
 
