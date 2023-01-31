@@ -28,13 +28,13 @@ MAS requires RWX storage on your cluster.  We test with ODF / OCS but other stor
 1.  Add the Ecosystem Engineering catalog to your cluster (see sample catalog source `sample_catalog_source.yaml` in samples directoy)
 (note when deploying the operator take the default namespace)
 
-2.  Create a ibm-entitlement-key secret
+2.  Deploy the operator and take the default namespace - search for `Maximo` in the Operator Hub on the cluster and you will see the `Maximo Application Suite Automation operator`
+
+3.  Create a ibm-entitlement-key secret
 
 `oc create secret generic "ibm-entitlement-key" -n masauto-operator-system --from-literal="username=cp" --from-literal="password=<your-ibm-entitlement-key-goes-here>" `
 
 Note: your entitlement key can be found [here](https://myibm.ibm.com/products-services/containerlibrary) 
-
-3.  Deploy the operator - search for `Maximo` in the Operator Hub on the cluster and you will see the `Maximo Application Suite Automation operator`
 
 More detailed step by step instructions for deployment using the operator can be found [here](/docs/MAS-Operator-Deployment.pdf)
 

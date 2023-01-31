@@ -23,4 +23,4 @@ spec:
   grafana_instance_storage_class: "ocs-storagecluster-cephfs"
   prometheus_alertmgr_storage_class: "ocs-storagecluster-cephfs"
   prometheus_storage_class: "ocs-storagecluster-cephfs"
-  zookeeper_storage_class: "ocs-storagecluster-ceph-rbd"
+  zookeeper_storage_class: "ibmc-vpcblock-odf-10iops"
