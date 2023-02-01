@@ -159,7 +159,8 @@ metadata:
             "mas_instance_id": "inst1",
             "mas_workspace_id": "masdev",
             "prometheus_alertmgr_storage_class": "ocs-storagecluster-cephfs",
-            "prometheus_storage_class": "ocs-storagecluster-cephfs"
+            "prometheus_storage_class": "ocs-storagecluster-cephfs",
+            "zookeeper_storage_class": "ibmc-vpcblock-odf-10iops"
           }
         },
         {
@@ -396,7 +397,7 @@ spec:
   - MAS
   links:
   - name: Masauto Operator
-    url: https://github.com/cloud-native-toolkit/operator-masauto
+    url: https://masauto-operator.domain
   maintainers:
   - email: tskill@us.ibm.com
     name: Tom Skill
