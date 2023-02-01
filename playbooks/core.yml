@@ -11,63 +11,34 @@
   vars: 
   # Cluster-wide dependencies for MAS 
     ibm_entitlement_key: "{{ ibm_entitlement_key }}"
-    mas_instance_id: "{{ lookup('env', 'mas_instance_id') | default('inst1', true) }}"
     mas_workspace_id: "{{ mas_workspace_id }}"
     mas_workspace_name: "{{ mas_workspace_name }}"    
-    mas_config_dir: "~/masconfig" #using this as it's created in the operator image
     mas_channel: "{{ mas_channel }}"
-    sls_mode: "{{ lookup('env', 'sls_mode') | default('prd', true) }}"
-    sls_compliance_enforce: "{{ lookup('env', 'sls_compliance_enforce') | default('true', true) }}"
+    
+  # set defaults for core
+    sls_compliance_enforce: "true"
+    sls_mode: "prod"
+    mas_instance_id: "inst1"
+    mas_config_dir: "~/masconfig" #this directory created in operator build - don't change it
 
     # Entitlement key can be passed by either the key or a secret name
     ibm_entitlement_secret: "{{ ibm_entitlement_secret }}"
     
   pre_tasks:
-    # Check if Core is already installed first.
-    - name: "Check if Suite exists"
-      kubernetes.core.k8s_info:
-        api_version: v1
-        name: "{{ mas_instance_id }}"
-        namespace: "mas-{{ mas_instance_id }}-core"
-        kind: Suite
-      register: suite_cr_result
-
-    # End the play if it's in Ready state.
-    - name: "Check if all components of Suite are deployed and Ready"
-      when: (suite_cr_result.resources[0].status.conditions is defined) and
-            (suite_cr_result.resources[0].status.conditions | selectattr('type', 'equalto', 'SystemDatabaseReady') | map(attribute='status') | list | length > 0) and
-            (suite_cr_result.resources[0].status.conditions | selectattr('type', 'equalto', 'SystemDatabaseReady') | map(attribute='status') | list | first == "True") and
-            (suite_cr_result.resources[0].status.conditions | selectattr('type', 'equalto', 'BASIntegrationReady') | map(attribute='status') | list | length > 0) and
-            (suite_cr_result.resources[0].status.conditions | selectattr('type', 'equalto', 'BASIntegrationReady') | map(attribute='status') | list | first == "True") and
-            (suite_cr_result.resources[0].status.conditions | selectattr('type', 'equalto', 'SLSIntegrationReady') | map(attribute='status') | list | length > 0) and
-            (suite_cr_result.resources[0].status.conditions | selectattr('type', 'equalto', 'SLSIntegrationReady') | map(attribute='status') | list | first == "True") and
-            (suite_cr_result.resources[0].status.conditions | selectattr('type', 'equalto', 'Ready') | map(attribute='status') | list | length > 0) and
-            (suite_cr_result.resources[0].status.conditions | selectattr('type', 'equalto', 'Ready') | map(attribute='status') | list | first == "True")
-      meta: end_play  
+    # Check if Core is already installed first.  
+    - include_tasks: "{{ playbook_dir }}/../tasks/preinstall_check_core.yml"
   
     # Lookup entitlement key via secret if it's declared and the ibm_entitlement_key isn't
-    - name: "Lookup IBM Entitlement Key credentials"
-      when: (ibm_entitlement_secret is defined and ibm_entitlement_secret != "")
-      ignore_errors: true      
-      kubernetes.core.k8s_info:
-        api_version: v1
-        kind: Secret
-        name: "{{ ibm_entitlement_secret }}"
-        namespace: "masauto-operator-system"
-      register: entitlement_credentials 
-    
-    - name: "Set entitllement based on secret"
-      when: (entitlement_credentials.api_found) and
-            (ibm_entitlement_secret is defined and ibm_entitlement_secret != "")
-      ignore_errors: true
-      set_fact:
-        ibm_entitlement_key: "{{ entitlement_credentials.resources[0].data.password | b64decode }}"
+    - include_tasks: "{{ playbook_dir }}/../tasks/lookup_entitlement.yml"
 
     # For the full set of supported environment variables refer to the playbook documentation
     - name: Check for required environment variables
       assert:
         that:
           - ibm_entitlement_key is defined and ibm_entitlement_key != ""
+          - mas_workspace_id is defined and mas_workspace_id != ""
+          - mas_workspace_name is defined and mas_workspace_name != ""
+          - mas_channel is defined and mas_channel != ""
         fail_msg: "One or more required variables are not defined"
 
     # Set SLS mode set if required
@@ -81,9 +52,6 @@
     - role: ibm.mas_devops.ibm_catalogs
     - role: ibm.mas_devops.common_services
     - role: ibm.mas_devops.cert_manager
-    ##- ibm.mas_devops.sbo
-    ## current version of sbo v1.10 is breaking mas so need to remove this for now
-    ## SBO isn't needed for MAS v8.8 so commenting it out for now
 
     # 2. Install MongoDb
     - role: ibm.mas_devops.mongodb

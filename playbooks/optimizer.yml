@@ -35,38 +35,10 @@
     
   pre_tasks:
     # Check if optimizer is already installed first.
-    - name: "Check for Optimizer already installed"
-      kubernetes.core.k8s_info:
-        api_version: apps.mas.ibm.com/v1
-        kind: OptimizerWorkspace
-        name: "{{ mas_instance_id }}-{{ mas_workspace_id }}"
-        namespace: "mas-{{ mas_instance_id }}-{{ mas_app_id }}"
-      register: op_app_ws_cr_result
-
-    # End the play if it's in Ready state.
-    - name: "Check if all components are deployed and Ready"
-      when: (op_app_ws_cr_result.resources is defined) and
-            (op_app_ws_cr_result.resources | length > 0) and
-            (op_app_ws_cr_result.resources | json_query('[*].status.conditions[?type==`Ready`][].status') | select ('match','True') | list | length == 1)
-      meta: end_play  
+    - include_tasks: "{{ playbook_dir }}/../tasks/preinstall_check_optimizer.yml"
 
     # Lookup entitlement key via secret if it's declared and the ibm_entitlement_key isn't
-    - name: "Lookup IBM Entitlement Key credentials"
-      when: (ibm_entitlement_secret is defined and ibm_entitlement_secret != "")
-      ignore_errors: true      
-      kubernetes.core.k8s_info:
-        api_version: v1
-        kind: Secret
-        name: "{{ ibm_entitlement_secret }}"
-        namespace: "masauto-operator-system"
-      register: entitlement_credentials 
-    
-    - name: "Set entitllement based on secret"
-      when: (entitlement_credentials.api_found) and
-            (ibm_entitlement_secret is defined and ibm_entitlement_secret != "")
-      ignore_errors: true
-      set_fact:
-        ibm_entitlement_key: "{{ entitlement_credentials.resources[0].data.password | b64decode }}"
+    - include_tasks: "{{ playbook_dir }}/../tasks/lookup_entitlement.yml"
 
     # For the full set of supported environment variables refer to the playbook documentation
     - name: Check for required environment variables
