@@ -35,15 +35,12 @@ MAS requires RWX storage on your cluster.  We test with ODF / OCS but other stor
 `oc create secret generic "ibm-entitlement-key" -n masauto-operator-system --from-literal="username=cp" --from-literal="password=<your-ibm-entitlement-key-goes-here>" `
 Note: your entitlement key can be found [here](https://myibm.ibm.com/products-services/containerlibrary) 
 
-4.  When deploying any of the applications, it is best to use the **yaml** view on the operator page so you can edit the storage classes appropriately for your cluster and cloud platform.
+4.  When deploying any of the applications, it is best to use the **yaml** view on the operator page so you can edit the storage classes appropriately for your cluster and cloud platform.  You may need to add the cluster ingress certificate secret name to the yaml file before you deploy.  See the **Troubleshooting** section below under ingress.
 
 More detailed step by step instructions for deployment using the operator can be found [here](/docs/MAS-Operator-Deployment.pdf)
 
 ### CP4D Important Requirement
 BEFORE installing CP4D you currently must have a *global* pull secret defined on the cluster with your IBM Entitlement Key
-
-### Predict Important Requirement
-If Predict install fails with a configuration error message for the database or database not able to be connected to, then most likely you will need to increase the heap of your db2 MASIOT database.  You can edit the following: CustomResourceDefination-> Db2Cluster->Instances->MASIOT  in the yaml edit the pod resources limits section set cpu:8 and mem: 32Gi
 
 ### Assist Important Requirement
 Assist requires object storage (for Watson Discovery).  For a Watson Discovery install ensure you have a properly sized cluster.  If you plan on installing the entire stack here, you will need a minimum of 12 worker nodes, 16x64 on the vpc.
@@ -59,5 +56,18 @@ The current product lab ansible does not handle the creation of the objectstorag
 `./mas-destroy-core.sh inst1 ibm-sls mongoce`
 
 ### Troubleshooting
+Check for errors in the log for this operator pod running in the `masauto-operator-system` namespace
 
 **Various IBM Common Service operators stuck not able to install**  This is currently being reported for installs on IBM Cloud, ROKS v4.10.x and is due to a reported RedHat OLM [bug](https://issues.redhat.com/projects/RHIBMCS/issues/RHIBMCS-147?filter=allopenissues) where the catalog source seems to be removed during the operator install. If you go into the subscription for the operator, look at the yaml for the status, you should see it complaining about a csv. One possible work around is to delete that csv and wait a few mins.  The operator will then pick up and re-install properly.  You may also have to delete the subscription.  Here's an example of how to delete a troubled csv:  `oc delete csv ibm-events-operator.v4.2.1 -n ibm-common-services`
+
+**Install of an application or core fails with an error about ingress tls**
+An install fails with an error about `cluster_ingress_secret_name`
+Depending on how the cluster is installed, the ingress secret name may need to be shared
+with this operator during the install.
+
+Fix: When installing core and all apps, add the following parameter to the yaml CR before creating a
+core instance (example shown here is for using letsencrypt yours may be different): 
+
+`ocp_ingress_tls_secret_name: "letsencrypt-certs"` 
+
+Replace letsencrypt with your cluster secret name usually found in the `openshift-ingress` namespace of the cluster.
