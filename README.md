@@ -64,6 +64,7 @@ This is currently being reported for installs on IBM Cloud, ROKS v4.10.x and is 
 
 
 **Install of an application or core fails with an error about ingress tls**
+
 An install fails with an error about `cluster_ingress_secret_name`
 Depending on how the cluster is installed, the ingress secret name may need to be shared
 with this operator during the install.
