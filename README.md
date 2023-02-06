@@ -58,9 +58,12 @@ The current product lab ansible does not handle the creation of the objectstorag
 ### Troubleshooting
 Check for errors in the log for this operator pod running in the `masauto-operator-system` namespace
 
-**Various IBM Common Service operators stuck not able to install**  This is currently being reported for installs on IBM Cloud, ROKS v4.10.x and is due to a reported RedHat OLM [bug](https://issues.redhat.com/projects/RHIBMCS/issues/RHIBMCS-147?filter=allopenissues) where the catalog source seems to be removed during the operator install. If you go into the subscription for the operator, look at the yaml for the status, you should see it complaining about a csv. One possible work around is to delete that csv and wait a few mins.  The operator will then pick up and re-install properly.  You may also have to delete the subscription.  Here's an example of how to delete a troubled csv:  `oc delete csv ibm-events-operator.v4.2.1 -n ibm-common-services`
+**Various IBM Common Service operators stuck not able to install**  
+
+This is currently being reported for installs on IBM Cloud, ROKS v4.10.x and is due to a reported RedHat OLM [bug](https://issues.redhat.com/projects/RHIBMCS/issues/RHIBMCS-147?filter=allopenissues) where the catalog source seems to be removed during the operator install. If you go into the subscription for the operator, look at the yaml for the status, you should see it complaining about a csv. One possible work around is to delete that csv and wait a few mins.  The operator will then pick up and re-install properly.  You may also have to delete the subscription.  Here's an example of how to delete a troubled csv:  `oc delete csv ibm-events-operator.v4.2.1 -n ibm-common-services`
 
 **Install of an application or core fails with an error about ingress tls**
+
 An install fails with an error about `cluster_ingress_secret_name`
 Depending on how the cluster is installed, the ingress secret name may need to be shared
 with this operator during the install.
