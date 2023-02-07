@@ -194,7 +194,7 @@ metadata:
                 "version": "latest"
               }
             },
-            "mas_appws_jdbc_binding": "workspace-application",
+            "mas_appws_bindings_jdbc": "workspace-application",
             "mas_config_scope": "wsapp",
             "mas_instance_id": "inst1",
             "mas_workspace_id": "masdev"

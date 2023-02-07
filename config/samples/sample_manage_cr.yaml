@@ -14,7 +14,7 @@ spec:
   mas_app_channel: "8.5.x"
   db2_dbname: "MANAGE"
   mas_config_scope: "wsapp"  # recommend keeping db for manage at workspace-application scope by default
-  mas_appws_jdbc_binding: "workspace-application"
+  mas_appws_bindings_jdbc: "workspace-application"
   db2_meta_storage_class: "ocs-storagecluster-cephfs"
   db2_data_storage_class: "ocs-storagecluster-ceph-rbd"
   db2_cpu_limits: "8000m"
