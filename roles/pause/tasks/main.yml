@@ -1,0 +1,4 @@
+# Default pause needed for sequencing tasks set to 5min
+- name: pause for task completion (default 5min)
+  pause:
+    seconds: "{{ pause_seconds|default(300) }}"

@@ -64,6 +64,7 @@
         mas_config_scope: "{{ mas_config_scope }}"
         db2_dbname: "{{ db2_dbname }}"
         mas_application_id: "{{ mas_app_id }}"
+    - role: pause #pause for 5mins to let db2 fully start
     - role: ibm.mas_devops.suite_db2_setup_for_manage
     - role: ibm.mas_devops.suite_config
     - role: ibm.mas_devops.suite_app_install
