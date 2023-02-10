@@ -26,25 +26,12 @@ spec:
     \n- When deploying any of the applications, it is best to use the yaml view on
     the operator page so you  can edit the storage classes appropriately for your
     cluster and cloud platform.\n- Deploy the Core first, then the remaining applications
-    as needed.\n- It is best to deploy the CP4D services individually, instead of
-    selecting \"true\" and trying them all at once.  Deploy the CP4D platfor foundation
-    first, then the services.\n**Important For Deploying Assist** Assist requires
-    object storage (for Watson Discovery).  For a Watson Discovery install ensure
-    you have a properly sized cluster.  If you plan on installing the entire stack
-    here, you will need a minimum of 12 worker nodes, 16x64 on the vpc.\nIMPORTANT
-    for Assist\nBy Default the Assist install will install: cos, cpd/discovery, and
-    Assist App.  It will not apply the  configurations in MAS for cos or discovery,
-    and will not activate the AssistWorkspace. This is due to the issue below.  You
-    can activate Assist manually in the MAS UI, or you can set `activate_app=\"true\"`
-    \ and add the root cert as described below.\nThe current product lab ansible does
-    not handle the creation of the objectstoragecfg CR certificate correctly.  It
-    leaves the root certificate in the chain out.  This must be added manually right
-    now to the objectstoragecfg CR to create the full certificate chain.  This root
-    cert can be obtained from simply opening the url for the object storage referenced
-    in the error - open that in a browser and download the root cert then add that
-    in the CR or open the MAS UI config for object storage and add it there.\n\n##
-    Limitations\n- The operator only supports single namespace deployment\n- The operator
-    will not watch resources that are deployed, those are instead watched by their
+    as needed.\n- It is best to deploy the CP4D services individually starting with the platform first.
+    The CP4D foundation requires a **global** cluster pull secret; services can be installed all at once, setting the desired services to `true` just be
+    aware some services take a long time to install.\n\n\nFor other helpful installation tips and common
+    issues, please check [here](https://github.com/cloud-native-toolkit/operator-masauto#cp4d-important-requirement) 
+    \n\n##Limitations\n- The operator only supports single
+    namespace deployment\n- The operator will not watch resources that are deployed, those are instead watched by their
     own operators.  \n## Troubleshooting\nCheck for errors in the log for this operator
     pod running in the `masauto-operator-system` namespace\n- Current list of common
     issues and solutions can be found [here](https://github.com/cloud-native-toolkit/operator-masauto#troubleshooting)\n##
