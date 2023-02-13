@@ -17,8 +17,6 @@ spec:
   mas_appws_bindings_jdbc: "workspace-application"
   db2_meta_storage_class: "ocs-storagecluster-cephfs"
   db2_data_storage_class: "ocs-storagecluster-ceph-rbd"
-  db2_cpu_limits: "8000m"
-  db2_memory_limits: "32Gi"  
   mas_app_settings_demodata: "true"
   mas_appws_components:
     base:
