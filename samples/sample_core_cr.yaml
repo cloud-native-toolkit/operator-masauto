@@ -11,9 +11,11 @@ spec:
   mas_instance_id: "inst1"
   mas_workspace_id: "masdev"
   mas_workspace_name: "MAS Development"
+  mas_annotations: "mas.ibm.com/operationalMode=production"
   mongodb_storage_class: "ocs-storagecluster-ceph-rbd"
   uds_contact:
     email: "youremail@us.ibm.com"
     first_name: "yourfirstname"
     last_name: "yourlastname"  
   uds_storage_class: "ocs-storagecluster-ceph-rbd"
+  
