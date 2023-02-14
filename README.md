@@ -1,5 +1,5 @@
 # Maximo Application Suite (MAS) Install Automation OpenShift Operator
-Currently using MAS Ansible: v12.10.3
+Currently using MAS Ansible: v12.10.4
 
 ![GitHub Workflow Status (with branch)](https://img.shields.io/github/actions/workflow/status/cloud-native-toolkit/operator-masauto/docker-build.yaml) ![GitHub Release Date](https://img.shields.io/github/release-date/cloud-native-toolkit/operator-masauto)
 
