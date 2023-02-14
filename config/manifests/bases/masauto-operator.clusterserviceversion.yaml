@@ -26,15 +26,16 @@ spec:
     \n- When deploying any of the applications, it is best to use the yaml view on
     the operator page so you  can edit the storage classes appropriately for your
     cluster and cloud platform.\n- Deploy the Core first, then the remaining applications
-    as needed.\n- It is best to deploy the CP4D services individually starting with the platform first.
-    The CP4D foundation requires a **global** cluster pull secret; services can be installed all at once, setting the desired services to `true` just be
-    aware some services take a long time to install.\n\n\nFor other helpful installation tips and common
-    issues, please check [here](https://github.com/cloud-native-toolkit/operator-masauto#cp4d-important-requirement) 
-    \n\n##Limitations\n- The operator only supports single
-    namespace deployment\n- The operator will not watch resources that are deployed, those are instead watched by their
-    own operators.  \n## Troubleshooting\nCheck for errors in the log for this operator
-    pod running in the `masauto-operator-system` namespace\n- Current list of common
-    issues and solutions can be found [here](https://github.com/cloud-native-toolkit/operator-masauto#troubleshooting)\n##
+    as needed.\n- It is best to deploy the CP4D services individually starting with
+    the platform first. The CP4D foundation requires a **global** cluster pull secret;
+    services can be installed all at once, setting the desired services to `true`
+    just be aware some services take a long time to install.\n\n\nFor other helpful
+    installation tips and common issues, please check [here](https://github.com/cloud-native-toolkit/operator-masauto#cp4d-important-requirement)
+    \n\n##Limitations\n- The operator only supports single namespace deployment\n-
+    The operator will not watch resources that are deployed, those are instead watched
+    by their own operators.  \n## Troubleshooting\nCheck for errors in the log for
+    this operator pod running in the `masauto-operator-system` namespace\n- Current
+    list of common issues and solutions can be found [here](https://github.com/cloud-native-toolkit/operator-masauto#troubleshooting)\n##
     Documentation\nThe Maximo Application Suite documentation is available [here](https://www.ibm.com/docs/SSRHPA/latest)\nThis
     operator's documentation can be found [here](https://github.com/cloud-native-toolkit/operator-masauto)\n\n##
     License\nMaximo Application Suite 8.9 License is available [here](https://ibm.biz/MAS89-License)\n"
