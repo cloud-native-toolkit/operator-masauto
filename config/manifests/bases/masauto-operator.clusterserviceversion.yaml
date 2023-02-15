@@ -4,6 +4,7 @@ metadata:
   annotations:
     alm-examples: '[]'
     capabilities: Basic Install
+    description: IBM Maximo Application Suite Install Automation
     operatorframework.io/suggested-namespace: masauto-operator-system
   name: masauto-operator.v0.0.0
   namespace: placeholder
@@ -59,6 +60,8 @@ spec:
   keywords:
   - Maximo
   - MAS
+  - ibm
+  - automation
   links:
   - name: Masauto Operator
     url: https://github.com/cloud-native-toolkit/operator-masauto
@@ -69,6 +72,6 @@ spec:
     name: Sean Sundberg
   maturity: alpha
   provider:
-    name: IBM Ecosystem Engineering
+    name: IBM US Ecosystem Engineering
     url: https://modules.cloudnativetoolkit.dev/
   version: 0.0.0
