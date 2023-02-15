@@ -4,8 +4,8 @@ metadata:
   annotations:
     alm-examples: '[]'
     capabilities: Basic Install
+    description: IBM Maximo Application Suite Install Automation
     operatorframework.io/suggested-namespace: masauto-operator-system
-    description: 'IBM Maximo Application Suite Install Automation'
   name: masauto-operator.v0.0.0
   namespace: placeholder
 spec:

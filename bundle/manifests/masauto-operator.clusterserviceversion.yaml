@@ -256,6 +256,7 @@ metadata:
         }
       ]
     capabilities: Basic Install
+    description: IBM Maximo Application Suite Install Automation
     operatorframework.io/suggested-namespace: masauto-operator-system
     operators.operatorframework.io/builder: operator-sdk-v1.22.0-ocp
     operators.operatorframework.io/project_layout: ansible.sdk.operatorframework.io/v1
@@ -426,6 +427,8 @@ spec:
   keywords:
   - Maximo
   - MAS
+  - ibm
+  - automation
   links:
   - name: Masauto Operator
     url: https://github.com/cloud-native-toolkit/operator-masauto
@@ -436,6 +439,6 @@ spec:
     name: Sean Sundberg
   maturity: alpha
   provider:
-    name: IBM Ecosystem Engineering
+    name: IBM US Ecosystem Engineering
     url: https://modules.cloudnativetoolkit.dev/
   version: 2.4.1
