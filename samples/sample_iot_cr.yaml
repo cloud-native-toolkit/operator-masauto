@@ -23,6 +23,8 @@ spec:
   db2_cpu_requests: "6000m"
   db2_memory_limits: "16Gi"
   db2_memory_requests: "16Gi"
+  db2_instance_dbm_config: 
+    INSTANCE_MEMORY: "80"
   kafka_storage_class: "ocs-storagecluster-ceph-rbd"
   grafana_instance_storage_class: "ocs-storagecluster-cephfs"
   prometheus_alertmgr_storage_class: "ocs-storagecluster-cephfs"
