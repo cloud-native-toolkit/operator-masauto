@@ -4,7 +4,7 @@
 #
 # Dependencies:
 # - CP4D Foundation
-# - CP4D Services: wsl, wml, spark, aiopenscale
+# - CP4D Services: wsl, wml, spark, aiopenscale, spss (as of mas v8.10)
 # - Maximo Monitor
 # - Maximo Health
 #
@@ -53,6 +53,7 @@
 
   roles:
     # run the suite config incase a dependency was installed and didn't get configured yet
+    - role: ibm.mas_devops.gencfg_watsonstudio
     - role: ibm.mas_devops.suite_config
     - role: ibm.mas_devops.suite_app_install
       vars:

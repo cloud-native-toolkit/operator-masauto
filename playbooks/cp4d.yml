@@ -28,6 +28,7 @@
     install_analytics_engine: "{{ install_analytics_engine }}"
     install_watson_openscale: "{{ install_watson_openscale }}"
     install_watson_discovery: "{{ install_watson_discovery }}"
+    install_spss_modeler: "{{ install_spss_modeler }}"
 
     cpd_primary_storage_class: "{{ cpd_primary_storage_class }}" # file
     cpd_metadata_storage_class: "{{ cpd_metadata_storage_class }}" # block
@@ -88,5 +89,10 @@
       vars:
         cpd_service_name: wd
 
+    # SPSS (~1 hour?)
+    - role: ibm.mas_devops.cp4d_service
+      when: install_spss_modeler|bool
+      vars:
+        cpd_service_name: spss
+
     - role: ibm.mas_devops.suite_config
-    

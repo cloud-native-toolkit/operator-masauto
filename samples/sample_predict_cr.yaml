@@ -20,7 +20,7 @@ spec:
   mas_instance_id: "inst1"
   mas_workspace_id: "masdev"
   mas_app_channel: "8.7.x"
-  cpd_product_version: "4.5.0"
+  cpd_product_version: "4.5.2"
   cpd_url: "<https:// ... insert your cp4d_url>"
 
 ## this cr assumes you have been using the defaults of this automation
