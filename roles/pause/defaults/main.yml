@@ -1,0 +1,3 @@
+# Configure Pause Task
+# --------------------
+pause_msg: "Pausing 5 mins"
