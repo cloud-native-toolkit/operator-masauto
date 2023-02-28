@@ -6,7 +6,7 @@ metadata:
 annotations:
   ansible.operator-sdk/reconcile-period: "0s"    
 spec:
-  ibm_entitlement_secret: "ibm-entitlement-key"
+  ibm_entitlement_secret: "ibm-entitlement-key" #secret where your ibm-entitlement-key is stored in operator namespace
   mas_instance_id: "inst1"
   mas_app_channel: "8.6.x"
   mas_workspace_id: "masdev"
@@ -14,12 +14,12 @@ spec:
   db2_dbname: "MASIOT"
   db2_meta_storage_class: "ocs-storagecluster-cephfs"
   db2_data_storage_class: "ocs-storagecluster-ceph-rbd"
-  db2_cpu_limits: "6000m"
-  db2_cpu_requests: "6000m"
-  db2_memory_limits: "16Gi"
-  db2_memory_requests: "16Gi"
+  db2_cpu_limits: "12000m"
+  db2_cpu_requests: "12000m"
+  db2_memory_limits: "32Gi"
+  db2_memory_requests: "32Gi"
   db2_instance_dbm_config: {
-    INSTANCE_MEMORY: "80"
+    INSTANCE_MEMORY: "70"
   }
   kafka_storage_class: "ocs-storagecluster-ceph-rbd"
   grafana_instance_storage_class: "ocs-storagecluster-cephfs"
