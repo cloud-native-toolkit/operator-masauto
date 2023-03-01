@@ -27,6 +27,9 @@
     # Application Installation
     mas_app_id: predict
     mas_app_channel: "{{ mas_app_channel }}"
+    
+    # Set default for cpd admin username
+    cpd_admin_username: "admin"
 
     # Application Configuration
     mas_workspace_id: "{{ mas_workspace_id }}"
@@ -47,14 +50,47 @@
         that:
           - ibm_entitlement_key is defined and ibm_entitlement_key != ""
           - mas_app_channel is defined and mas_app_channel != ""
-          - cpd_url is defined and cpd_url != ""
           - cpd_product_version is defined and cpd_product_version != ""
+          - cpd_instance_namespace is defined and cpd_instance_namespace != ""
         fail_msg: "One or more required variables are not defined"
 
+    # Lookup admin username/pw via secret
+    - name: "Lookup CPD Admin Password"
+      ignore_errors: true      
+      kubernetes.core.k8s_info:
+        api_version: v1
+        kind: Secret
+        name: "admin-user-details"
+        namespace: "{{ cpd_instance_namespace }}"
+      register: admin_credentials 
+    
+    - name: "Set cpd admin credentials"
+      when: admin_credentials.api_found
+      ignore_errors: true
+      set_fact:
+        cpd_admin_password: "{{ admin_credentials.resources[0].data.initial_admin_password | b64decode }}"    
+
+    # Lookup and set cpd route
+    - name: "Lookup CPD Route"
+      ignore_errors: true      
+      kubernetes.core.k8s_info:
+        api_version: v1
+        kind: Route
+        name: "cpd"
+        namespace: "{{ cpd_instance_namespace }}"
+      register: dashboard_route 
+    
+    - name: "Set cpd dashboard route"
+      when: dashboard_route.api_found
+      ignore_errors: true
+      set_fact:
+        cpd_url: "https://{{ dashboard_route.resources[0].spec.host }}"
+  
   roles:
     # run the suite config incase a dependency was installed and didn't get configured yet
     - role: ibm.mas_devops.gencfg_watsonstudio
     - role: ibm.mas_devops.suite_config
+    - role: pause #pause for 5mins to let db2 settle
     - role: ibm.mas_devops.suite_app_install
       vars:
         mas_entitlement_key: "{{ ibm_entitlement_key }}"

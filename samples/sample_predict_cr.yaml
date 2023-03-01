@@ -21,7 +21,7 @@ spec:
   mas_workspace_id: "masdev"
   mas_app_channel: "8.7.x"
   cpd_product_version: "4.5.2"
-  cpd_url: "<https:// ... insert your cp4d_url>"
+  cpd_instance_namespace: "ibm-cpd"
 
 ## this cr assumes you have been using the defaults of this automation
 ## and in the masconfig dir you have a wsl project yaml and project id 
@@ -31,3 +31,5 @@ spec:
 ##
 ## cpd_ws_project_name: "" ## value found in cp4d ui projects location
 ## cpd_ws_project_id: "" ## value found in cp4d url, open the ws project, id is number after the "project" in the url
+##
+## Note in MAS v8.10 this above requirement of needing the WS Project information is scheduled to tbe removed.

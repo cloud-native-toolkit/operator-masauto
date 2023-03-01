@@ -1,6 +1,6 @@
 - name: Setup Pause
   debug:
-    msg: "Pausing {{ pause_msg }}"
+    msg: "{{ pause_msg }}"
 
 # Default pause needed for sequencing tasks set to 5min
 - name: Pause for task completion
