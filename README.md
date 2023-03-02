@@ -21,7 +21,15 @@ Current list of MAS components supported with this operator install as well as r
 - Optimizer
 
 ### Pre-install Requirements
-MAS requires RWX storage on your cluster.  We test with ODF / OCS but other storage options are supported and can be found with other cluster requirements on the product [documentation](https://www.ibm.com/docs/en/mas-cd/continuous-delivery?topic=installing)
+MAS requires Read/Write/Many (RWX) storage on your cluster such as through OpenShift Data Foundation or Container Storage (ODF/OCS), EFS (found on AWS, or you to install manually.  For guidance on installing ODF/OCS see the product [documentation](https://www.ibm.com/docs/en/SSRHPA_cd/appsuite/install/onprem/setup_ocs.html)
+
+**Properly sized cluster!** Can't emphasize how important this is.
+- Example MAS+Manage cluster might be 7 worker nodes, 16x64
+- Example MAS+Manage+IOT+Monitor+CP4D+DB2 might be 9 worker nodes, 16x64
+
+The bare minimum is [here](https://www.ibm.com/docs/en/mas-cd/continuous-delivery?topic=ic-minimal-resource-requirements-red-hat-openshift-container-platform-nodes)
+
+Reading the general MAS installation guidance for additional requirements per MAS application may be useful and can be found [here](https://www.ibm.com/docs/en/mas-cd/continuous-delivery?topic=installing-planning-install-maximo-application-suite)
 
 ### To Run
 
