@@ -38,7 +38,7 @@ metadata:
             "activate_app": "false",
             "cos_type": "ocs",
             "cpd_instance_namespace": "ibm-cpd",
-            "cpd_product_version": "4.5.0",
+            "cpd_product_version": "4.5.2",
             "ibm_entitlement_secret": "ibm-entitlement-key",
             "mas_app_channel": "8.6.x",
             "mas_instance_id": "inst1",
@@ -59,10 +59,11 @@ metadata:
             "cpd_instance_namespace": "ibm-cpd",
             "cpd_metadata_storage_class": "ocs-storagecluster-ceph-rbd",
             "cpd_primary_storage_class": "ocs-storagecluster-cephfs",
-            "cpd_product_version": "4.5.0",
+            "cpd_product_version": "4.5.2",
             "ibm_entitlement_secret": "ibm-entitlement-key",
             "install_analytics_engine": "false",
             "install_cp4d_platform": "true",
+            "install_spss_modeler": "false",
             "install_watson_discovery": "false",
             "install_watson_machine_learning": "false",
             "install_watson_openscale": "false",
@@ -84,10 +85,11 @@ metadata:
             "cpd_instance_namespace": "ibm-cpd",
             "cpd_metadata_storage_class": "ocs-storagecluster-ceph-rbd",
             "cpd_primary_storage_class": "ocs-storagecluster-cephfs",
-            "cpd_product_version": "4.5.0",
+            "cpd_product_version": "4.5.2",
             "ibm_entitlement_secret": "ibm-entitlement-key",
             "install_analytics_engine": "false",
             "install_cp4d_platform": "false",
+            "install_spss_modeler": "false",
             "install_watson_discovery": "false",
             "install_watson_machine_learning": "false",
             "install_watson_openscale": "false",
@@ -149,11 +151,20 @@ metadata:
             "namespace": "masauto-operator-system"
           },
           "spec": {
-            "db2_cpu_limits": "4000m",
+            "db2_cpu_limits": "8000m",
+            "db2_cpu_requests": "8000m",
             "db2_data_storage_class": "ocs-storagecluster-ceph-rbd",
+            "db2_database_db_config": {
+              "AUTO_REORG": "OFF",
+              "LOGARCHMETH1": "OFF"
+            },
             "db2_dbname": "MASIOT",
+            "db2_instance_dbm_config": {
+              "INSTANCE_MEMORY": "70"
+            },
             "db2_instance_name": "db2w-iot",
-            "db2_memory_requests": "3Gi",
+            "db2_memory_limits": "32Gi",
+            "db2_memory_requests": "32Gi",
             "db2_meta_storage_class": "ocs-storagecluster-cephfs",
             "grafana_instance_storage_class": "ocs-storagecluster-cephfs",
             "ibm_entitlement_secret": "ibm-entitlement-key",
@@ -178,6 +189,9 @@ metadata:
           },
           "spec": {
             "db2_data_storage_class": "ocs-storagecluster-ceph-rbd",
+            "db2_database_db_config": {
+              "LOGARCHMETH1": "OFF"
+            },
             "db2_dbname": "MANAGE",
             "db2_instance_name": "db2w-manage",
             "db2_memory_requests": "3Gi",
@@ -246,8 +260,8 @@ metadata:
             "namespace": "masauto-operator-system"
           },
           "spec": {
-            "cpd_product_version": "4.5.0",
-            "cpd_url": "\u003chttps:// ... insert your cp4d_url\u003e",
+            "cpd_instance_namespace": "ibm-cpd",
+            "cpd_product_version": "4.5.2",
             "ibm_entitlement_secret": "ibm-entitlement-key",
             "mas_app_channel": "8.7.x",
             "mas_instance_id": "inst1",
@@ -260,7 +274,7 @@ metadata:
     operatorframework.io/suggested-namespace: masauto-operator-system
     operators.operatorframework.io/builder: operator-sdk-v1.22.0-ocp
     operators.operatorframework.io/project_layout: ansible.sdk.operatorframework.io/v1
-  name: masauto-operator.v2.4.1
+  name: masauto-operator.v2.5.0
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
@@ -303,12 +317,14 @@ spec:
     [here](http://www.ibm.com/docs/SSRHPA_cd/appsuite/install/dependencies/index.html).\nThis
     Operator is tested with OCS storage on the cluster.  Other RWO and RWX storage
     classes are supported and can be replaced when selecting the yaml view during
-    deployment.\nAn IBM Entitled Registry key is also required.  See installation
-    section for creating a secret to use the entitlement key.\n## Installing\n- Take
-    the defaults for installing this operator.\n- Create a ibm-entitlement-key secret\n`oc
-    create secret generic \"ibm-entitlement-key\" -n masauto-operator-system --from-literal=\"username=cp\"
-    --from-literal=\"password=<your-ibm-entitlement-key-goes-here>\" ` Note: your
-    entitlement key can be found [here](https://myibm.ibm.com/products-services/containerlibrary)
+    deployment.  The defaults are setup for OpenShift Container Storage on the cluster.
+    If this isn't an option for your cluster, change the defaults in the yaml view
+    before installing using this operator.\nAn IBM Entitled Registry key is also required.
+    \ See installation section for creating a secret to use the entitlement key.\n##
+    Installing\n- Take the defaults for installing this operator.\n- Create a ibm-entitlement-key
+    secret\n`oc create secret generic \"ibm-entitlement-key\" -n masauto-operator-system
+    --from-literal=\"username=cp\" --from-literal=\"password=<your-ibm-entitlement-key-goes-here>\"
+    ` Note: your entitlement key can be found [here](https://myibm.ibm.com/products-services/containerlibrary)
     \n- When deploying any of the applications, it is best to use the yaml view on
     the operator page so you  can edit the storage classes appropriately for your
     cluster and cloud platform.\n- Deploy the Core first, then the remaining applications
@@ -386,7 +402,7 @@ spec:
                 env:
                 - name: ANSIBLE_GATHERING
                   value: explicit
-                image: quay.io/cloudnativetoolkit/masauto:v2.4.1
+                image: quay.io/cloudnativetoolkit/masauto:v2.5.0
                 imagePullPolicy: Always
                 livenessProbe:
                   httpGet:
@@ -441,4 +457,4 @@ spec:
   provider:
     name: IBM US Ecosystem Engineering
     url: https://modules.cloudnativetoolkit.dev/
-  version: 2.4.1
+  version: 2.5.0
