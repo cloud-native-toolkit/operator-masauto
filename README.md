@@ -27,8 +27,6 @@ MAS requires Read/Write/Many (RWX) storage on your cluster such as through OpenS
 - Example MAS+Manage cluster might be 7 worker nodes, 16x64
 - Example MAS+Manage+IOT+Monitor+CP4D+DB2 might be 9 worker nodes, 16x64
 
-The bare minimum is [here](https://www.ibm.com/docs/en/mas-cd/continuous-delivery?topic=ic-minimal-resource-requirements-red-hat-openshift-container-platform-nodes)
-
 Reading the general MAS installation guidance for additional requirements per MAS application may be useful and can be found [here](https://www.ibm.com/docs/en/mas-cd/continuous-delivery?topic=installing-planning-install-maximo-application-suite)
 
 ### To Run
