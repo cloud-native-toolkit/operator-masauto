@@ -18,7 +18,9 @@ spec:
     [here](http://www.ibm.com/docs/SSRHPA_cd/appsuite/install/dependencies/index.html).\nThis
     Operator is tested with OCS storage on the cluster.  Other RWO and RWX storage
     classes are supported and can be replaced when selecting the yaml view during
-    deployment.\nAn IBM Entitled Registry key is also required.  See installation
+    deployment.  The defaults are setup for OpenShift Container Storage on the cluster.
+    If this isn't an option for your cluster, change the defaults in the yaml view before
+    installing using this operator.\nAn IBM Entitled Registry key is also required.  See installation
     section for creating a secret to use the entitlement key.\n## Installing\n- Take
     the defaults for installing this operator.\n- Create a ibm-entitlement-key secret\n`oc
     create secret generic \"ibm-entitlement-key\" -n masauto-operator-system --from-literal=\"username=cp\"
