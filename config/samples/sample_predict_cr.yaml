@@ -10,5 +10,5 @@ spec:
   mas_instance_id: "inst1"
   mas_workspace_id: "masdev"
   mas_app_channel: "8.7.x"
-  cpd_product_version: "4.5.0"
-  cpd_url: "<https:// ... insert your cp4d_url>"
+  cpd_product_version: "4.5.2"
+  cpd_instance_namespace: "ibm-cpd"

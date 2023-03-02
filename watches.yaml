@@ -5,6 +5,7 @@
   kind: Manage
   playbook: playbooks/manage.yml
   reconcilePeriod: 0s
+  snakeCaseParameters: False
   manageStatus: False
   watchDependentResources: False
 - version: v1alpha1
@@ -12,6 +13,7 @@
   kind: IoT
   playbook: playbooks/iot.yml
   reconcilePeriod: 0s
+  snakeCaseParameters: False
   manageStatus: False
   watchDependentResources: False
 - version: v1alpha1

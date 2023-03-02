@@ -1,5 +1,5 @@
 # Maximo Application Suite (MAS) Install Automation OpenShift Operator
-Currently using MAS Ansible: v12.10.4
+Currently using MAS Ansible: v12.11.1
 
 ![GitHub Workflow Status (with branch)](https://img.shields.io/github/actions/workflow/status/cloud-native-toolkit/operator-masauto/docker-build.yaml) ![GitHub Release Date](https://img.shields.io/github/release-date/cloud-native-toolkit/operator-masauto)
 
@@ -21,7 +21,13 @@ Current list of MAS components supported with this operator install as well as r
 - Optimizer
 
 ### Pre-install Requirements
-MAS requires RWX storage on your cluster.  We test with ODF / OCS but other storage options are supported and can be found with other cluster requirements on the product [documentation](https://www.ibm.com/docs/en/mas-cd/continuous-delivery?topic=installing)
+MAS requires Read/Write/Many (RWX) storage on your cluster such as through OpenShift Data Foundation or Container Storage (ODF/OCS), EFS (found on AWS, or you to install manually.  For guidance on installing ODF/OCS see the product [documentation](https://www.ibm.com/docs/en/SSRHPA_cd/appsuite/install/onprem/setup_ocs.html)
+
+**Properly sized cluster!** Can't emphasize how important this is.
+- Example MAS+Manage cluster might be 7 worker nodes, 16x64
+- Example MAS+Manage+IOT+Monitor+CP4D+DB2 might be 9 worker nodes, 16x64
+
+Reading the general MAS installation guidance for additional requirements per MAS application may be useful and can be found [here](https://www.ibm.com/docs/en/mas-cd/continuous-delivery?topic=installing-planning-install-maximo-application-suite)
 
 ### To Run
 
@@ -40,7 +46,7 @@ Note: your entitlement key can be found [here](https://myibm.ibm.com/products-se
 More detailed step by step instructions for deployment using the operator can be found [here](/docs/MAS-Operator-Deployment.pdf)
 
 ### CP4D Important Requirement
-BEFORE installing CP4D you currently must have a *global* pull secret defined on the cluster with your IBM Entitlement Key
+BEFORE installing CP4D you currently must have a *global* pull secret defined on the cluster with your IBM Entitlement Key. See CP4D [docs](https://www.ibm.com/docs/en/cloud-paks/cp-data/4.5.x?topic=cluster-updating-global-image-pull-secret)
 
 ### Assist Important Requirement
 Assist requires object storage (for Watson Discovery).  For a Watson Discovery install ensure you have a properly sized cluster.  If you plan on installing the entire stack here, you will need a minimum of 12 worker nodes, 16x64 on the vpc.
@@ -58,6 +64,9 @@ The current product lab ansible does not handle the creation of the objectstorag
 ### Troubleshooting
 Check for errors in the log for this operator pod running in the `masauto-operator-system` namespace
 
+**Core Install fails with MongoCE pods not running**  
+There should be multiple mongoce pods running in the `mongoce` namespace. This most commonly will fail when the user 
+does not have OpenShift Container Storage installed on the cluster and they took the default for Core install.  The default Core install storage classes use OpenShift Container Storage.  If you are installing on a cluster where this doesn't exist, you will need to replace that in the Core yaml before you install with some other block storage on your cluster (such as gp2 on AWS or managed-premium on Azure) OR you can install OCS/ODF on the cluster and take the defaults for all the installs.  Run the `mas-destroy-core.sh` script found in this repository, uninstall this operator, and restart installation.
 
 **Various IBM Common Service operators stuck not able to install**  
 This is currently being reported for installs on IBM Cloud, ROKS v4.10.x and is due to a reported RedHat OLM [bug](https://issues.redhat.com/projects/RHIBMCS/issues/RHIBMCS-147?filter=allopenissues) where the catalog source seems to be removed during the operator install. If you go into the subscription for the operator, look at the yaml for the status, you should see it complaining about a csv. One possible work around is to delete that csv and wait a few mins.  The operator will then pick up and re-install properly.  You may also have to delete the subscription.  Here's an example of how to delete a troubled csv:  `oc delete csv ibm-events-operator.v4.2.1 -n ibm-common-services`

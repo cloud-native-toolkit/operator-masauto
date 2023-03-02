@@ -27,4 +27,5 @@ spec:
 ##
 ## cpd_ws_project_name: "" ## value found in cp4d ui projects location
 ## cpd_ws_project_id: "" ## value found in cp4d url, open the ws project, id is number after the "project" in the url
-
+##
+## Note in MAS v8.10 this above requirement of needing the WS Project information is scheduled to tbe removed.

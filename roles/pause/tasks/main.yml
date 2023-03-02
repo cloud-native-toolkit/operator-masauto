@@ -1,4 +1,8 @@
+- name: Setup Pause
+  debug:
+    msg: "{{ pause_msg }}"
+
 # Default pause needed for sequencing tasks set to 5min
-- name: pause for task completion (default 5min)
+- name: Pause for task completion
   pause:
     seconds: "{{ pause_seconds|default(300) }}"

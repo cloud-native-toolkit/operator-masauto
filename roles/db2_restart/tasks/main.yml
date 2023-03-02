@@ -1,0 +1,10 @@
+# Restarts the DB2 pod given an instance name and namespace
+# works around db2 problem causing connection issues after monitor install
+# ------------------------------------------------------------------------
+- name: Delete db2u pod on initial setup
+  kubernetes.core.k8s:
+    api_version: v1
+    kind: Pod
+    name: "c-{{ db2_instance_name | lower }}-db2u-0"
+    namespace: "{{ db2_namespace }}"
+    state: absent
