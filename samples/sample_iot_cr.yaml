@@ -26,6 +26,10 @@ spec:
   db2_instance_dbm_config: {
     INSTANCE_MEMORY: "70"
   }
+  db2_database_db_config: {
+    LOGARCHMETH1: "OFF",
+    AUTO_REORG: "OFF"
+  }
   kafka_storage_class: "ocs-storagecluster-ceph-rbd"
   grafana_instance_storage_class: "ocs-storagecluster-cephfs"
   prometheus_alertmgr_storage_class: "ocs-storagecluster-cephfs"
