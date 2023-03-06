@@ -6,7 +6,7 @@ Currently using MAS Ansible: v12.11.1
 **This will default to latest v8.9.x of MAS**
 (Note: to install older versions of MAS, change the appropriate channel definitions in the CR that is being deployed)
 
-This creates an operator that will run the MAS Product Lab ansible tasks to install MAS and it's applications.  Present state recommending taking defaults for mas instance name: `inst1` otherwise will need to change the role binding.  Other suitable defaults are provided in the [samples](/samples) directory and the operator CR's.
+This creates an operator that will run the MAS Product Lab ansible tasks to install MAS and it's applications.  Suitable defaults are provided in the [samples](/samples) directory and the operator CR's after installation.
 
 Current list of MAS components supported with this operator install as well as recommended order if installing the stack:
 - Core
@@ -42,6 +42,8 @@ Reading the general MAS installation guidance for additional requirements per MA
 Note: your entitlement key can be found [here](https://myibm.ibm.com/products-services/containerlibrary) 
 
 4.  When deploying any of the applications, it is best to use the **yaml** view on the operator page so you can edit the storage classes appropriately for your cluster and cloud platform.  You may need to add the cluster ingress certificate secret name to the yaml file before you deploy.  See the **Troubleshooting** section below under ingress.
+
+5.  The `masconfig` directory is automatically set for you based on the instance name provided to support a multi instance install on the same cluster.  Do not set this manually.
 
 More detailed step by step instructions for deployment using the operator can be found [here](/docs/MAS-Operator-Deployment.pdf)
 
