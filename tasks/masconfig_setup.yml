@@ -6,6 +6,6 @@
 
     - name: "Create masconfig based on instance ID"
       file:
-        path: {{ mas_config_dir }}
+        path: "{{ mas_config_dir }}"
         state: directory
         mode: '0775'
