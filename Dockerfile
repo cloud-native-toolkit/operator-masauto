@@ -22,7 +22,8 @@ RUN pip3 install yq
 USER 1001
 CMD ["/usr/local/bin/oc"]
 
-#Create the masconfig directory to store config information needed for mas, mongo, sls
-#this will be the directory used in those roles
-RUN bash -c 'mkdir -p ~/masconfig'
-RUN bash -c 'chmod 775 ~/masconfig'
+#Create the default masconfig directory to store config information needed for mas, mongo, sls
+#this will be the directory used in those roles. These subdirectories get automatically created
+#at runtime based on the instance id name and not recommended to change.
+RUN bash -c 'mkdir -p ~/masconfig/inst1'
+RUN bash -c 'chmod 775 ~/masconfig/inst1'

@@ -15,9 +15,8 @@
 
   vars:
     # Cluster-wide dependencies for MAS 
-    mas_config_dir: "~/masconfig"
     ibm_entitlement_key: "{{ ibm_entitlement_key }}"
-    mas_instance_id: "{{ mas_instance_id }}"
+    mas_instance_id: "inst1"
     
     # Application Dependencies
     db2_instance_name: "{{ db2_instance_name }}"
@@ -54,7 +53,11 @@
           - db2_dbname is defined and db2_dbname != ""
           - mas_config_scope is defined and mas_config_scope != ""
           - mas_appws_bindings_jdbc is defined and mas_appws_bindings_jdbc != ""
+          - mas_instance_id is defined and mas_instance_id != ""
         fail_msg: "One or more required variables are not defined"
+    
+    # Create masconfig directory based on instance_id
+    - include_tasks: "{{ playbook_dir }}/../tasks/masconfig_setup.yml"        
 
   roles:
     - role: ibm.mas_devops.db2
