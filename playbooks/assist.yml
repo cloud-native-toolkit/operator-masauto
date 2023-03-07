@@ -19,9 +19,7 @@
 
   vars:
     # Cluster-wide dependencies for MAS 
-    mas_config_dir: "~/masconfig"
     ibm_entitlement_key: "{{ ibm_entitlement_key }}"
-    mas_instance_id: "{{ mas_instance_id }}"
     
     # Application Installation
     mas_app_id: assist
@@ -60,7 +58,11 @@
           - cpd_product_version is defined and cpd_product_version != ""
           - cpd_instance_namespace is defined and cpd_instance_namespace != ""
           - activate_app is defined and activate_app != "" # remove flag
+          - mas_instance_id is defined and mas_instance_id != ""
         fail_msg: "One or more required variables are not defined"
+
+    # Create masconfig directory based on instance_id
+    - include_tasks: "{{ playbook_dir }}/../tasks/masconfig_setup.yml"         
 
   roles:
     - role: ibm.mas_devops.cos

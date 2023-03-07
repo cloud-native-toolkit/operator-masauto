@@ -15,9 +15,7 @@
 
   vars:
     # Cluster-wide dependencies for MAS 
-    mas_config_dir: "~/masconfig"
     ibm_entitlement_key: "{{ ibm_entitlement_key }}"
-    mas_instance_id: "{{ mas_instance_id }}"
 
     # Entitlement key can be passed by either the key or a secret name
     ibm_entitlement_secret: "{{ ibm_entitlement_secret }}"
@@ -32,6 +30,7 @@
           - appconnect_dashboard_name is defined and appconnect_dashboard_name != ""
           - appconnect_license_id is defined and appconnect_license_id != ""
           - appconnect_namespace is defined and appconnect_namespace != ""
+          - mas_instance_id is defined and mas_instance_id != ""
         fail_msg: "One or more required variables are not defined"
 
     # Check if AppConnect is already installed first.
@@ -45,6 +44,9 @@
         that:
           - ibm_entitlement_key is defined and ibm_entitlement_key != ""
         fail_msg: "Entitlement key not defined"
+
+    # Create masconfig directory based on instance_id
+    - include_tasks: "{{ playbook_dir }}/../tasks/masconfig_setup.yml"         
 
   roles:
     - role: ibm.mas_devops.appconnect

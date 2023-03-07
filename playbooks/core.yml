@@ -18,7 +18,6 @@
   # set defaults for core
     sls_compliance_enforce: "true"
     sls_mode: "prod"
-    mas_instance_id: "inst1"
 
     # Entitlement key can be passed by either the key or a secret name
     ibm_entitlement_secret: "{{ ibm_entitlement_secret }}"
@@ -66,7 +65,7 @@
     # an existing installation of SLS
     - role: ibm.mas_devops.sls
       vars:
-        sls_mongodb_cfg_file: "~/masconfig/mongo-mongoce.yml"
+        sls_mongodb_cfg_file: "{{ mas_config_dir }}/mongo-mongoce.yml"
 
     # 4. Install UDS
     # Set uds_endpoint_url, uds_tls_crt_local_file_path, uds_api_key variables to skip install and set up BASCfg for

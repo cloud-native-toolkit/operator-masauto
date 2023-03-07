@@ -15,9 +15,7 @@
 
   vars:
     # Cluster-wide dependencies for MAS 
-    mas_config_dir: "~/masconfig"
     ibm_entitlement_key: "{{ ibm_entitlement_key }}"
-    mas_instance_id: "{{ mas_instance_id }}"
     
     # Application Dependencies
     db2_instance_name: "{{ db2_instance_name }}"
@@ -55,7 +53,11 @@
           - prometheus_storage_class is defined and prometheus_storage_class != ""
           - zookeeper_storage_class is defined and zookeeper_storage_class != ""
           - db2_instance_dbm_config is defined and db2_instance_dbm_config != ""
+          - mas_instance_id is defined and mas_instance_id != ""
         fail_msg: "One or more required variables are not defined"
+
+    # Create masconfig directory based on instance_id
+    - include_tasks: "{{ playbook_dir }}/../tasks/masconfig_setup.yml" 
 
   roles:
     - role: ibm.mas_devops.db2
