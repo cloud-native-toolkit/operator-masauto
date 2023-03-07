@@ -57,4 +57,3 @@
         appconnect_dashboard_name: "{{ appconnect_dashboard_name }}"
         appconnect_license_id: "{{ appconnect_license_id }}"
         appconnect_storage_class: "{{ appconnect_storage_class }}" #file storage class
-
