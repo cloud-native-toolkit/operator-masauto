@@ -6,7 +6,7 @@ Currently using MAS Ansible: v12.11.1
 **This will default to latest v8.9.x of MAS**
 (Note: to install older versions of MAS, change the appropriate channel definitions in the CR that is being deployed)
 
-This creates an operator that will run the MAS Product Lab ansible tasks to install MAS and it's applications.  Present state recommending taking defaults for mas instance name: `inst1` otherwise will need to change the role binding.  Other suitable defaults are provided in the [samples](/samples) directory and the operator CR's.
+This creates an operator that will run the MAS Product Lab ansible tasks to install MAS and it's applications.  Suitable defaults are provided in the [samples](/samples) directory and the operator CR's after installation.
 
 Current list of MAS components supported with this operator install as well as recommended order if installing the stack:
 - Core
@@ -43,10 +43,12 @@ Note: your entitlement key can be found [here](https://myibm.ibm.com/products-se
 
 4.  When deploying any of the applications, it is best to use the **yaml** view on the operator page so you can edit the storage classes appropriately for your cluster and cloud platform.  You may need to add the cluster ingress certificate secret name to the yaml file before you deploy.  See the **Troubleshooting** section below under ingress.
 
+5.  The `masconfig` directory is automatically set for you based on the instance name provided to support a multi instance install on the same cluster.  Do not set this manually.
+
 More detailed step by step instructions for deployment using the operator can be found [here](/docs/MAS-Operator-Deployment.pdf)
 
 ### CP4D Important Requirement
-BEFORE installing CP4D you currently must have a *global* pull secret defined on the cluster with your IBM Entitlement Key. See CP4D [docs](https://www.ibm.com/docs/en/cloud-paks/cp-data/4.5.x?topic=cluster-updating-global-image-pull-secret)
+BEFORE installing CP4D you currently must have a *global* pull secret defined on the cluster with your IBM Entitlement Key. See CP4D [docs](https://www.ibm.com/docs/en/mas-cd/continuous-delivery?topic=configuring-global-image-pull-secret)
 
 ### Assist Important Requirement
 Assist requires object storage (for Watson Discovery).  For a Watson Discovery install ensure you have a properly sized cluster.  If you plan on installing the entire stack here, you will need a minimum of 12 worker nodes, 16x64 on the vpc.
@@ -55,7 +57,7 @@ Assist requires object storage (for Watson Discovery).  For a Watson Discovery i
 
 By Default the Assist install will install: cos, cpd/discovery, and Assist App.  It will not apply the configurations in MAS for cos or discovery, and will not activate the AssistWorkspace. This is due to the issue below.  You can activate Assist manually in the MAS UI, or you can set `activate_app="true"` and add the root cert as described below.
 
-The current product lab ansible does not handle the creation of the objectstoragecfg CR certificate correctly.  It leaves the root certificate in the chain out.  This must be added manually right now to the objectstoragecfg CR to create the full certificate chain.  This root cert can be obtained from simply opening the url for the object storage referenced in the error - open that in a browser and download the root cert then add that in the CR or open the MAS UI config for object storage and add it there.
+**Technical explaination of the issue with Assist** and how to fix if your install of Assist is hanging on the workspace activation.  The current product lab ansible does not handle the creation of the objectstoragecfg CR certificate correctly.  It leaves the root certificate in the chain out.  This must be added manually right now to the objectstoragecfg CR to create the full certificate chain.  This root cert can be obtained from simply opening the url for the object storage referenced in the error - open that in a browser and download the root cert then add that in the CR or open the MAS UI config for object storage and add it there.
 
 ### To Destory a Core Install
 (this currently destroys a core install only)

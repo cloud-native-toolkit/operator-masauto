@@ -1,0 +1,11 @@
+# sets the masconfig directory and creates it based on the instance id
+# this is needed to support a multi instance install on the same cluster
+    - name: "Set masconfig directory fact"
+      set_fact:
+        mas_config_dir: "~/masconfig/{{ mas_instance_id }}" 
+
+    - name: "Create masconfig based on instance ID"
+      file:
+        path: "{{ mas_config_dir }}"
+        state: directory
+        mode: '0775'

@@ -18,9 +18,7 @@
 
   vars:
     # Cluster-wide dependencies for MAS 
-    mas_config_dir: "~/masconfig"
     ibm_entitlement_key: "{{ ibm_entitlement_key }}"
-    mas_instance_id: "{{ mas_instance_id }}"
     
     # Application Installation
     mas_app_id: monitor
@@ -45,7 +43,11 @@
         that:
           - ibm_entitlement_key is defined and ibm_entitlement_key != ""
           - mas_app_channel is defined and mas_app_channel != ""
+          - mas_instance_id is defined and mas_instance_id != ""
         fail_msg: "One or more required variables are not defined"
+
+    # Create masconfig directory based on instance_id
+    - include_tasks: "{{ playbook_dir }}/../tasks/masconfig_setup.yml" 
 
   roles:
     - role: ibm.mas_devops.suite_app_install

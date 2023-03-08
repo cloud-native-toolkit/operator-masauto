@@ -16,8 +16,6 @@
   vars:
     # Cluster-wide dependencies for MAS 
     ibm_entitlement_key: "{{ ibm_entitlement_key }}"
-    mas_config_dir: "~/masconfig"
-    mas_instance_id: "{{ mas_instance_id }}"
 
     # Entitlement key can be passed by either the key or a secret name
     ibm_entitlement_secret: "{{ ibm_entitlement_secret }}"
@@ -48,7 +46,11 @@
         that:
           - ibm_entitlement_key is defined and ibm_entitlement_key != ""
           - cpd_product_version is defined and cpd_product_version != ""
+          - mas_instance_id is defined and mas_instance_id != ""
         fail_msg: "One or more required variables are not defined"
+
+    # Create masconfig directory based on instance_id
+    - include_tasks: "{{ playbook_dir }}/../tasks/masconfig_setup.yml" 
 
   roles:
     # Cloud Pak for Data Platform (~1 1/2 hours)

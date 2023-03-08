@@ -18,8 +18,6 @@
   # set defaults for core
     sls_compliance_enforce: "true"
     sls_mode: "prod"
-    mas_instance_id: "inst1"
-    mas_config_dir: "~/masconfig" #this directory created in operator build - don't change it
 
     # Entitlement key can be passed by either the key or a secret name
     ibm_entitlement_secret: "{{ ibm_entitlement_secret }}"
@@ -39,7 +37,11 @@
           - mas_workspace_id is defined and mas_workspace_id != ""
           - mas_workspace_name is defined and mas_workspace_name != ""
           - mas_channel is defined and mas_channel != ""
+          - mas_instance_id is defined and mas_instance_id != ""
         fail_msg: "One or more required variables are not defined"
+
+    # Create masconfig directory based on instance_id
+    - include_tasks: "{{ playbook_dir }}/../tasks/masconfig_setup.yml"    
 
     # Set SLS mode set if required
     - name: "Set SLS config mode if required"
@@ -63,7 +65,7 @@
     # an existing installation of SLS
     - role: ibm.mas_devops.sls
       vars:
-        sls_mongodb_cfg_file: "~/masconfig/mongo-mongoce.yml"
+        sls_mongodb_cfg_file: "{{ mas_config_dir }}/mongo-mongoce.yml"
 
     # 4. Install UDS
     # Set uds_endpoint_url, uds_tls_crt_local_file_path, uds_api_key variables to skip install and set up BASCfg for
