@@ -12,15 +12,17 @@ spec:
   mas_app_id: "manage"
   mas_app_channel: "8.5.x"
   configure_external_db: "true"
+  ssl_enabled: "true"
+  db_pem_configmap: "manage_db_pem_configmap"
 
-  db_instance_id: maxdbxx 
-  mas_jdbc_user: maximo
-  mas_jdbc_password_secret: manage_jdbc_credentials
-  mas_jdbc_url: xxx
+  db_instance_id: "maxdbxx"
+  mas_jdbc_user: "maximo"
+  mas_jdbc_password_secret: "manage_jdbc_credentials"
+  mas_jdbc_url: "<your_jdbc_url_see_examples>"
 
-  mas_app_settings_db2_schema: maximo
-  mas_app_settings_tablespace: maxdata
-  mas_app_settings_indexspace: maxindex
+  mas_app_settings_db2_schema: "maximo"
+  mas_app_settings_tablespace: "maxdata"
+  mas_app_settings_indexspace: "maxindex"
 
   mas_config_scope: "wsapp"  # recommend keeping db for manage at workspace-application scope by default
   mas_appws_bindings_jdbc: "workspace-application"

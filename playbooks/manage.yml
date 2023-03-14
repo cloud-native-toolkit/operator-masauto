@@ -21,6 +21,7 @@
     # Application Dependencies
     db2_instance_name: "{{ db2_instance_name }}"
     configure_external_db: "false"
+    ssl_enabled: "true"
 
     # Application Installation
     # set mas_app_id to "manage" OR set to "health" to install manage in the "Health standalone" mode from this same playbook.
@@ -71,7 +72,17 @@
           - mas_app_settings_db2_indexspace is defined and mas_app_settings_db2_indexspace != ""
         fail_msg: "One or more JDBC configuration environment variables are not defined for external database"
     
-      # Lookup external db credentials via secret
+    - name: Check for SSL configmap definition
+      when: (ssl_enabled|bool) and (configure_external_db|bool)
+      assert:
+        that:
+          - db_pem_configmap is defined and db_pem_configmap != ""
+        fail_msg: "Missing DB SSL pem configmap defition.  Define this first and restart"
+
+    # Create masconfig directory based on instance_id
+    - include_tasks: "{{ playbook_dir }}/../tasks/masconfig_setup.yml"   
+
+    # Lookup external db credentials via secret
     - name: "Lookup external db credentials secret"
       when: configure_external_db|bool
       ignore_errors: true      
@@ -88,10 +99,39 @@
       set_fact:
         mas_jdbc_password: "{{ db_credentials.resources[0].data.password | b64decode }}"
 
+    # Lookup external db ssl configmap on cluster and set on filesystem
+    - name: "Lookup external db ssl configmap on cluster"
+      when: (ssl_enabled|bool) and (configure_external_db|bool)
+      ignore_errors: true      
+      kubernetes.core.k8s_info:
+        api_version: v1
+        kind: ConfigMap
+        metadata:
+          name: "{{ db_pem_configmap }}"
+          namespace: "masauto-operator-system"
+      register: pem_result
 
+    - name: "Set PEM Result"
+      when: (pem_result.api_found) and 
+            (ssl_enabled|bool) and (configure_external_db|bool)
+      ignore_errors: true
+      set_fact:
+      pem_readin: "{{ pem_result.resources[0].data[0] }}"
 
-    # Create masconfig directory based on instance_id
-    - include_tasks: "{{ playbook_dir }}/../tasks/masconfig_setup.yml"        
+    - name: "Copy Manage DB PEM to filesystem"
+      when: (pem_result.api_found) and 
+            (ssl_enabled|bool) and (configure_external_db|bool)
+      ansible.builtin.template:
+        src: /../templates/pemfileout.yml.j2
+        dest: "{{ mas_config_dir }}/manage_db.pem"
+        mode: '664'
+
+    - name: "Set PEM path to file"
+      when: (pem_result.api_found) and 
+            (ssl_enabled|bool) and (configure_external_db|bool)
+      ignore_errors: true
+      set_fact:
+      db_pem_file: "{{ mas_config_dir }}/manage_db.pem"
 
   roles:
     - role: ibm.mas_devops.db2
@@ -108,7 +148,7 @@
       when: not (configure_external_db|bool)
     - role: ibm.mas_devops.gencfg_jdbc
       when: configure_external_db|bool
-      
+
     - role: ibm.mas_devops.suite_config
     - role: ibm.mas_devops.suite_app_install
       vars:
