@@ -20,6 +20,7 @@
     
     # Application Dependencies
     db2_instance_name: "{{ db2_instance_name }}"
+    configure_external_db: "false"
 
     # Application Installation
     # set mas_app_id to "manage" OR set to "health" to install manage in the "Health standalone" mode from this same playbook.
@@ -55,12 +56,46 @@
           - mas_appws_bindings_jdbc is defined and mas_appws_bindings_jdbc != ""
           - mas_instance_id is defined and mas_instance_id != ""
         fail_msg: "One or more required variables are not defined"
+
+    - name: Check for JDBC configuration environment variables if using external database
+      when: configure_external_db|bool
+      assert:
+        that:
+          - mas_instance_id is defined and mas_instance_id != ""
+          - db_instance_id is defined and db_instance_id != ""
+          - mas_jdbc_user is defined and mas_jdbc_user != ""
+          - mas_jdbc_password_secret is defined and mas_jdbc_password_secret != ""
+          - mas_jdbc_url is defined and mas_jdbc_url != ""
+          - mas_app_settings_db2_schema is defined and mas_app_settings_db2_schema != ""
+          - mas_app_settings_db2_tablespace is defined and mas_app_settings_db2_tablespace != ""
+          - mas_app_settings_db2_indexspace is defined and mas_app_settings_db2_indexspace != ""
+        fail_msg: "One or more JDBC configuration environment variables are not defined for external database"
     
+      # Lookup external db credentials via secret
+    - name: "Lookup external db credentials secret"
+      when: configure_external_db|bool
+      ignore_errors: true      
+      kubernetes.core.k8s_info:
+        api_version: v1
+        kind: Secret
+        name: "{{ mas_jdbc_password_secret }}"
+        namespace: "masauto-operator-system"
+      register: db_credentials 
+    
+    - name: "Set entitllement based on secret"
+      when: db_credentials.api_found
+      ignore_errors: true
+      set_fact:
+        mas_jdbc_password: "{{ db_credentials.resources[0].data.password | b64decode }}"
+
+
+
     # Create masconfig directory based on instance_id
     - include_tasks: "{{ playbook_dir }}/../tasks/masconfig_setup.yml"        
 
   roles:
     - role: ibm.mas_devops.db2
+      when: not (configure_external_db|bool)
       vars:  
         db2_meta_storage_class: "{{ db2_meta_storage_class }}" #file storage class
         db2_data_storage_class: "{{ db2_data_storage_class }}" #block storage class
@@ -68,7 +103,12 @@
         db2_dbname: "{{ db2_dbname }}"
         mas_application_id: "{{ mas_app_id }}"
     - role: pause #pause for 5mins to let db2 fully start
+      when: not (configure_external_db|bool)
     - role: ibm.mas_devops.suite_db2_setup_for_manage
+      when: not (configure_external_db|bool)
+    - role: ibm.mas_devops.gencfg_jdbc
+      when: configure_external_db|bool
+      
     - role: ibm.mas_devops.suite_config
     - role: ibm.mas_devops.suite_app_install
       vars:
