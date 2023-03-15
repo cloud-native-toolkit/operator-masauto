@@ -11,6 +11,7 @@ COPY watches.yaml ${HOME}/watches.yaml
 COPY roles/ ${HOME}/roles/
 COPY playbooks/ ${HOME}/playbooks/
 COPY tasks/ ${HOME}/tasks/
+COPY templates/ ${HOME}/templates/
 
 #Add dependent CLIs - need to add as root since it's in /usr/local/bin
 #After install switch back to user 1001 so we aren't running as root
