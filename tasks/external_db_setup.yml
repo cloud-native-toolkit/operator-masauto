@@ -1,0 +1,47 @@
+    # These tasks are needed when setting up manage (and IOT) for using an external db
+    # Lookup external db credentials via secret
+    - name: "Lookup external db credentials secret"
+      when: configure_external_db|bool
+      ignore_errors: true      
+      kubernetes.core.k8s_info:
+        api_version: v1
+        kind: Secret
+        name: "{{ mas_jdbc_password_secret }}"
+        namespace: "masauto-operator-system"
+      register: db_credentials 
+    
+    - name: "Set entitllement based on secret"
+      when: configure_external_db|bool
+      ignore_errors: true
+      set_fact:
+        mas_jdbc_password: "{{ db_credentials.resources[0].data.password | b64decode }}"
+
+    # Lookup external db ssl configmap on cluster and set on filesystem
+    - name: "Lookup external db ssl configmap on cluster"
+      when: (ssl_enabled) and (configure_external_db|bool)
+      ignore_errors: true
+      kubernetes.core.k8s_info:
+        api_version: v1
+        kind: ConfigMap
+        name: "{{ db_pem_configmap }}"
+        namespace: "masauto-operator-system"
+      register: pem_result
+
+    - name: "Set PEM Result"
+      when: (ssl_enabled) and (configure_external_db|bool)
+      ignore_errors: true
+      set_fact:
+        pem_readin: "{{ pem_result.resources[0] | to_json | from_json | community.general.json_query('data.* | [0]') }}"
+
+    - name: "Copy Manage DB PEM to filesystem"
+      when: (ssl_enabled) and (configure_external_db|bool)
+      ansible.builtin.template:
+        src: "{{ playbook_dir }}/../templates/pemfileout.yml.j2"
+        dest: "{{ mas_config_dir }}/manage_db.pem"
+        mode: '664'
+
+    - name: "Set PEM path to file"
+      when: (ssl_enabled) and (configure_external_db|bool)
+      ignore_errors: true
+      set_fact:
+        db_pem_file: "{{ mas_config_dir }}/manage_db.pem"
