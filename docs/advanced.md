@@ -1,3 +1,6 @@
+
+## Advanced Setup and Install Scenarios
+
 ### Setup Prior to installing Manage with an External DB
 When installing Manage with an external db, please follow the steps below before installing Manage.
 
@@ -7,4 +10,4 @@ When installing Manage with an external db, please follow the steps below before
 
 2.  Create a configmap to store your public ssl certificate in pem format for establishing a ssl connection.  This is not required if you set `ssl_enabled: false`, ssl is recommended and true is the default.
 
-`oc -n masauto-operator-system create configmap ca-pemstore --from-file=/Users/temp/db2.pem`  replace the file path and pemfile name with your path and pemfile name.
+`oc -n masauto-operator-system create configmap ca-pemstore --from-file=/temp/db2.pem`  replace the file path and pemfile name with your path and pemfile name.

@@ -13,16 +13,16 @@ spec:
   mas_app_channel: "8.5.x"
   configure_external_db: "true"
   ssl_enabled: true
-  db_pem_configmap: "manage-db-pem-configmap"
+  db_pem_configmap: "ca-pemstore"
 
-  db_instance_id: "maxdbxx"
-  mas_jdbc_user: "maximo"
+  db_instance_id: "db2w-manage"
+  mas_jdbc_user: "db2inst1"
   mas_jdbc_password_secret: "manage-jdbc-credentials"
   mas_jdbc_url: "<your_jdbc_url_see_examples>"
 
-  mas_app_settings_db2_schema: "maximo"
-  mas_app_settings_tablespace: "maxdata"
-  mas_app_settings_indexspace: "maxindex"
+  mas_app_settings_db2_schema: "MANAGE"
+  mas_app_settings_tablespace: "MAXDATA"
+  mas_app_settings_indexspace: "MAXINDEX"
 
   mas_config_scope: "wsapp"  # recommend keeping db for manage at workspace-application scope by default
   mas_appws_bindings_jdbc: "workspace-application"
@@ -37,8 +37,8 @@ spec:
 #  mas_jdbc_url samples
 #
 #  DB2:
-#   mas_jdbc_url: "jdbc:db2://dbserverxx:50000/maxdbxx"
-#   mas_jdbc_url: "jdbc:db2://dbserverxx:50000/maxdbxx:sslConnection=true"  if SSL enabled
+#   mas_jdbc_url: "jdbc:db2://dbserverxx:50000/MANAGE"
+#   mas_jdbc_url: "jdbc:db2://123.456.78.90:50001/MANAGE:sslConnection=true;sslVersion=TLSv1.2;"  if SSL enabled
 #
 #  Oracle:
 #   mas_jdbc_url: "jdbc:oracle:thin:@dbserverxx:1521:maximo"

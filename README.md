@@ -29,7 +29,7 @@ MAS requires Read/Write/Many (RWX) storage on your cluster such as through OpenS
 
 Reading the general MAS installation guidance for additional requirements per MAS application may be useful and can be found [here](https://www.ibm.com/docs/en/mas-cd/continuous-delivery?topic=installing-planning-install-maximo-application-suite)
 
-**Installing Manage with an External DB** When installing Manage with an external db, please see the additional instructions [here](/docs/externaldb.md) for creating a db credentials secret and ssl configmap resource on the cluster.
+**Installing Manage with an External DB** When installing Manage with an external db, please see the advanced instructions [here](/docs/advanced.md) for creating a db credentials secret and ssl configmap resource on the cluster.
 
 ### To Run
 
