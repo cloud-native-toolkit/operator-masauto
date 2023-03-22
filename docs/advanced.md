@@ -15,7 +15,7 @@ When installing Manage with an external db, please follow the steps below before
 ### Installing multiple instances of MAS and Applications
 Multiple instances of core as well as the applications are supported.  It is not uncommon in a development cluster to install multiple instance of Manage for example while sharing common services of: mongo, sls, UDS among the core instances.
 
-This can be done simply through editing the yaml in the operator during deployment.  To deploy a second core instance, simply change the name of the mas_instance_id variable to something different than the first instance already deploy.  For example if `inst1` is already deployed on the cluster, change this to `inst2` as shown below.
+This can be done simply through editing the yaml in the core or appliation CR before deployment.  To deploy a second core instance, simply change the name of the mas_instance_id variable to something different than the first instance already deploy.  For example if `inst1` is already deployed on the cluster, change this to `inst2` as shown below.
 
 ```shell
    name: masauto-core2
