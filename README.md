@@ -1,12 +1,12 @@
 # Maximo Application Suite (MAS) Install Automation OpenShift Operator
-Currently using MAS Ansible: v12.11.1
+Currently using MAS Ansible: v12.14.0
 
 ![GitHub Workflow Status (with branch)](https://img.shields.io/github/actions/workflow/status/cloud-native-toolkit/operator-masauto/docker-build.yaml) ![GitHub Release Date](https://img.shields.io/github/release-date/cloud-native-toolkit/operator-masauto)
 
 **This will default to latest v8.9.x of MAS**
 (Note: to install older versions of MAS, change the appropriate channel definitions in the CR that is being deployed)
 
-This creates an operator that will run the MAS Product Lab ansible tasks to install MAS and it's applications.  Suitable defaults are provided in the [samples](/samples) directory and the operator CR's after installation.
+This creates an operator that will run the MAS Product Lab ansible tasks to install MAS and it's applications.  Suitable defaults are provided to install everything in a single cluster.  Other common installation patterns can be found in the [samples](/samples) directory of this repository.  
 
 Current list of MAS components supported with this operator install as well as recommended order if installing the stack:
 - Core
@@ -29,7 +29,7 @@ MAS requires Read/Write/Many (RWX) storage on your cluster such as through OpenS
 
 Reading the general MAS installation guidance for additional requirements per MAS application may be useful and can be found [here](https://www.ibm.com/docs/en/mas-cd/continuous-delivery?topic=installing-planning-install-maximo-application-suite)
 
-### To Run
+### To Run the Operator
 
 1.  Add the Ecosystem Engineering catalog to your cluster (see sample catalog source `sample_catalog_source.yaml` in samples directoy)
 (note when deploying the operator take the default namespace)
@@ -45,7 +45,13 @@ Note: your entitlement key can be found [here](https://myibm.ibm.com/products-se
 
 5.  The `masconfig` directory is automatically set for you based on the instance name provided to support a multi instance install on the same cluster.  Do not set this manually.
 
-More detailed step by step instructions for deployment using the operator can be found [here](/docs/MAS-Operator-Deployment.pdf)
+More detailed step by step instructions for deployment of core using the operator can be found [here](/docs/MAS-Operator-Deployment.pdf)
+
+### Advanced Setup Configurations
+The default setup will install on a single cluster.  The following advanced configurations require additional setup.  These have been tested.  Further setup instructions found [here](/docs/advanced.md)
+
+- Installing Manage with an External DB.
+- Installing multiple instances of MAS and Applications on the same cluster.
 
 ### CP4D Important Requirement
 BEFORE installing CP4D you currently must have a *global* pull secret defined on the cluster with your IBM Entitlement Key. See CP4D [docs](https://www.ibm.com/docs/en/mas-cd/continuous-delivery?topic=configuring-global-image-pull-secret)

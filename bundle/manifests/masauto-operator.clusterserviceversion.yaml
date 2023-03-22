@@ -188,6 +188,7 @@ metadata:
             "namespace": "masauto-operator-system"
           },
           "spec": {
+            "configure_external_db": "false",
             "db2_data_storage_class": "ocs-storagecluster-ceph-rbd",
             "db2_database_db_config": {
               "LOGARCHMETH1": "OFF"
@@ -274,7 +275,7 @@ metadata:
     operatorframework.io/suggested-namespace: masauto-operator-system
     operators.operatorframework.io/builder: operator-sdk-v1.22.0-ocp
     operators.operatorframework.io/project_layout: ansible.sdk.operatorframework.io/v1
-  name: masauto-operator.v2.6.0
+  name: masauto-operator.v2.7.0
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
@@ -402,7 +403,7 @@ spec:
                 env:
                 - name: ANSIBLE_GATHERING
                   value: explicit
-                image: quay.io/cloudnativetoolkit/masauto:v2.6.0
+                image: quay.io/cloudnativetoolkit/masauto:v2.7.0
                 imagePullPolicy: Always
                 livenessProbe:
                   httpGet:
@@ -457,4 +458,4 @@ spec:
   provider:
     name: IBM US Ecosystem Engineering
     url: https://modules.cloudnativetoolkit.dev/
-  version: 2.6.0
+  version: 2.7.0

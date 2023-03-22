@@ -20,6 +20,8 @@
     
     # Application Dependencies
     db2_instance_name: "{{ db2_instance_name }}"
+    configure_external_db: "false"
+    ssl_enabled: true
 
     # Application Installation
     # set mas_app_id to "manage" OR set to "health" to install manage in the "Health standalone" mode from this same playbook.
@@ -46,29 +48,70 @@
         that:
           - ibm_entitlement_key is defined and ibm_entitlement_key != ""
           - mas_app_channel is defined and mas_app_channel != ""
-          - db2_instance_name is defined and db2_instance_name != ""
-          - db2_meta_storage_class is defined and db2_meta_storage_class != ""
-          - db2_data_storage_class is defined and db2_data_storage_class != ""
           - mas_appws_components is defined and mas_appws_components != ""
-          - db2_dbname is defined and db2_dbname != ""
           - mas_config_scope is defined and mas_config_scope != ""
           - mas_appws_bindings_jdbc is defined and mas_appws_bindings_jdbc != ""
           - mas_instance_id is defined and mas_instance_id != ""
         fail_msg: "One or more required variables are not defined"
+
+    - name: Check for DB2 required environment variables if not external db
+      when: not (configure_external_db|bool)
+      assert:
+        that:
+          - db2_instance_name is defined and db2_instance_name != ""
+          - db2_meta_storage_class is defined and db2_meta_storage_class != ""
+          - db2_data_storage_class is defined and db2_data_storage_class != ""
+          - db2_dbname is defined and db2_dbname != ""
+        fail_msg: "One or more required variables are not defined"
+
+    - name: Check for JDBC configuration environment variables if using external database
+      when: configure_external_db|bool
+      assert:
+        that:
+          - db_instance_id is defined and db_instance_id != ""
+          - mas_jdbc_user is defined and mas_jdbc_user != ""
+          - mas_jdbc_password_secret is defined and mas_jdbc_password_secret != ""
+          - mas_jdbc_url is defined and mas_jdbc_url != ""
+          - mas_app_settings_db2_schema is defined and mas_app_settings_db2_schema != ""
+          - mas_app_settings_tablespace is defined and mas_app_settings_tablespace != ""
+          - mas_app_settings_indexspace is defined and mas_app_settings_indexspace != ""
+        fail_msg: "One or more JDBC configuration environment variables are not defined for external database"
     
+    - name: Check for SSL configmap definition
+      when: (ssl_enabled) and (configure_external_db|bool)
+      assert:
+        that:
+          - db_pem_configmap is defined and db_pem_configmap != ""
+        fail_msg: "Missing DB SSL pem configmap defition.  Define this first and restart"
+
     # Create masconfig directory based on instance_id
-    - include_tasks: "{{ playbook_dir }}/../tasks/masconfig_setup.yml"        
+    - include_tasks: "{{ playbook_dir }}/../tasks/masconfig_setup.yml"   
+
+    # Setup tasks for using an external db
+    - include_tasks: "{{ playbook_dir }}/../tasks/external_db_setup.yml"   
 
   roles:
     - role: ibm.mas_devops.db2
+      when: not (configure_external_db|bool)
       vars:  
         db2_meta_storage_class: "{{ db2_meta_storage_class }}" #file storage class
         db2_data_storage_class: "{{ db2_data_storage_class }}" #block storage class
         mas_config_scope: "{{ mas_config_scope }}"
         db2_dbname: "{{ db2_dbname }}"
         mas_application_id: "{{ mas_app_id }}"
+
     - role: pause #pause for 5mins to let db2 fully start
+      when: not (configure_external_db|bool)
     - role: ibm.mas_devops.suite_db2_setup_for_manage
+      when: not (configure_external_db|bool)
+
+    - role: ibm.mas_devops.gencfg_jdbc
+      when: configure_external_db|bool
+      vars:
+        db_username: "{{ mas_jdbc_user }}"
+        jdbc_instance_password: "{{ mas_jdbc_password }}"
+        jdbc_url: "{{ mas_jdbc_url }}"
+
     - role: ibm.mas_devops.suite_config
     - role: ibm.mas_devops.suite_app_install
       vars:
