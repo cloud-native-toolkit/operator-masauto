@@ -1,7 +1,7 @@
 
 ## Advanced Setup and Install Scenarios
 
-### Setup Prior to installing Manage with an External DB
+### Installing Manage with an External DB
 When installing Manage with an external db, please follow the steps below before installing Manage.
 
 1.  Create a manage-jdbc-credentials secret.  Note the username will be passed in the manage CR, this is only the password to connect to the database.
