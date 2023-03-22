@@ -188,6 +188,7 @@ metadata:
             "namespace": "masauto-operator-system"
           },
           "spec": {
+            "configure_external_db": "false",
             "db2_data_storage_class": "ocs-storagecluster-ceph-rbd",
             "db2_database_db_config": {
               "LOGARCHMETH1": "OFF"
