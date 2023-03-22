@@ -29,9 +29,7 @@ MAS requires Read/Write/Many (RWX) storage on your cluster such as through OpenS
 
 Reading the general MAS installation guidance for additional requirements per MAS application may be useful and can be found [here](https://www.ibm.com/docs/en/mas-cd/continuous-delivery?topic=installing-planning-install-maximo-application-suite)
 
-**Installing Manage with an External DB** When installing Manage with an external db, please see the advanced instructions [here](/docs/advanced.md) for creating a db credentials secret and ssl configmap resource on the cluster.
-
-### To Run
+### To Run the Operator
 
 1.  Add the Ecosystem Engineering catalog to your cluster (see sample catalog source `sample_catalog_source.yaml` in samples directoy)
 (note when deploying the operator take the default namespace)
@@ -48,6 +46,11 @@ Note: your entitlement key can be found [here](https://myibm.ibm.com/products-se
 5.  The `masconfig` directory is automatically set for you based on the instance name provided to support a multi instance install on the same cluster.  Do not set this manually.
 
 More detailed step by step instructions for deployment of core using the operator can be found [here](/docs/MAS-Operator-Deployment.pdf)
+
+### Advanced Setup Configurations
+The default setup will install on a single cluster.  The following advanced configurations require additional setup.  These have been tested.  Further setup instructions found [here](/docs/advanced.md)
+
+- Installing Manage with an External DB.   See the advanced instructions for creating a db credentials secret and ssl configmap resource on the cluster.
 
 ### CP4D Important Requirement
 BEFORE installing CP4D you currently must have a *global* pull secret defined on the cluster with your IBM Entitlement Key. See CP4D [docs](https://www.ibm.com/docs/en/mas-cd/continuous-delivery?topic=configuring-global-image-pull-secret)
