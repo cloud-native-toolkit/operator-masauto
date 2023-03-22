@@ -11,3 +11,21 @@ When installing Manage with an external db, please follow the steps below before
 2.  Create a configmap to store your public ssl certificate in pem format for establishing a ssl connection.  This is not required if you set `ssl_enabled: false`, ssl is recommended and true is the default.
 
 `oc -n masauto-operator-system create configmap ca-pemstore --from-file=/temp/db2.pem`  replace the file path and pemfile name with your path and pemfile name.
+
+### Installing multiple instances of MAS and Applications
+Multiple instances of core as well as the applications are supported.  It is not uncommon in a development cluster to install multiple instance of Manage for example while sharing common services of: mongo, sls, UDS among the core instances.
+
+This can be done simply through editing the yaml in the operator during deployment.  To deploy a second core instance, simply change the name of the mas_instance_id variable to something different than the first instance already deploy.  For example if `inst1` is already deployed on the cluster, change this to `inst2` as shown below.
+
+```shell
+   name: masauto-core2
+   mas_instance_id: "inst1"
+```   
+
+The same applies for installing a second Manage on the same cluster.  A sample of the variables needed to be changed could look something like below.
+
+```shell
+  name: masauto-manage2
+  mas_instance_id: "inst2"
+  db2_instance_name: "db2w-manage2"
+```

@@ -50,7 +50,8 @@ More detailed step by step instructions for deployment of core using the operato
 ### Advanced Setup Configurations
 The default setup will install on a single cluster.  The following advanced configurations require additional setup.  These have been tested.  Further setup instructions found [here](/docs/advanced.md)
 
-- Installing Manage with an External DB.   See the advanced instructions for creating a db credentials secret and ssl configmap resource on the cluster.
+- Installing Manage with an External DB.
+- Installing multiple instances of MAS and Applications on the same cluster.
 
 ### CP4D Important Requirement
 BEFORE installing CP4D you currently must have a *global* pull secret defined on the cluster with your IBM Entitlement Key. See CP4D [docs](https://www.ibm.com/docs/en/mas-cd/continuous-delivery?topic=configuring-global-image-pull-secret)
