@@ -19,7 +19,7 @@ This can be done simply through editing the yaml in the core or appliation CR be
 
 ```shell
    name: masauto-core2
-   mas_instance_id: "inst1"
+   mas_instance_id: "inst2"
 ```   
 
 The same applies for installing a second Manage on the same cluster.  A sample of the variables needed to be changed could look something like below.
