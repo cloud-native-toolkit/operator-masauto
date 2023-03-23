@@ -72,4 +72,10 @@
   reconcilePeriod: 0s
   manageStatus: False
   watchDependentResources: False
-#+kubebuilder:scaffold:watch
+- version: v1alpha1
+  group: masauto.ibm.com
+  kind: DNSConfig
+  playbook: playbooks/dnsconfig.yml
+  reconcilePeriod: 0s
+  manageStatus: False
+  watchDependentResources: False

@@ -1,0 +1,20 @@
+# permissions for end users to view dnsconfigs.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: dnsconfig-viewer-role
+rules:
+- apiGroups:
+  - masauto.ibm.com
+  resources:
+  - dnsconfigs
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - masauto.ibm.com
+  resources:
+  - dnsconfigs/status
+  verbs:
+  - get

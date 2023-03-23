@@ -1,0 +1,24 @@
+# permissions for end users to edit dnsconfigs.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: dnsconfig-editor-role
+rules:
+- apiGroups:
+  - masauto.ibm.com
+  resources:
+  - dnsconfigs
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - masauto.ibm.com
+  resources:
+  - dnsconfigs/status
+  verbs:
+  - get

@@ -12,4 +12,5 @@ resources:
 - bases/masauto.ibm.com_predicts.yaml
 - bases/masauto.ibm.com_assists.yaml
 - bases/masauto.ibm.com_optimizers.yaml
+- bases/masauto.ibm.com_dnsconfigs.yaml
 #+kubebuilder:scaffold:crdkustomizeresource

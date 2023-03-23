@@ -1,0 +1,6 @@
+apiVersion: masauto.ibm.com/v1alpha1
+kind: DNSConfig
+metadata:
+  name: dnsconfig-sample
+spec:
+  # TODO(user): Add fields here
