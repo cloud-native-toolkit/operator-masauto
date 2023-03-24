@@ -6,6 +6,7 @@
           - cloudflare_zone is defined and cloudflare_zone != ""
           - cloudflare_apitoken_secret is defined and cloudflare_apitoken_secret != ""
           - cloudflare_email is defined and cloudflare_email != ""
+          - mas_domain is defined and mas_domain != ""
         fail_msg: "One or more required cloudflare variables are not defined"  
 
     - name: "Get cloudflare apikey secret"
@@ -32,6 +33,7 @@
           - cis_crn is defined and cis_crn != ""
           - cis_email is defined and cis_email != ""
           - cis_apikey_secret is defined and cis_apikey_secret != ""
+          - mas_domain is defined and mas_domain != ""
         fail_msg: "One or more required cis properties are missing"
 
     - name: "Get cis apikey secret"
