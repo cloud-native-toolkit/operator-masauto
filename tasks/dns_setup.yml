@@ -1,0 +1,52 @@
+    # These tasks grab the apikey for the dns provider
+    - name: "If Cloudflare set: Check for required Cloudflare properties"
+      when: dns_provider == "cloudflare"
+      assert:
+        that:
+          - cloudflare_zone is defined and cloudflare_zone != ""
+          - cloudflare_apitoken_secret is defined and cloudflare_apitoken_secret != ""
+          - cloudflare_email is defined and cloudflare_email != ""
+        fail_msg: "One or more required cloudflare variables are not defined"  
+
+    - name: "Get cloudflare apikey secret"
+      when: dns_provider == "cloudflare"
+      ignore_errors: true      
+      kubernetes.core.k8s_info:
+        api_version: v1
+        kind: Secret
+        name: "{{ cloudflare_apitoken_secret }}"
+        namespace: "masauto-operator-system"
+      register: cf_entitlement_credentials 
+    
+    - name: "Set cf apikey based on secret"
+      when: (cf_entitlement_credentials.api_found) and
+            (cloudflare_apitoken_secret is defined and cloudflare_apitoken_secret != "")
+      ignore_errors: true
+      set_fact:
+        cloudflare_apitoken: "{{ cf_entitlement_credentials.resources[0].data.apikey | b64decode }}"
+
+    - name: "If CIS set: Check for required CIS properties"
+      when: dns_provider == "cis"
+      assert:
+        that:
+          - cis_crn is defined and cis_crn != ""
+          - cis_email is defined and cis_email != ""
+          - cis_apikey_secret is defined and cis_apikey_secret != ""
+        fail_msg: "One or more required cis properties are missing"
+
+    - name: "Get cis apikey secret"
+      when: dns_provider == "cloudflare"
+      ignore_errors: true      
+      kubernetes.core.k8s_info:
+        api_version: v1
+        kind: Secret
+        name: "{{ cis_apikey_secret }}"
+        namespace: "masauto-operator-system"
+      register: cis_entitlement_credentials 
+    
+    - name: "Set cis apikey based on secret"
+      when: (cis_entitlement_credentials.api_found) and
+            (cis_apikey_secret is defined and cis_apikey_secret != "")
+      ignore_errors: true
+      set_fact:
+        cis_apikey: "{{ cis_entitlement_credentials.resources[0].data.apikey | b64decode }}"

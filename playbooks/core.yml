@@ -18,6 +18,7 @@
   # set defaults for core
     sls_compliance_enforce: "true"
     sls_mode: "prod"
+    dns_provider: ""
 
     # Entitlement key can be passed by either the key or a secret name
     ibm_entitlement_secret: "{{ ibm_entitlement_secret }}"
@@ -42,6 +43,10 @@
 
     # Create masconfig directory based on instance_id
     - include_tasks: "{{ playbook_dir }}/../tasks/masconfig_setup.yml"    
+
+    # Setup DNS config secrets if provider is set
+    - include_tasks: "{{ playbook_dir }}/../tasks/dns_setup.yml"
+      when: dns_provider != ""
 
     # Set SLS mode set if required
     - name: "Set SLS config mode if required"
