@@ -24,4 +24,4 @@ spec:
   cis_email: "<your email>"
   cis_apikey_secret: "cis-apikey-secret" #see advanced doc link for setup
   mas_domain: "mysubdomain.mydomain.com"
-  mas_cluster_issuer: "inst1-cloudflare-le-prod"
+  mas_cluster_issuer: "inst1-cis-le-prod"
