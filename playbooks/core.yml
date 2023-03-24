@@ -53,7 +53,7 @@
       when: (sls_mode is defined and sls_mode == "dev")
       set_fact:
         sls_compliance_enforce: "false"
-      
+
   roles:
     # 1. Install cluster-scoped dependencies (e.g. SBO, Cert-Manager, Operator Catalogs) & cluster monitoring
     - role: ibm.mas_devops.ibm_catalogs
