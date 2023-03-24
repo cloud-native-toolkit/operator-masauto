@@ -23,7 +23,7 @@
             (cloudflare_apitoken_secret is defined and cloudflare_apitoken_secret != "")
       ignore_errors: true
       set_fact:
-        cloudflare_apitoken: "{{ cf_entitlement_credentials.resources[0].data.apikey | b64decode }}"
+        cloudflare_apitoken: "{{ cf_entitlement_credentials.resources[0].data.apitoken | b64decode }}"
 
     - name: "If CIS set: Check for required CIS properties"
       when: dns_provider == "cis"

@@ -88,6 +88,7 @@
     
     # 6. Install & configure MAS
     - role: ibm.mas_devops.suite_dns
+      when: dns_provider != ""
     - role: ibm.mas_devops.suite_install
       vars:
         mas_entitlement_key: "{{ ibm_entitlement_key }}"
