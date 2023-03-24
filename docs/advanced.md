@@ -29,3 +29,20 @@ The same applies for installing a second Manage on the same cluster.  A sample o
   mas_instance_id: "inst2"
   db2_instance_name: "db2w-manage2"
 ```
+
+### Using a DNS with Core and Signing with Letsencrypt Service
+Current automation supports both IBM CIS or Cloudflare DNS.  This automation operator requires your apikey for either service to be in a secret on the cluster.  Set this up before running an installation of Core.
+
+1. If using Cloudflare:
+
+```shell
+  oc create secret generic "cloudflare-apitoken-secret" -n masauto-operator-system --from-literal="apitoken=<your-apitoken-goes-here>"
+``` 
+
+2. If using IBM CIS:
+
+```shell
+  oc create secret generic "cis-apikey-secret" -n masauto-operator-system --from-literal="apikey=<your-apikey-goes-here>"
+```
+
+3.  See the samples [directory](/samples) for a sample core CR with either CIS or Cloudflare DNS and letsencrypt.

@@ -52,6 +52,7 @@ The default setup will install on a single cluster.  The following advanced conf
 
 - Installing Manage with an External DB.
 - Installing multiple instances of MAS and Applications on the same cluster.
+- Using Letsencrypt and DNS
 
 ### CP4D Important Requirement
 BEFORE installing CP4D you currently must have a *global* pull secret defined on the cluster with your IBM Entitlement Key. See CP4D [docs](https://www.ibm.com/docs/en/mas-cd/continuous-delivery?topic=configuring-global-image-pull-secret)

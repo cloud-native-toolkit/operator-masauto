@@ -1,0 +1,27 @@
+apiVersion: masauto.ibm.com/v1alpha1
+kind: Core
+metadata:
+  name: masauto-core-cis
+  namespace: masauto-operator-system
+annotations:
+  ansible.operator-sdk/reconcile-period: "0s"    
+spec:
+  mas_channel: "8.9.x"
+  ibm_entitlement_secret: "ibm-entitlement-key" #secret where your ibm-entitlement-key is stored in operator namespace
+  mas_instance_id: "inst1"
+  mas_workspace_id: "masdev"
+  mas_workspace_name: "MAS Development"
+  mas_annotations: "mas.ibm.com/operationalMode=production"
+  mongodb_storage_class: "ocs-storagecluster-ceph-rbd"
+  uds_contact:
+    email: "youremail@us.ibm.com"
+    first_name: "yourfirstname"
+    last_name: "yourlastname"  
+  uds_storage_class: "ocs-storagecluster-ceph-rbd"
+
+  dns_provider: "cis"
+  cis_crn: "<your crn>"
+  cis_email: "<your email>"
+  cis_apikey_secret: "cis-apikey-secret" #see advanced doc link for setup
+  mas_domain: "mysubdomain.mydomain.com"
+  mas_cluster_issuer: "inst1-cis-le-prod"
