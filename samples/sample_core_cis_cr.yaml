@@ -22,6 +22,6 @@ spec:
   dns_provider: "cis"
   cis_crn: "<your crn>"
   cis_email: "<your email>"
-  cis_apikey_secret: "cis_apikey_secret" #see advanced doc link for setup
+  cis_apikey_secret: "cis-apikey-secret" #see advanced doc link for setup
   mas_domain: "mysubdomain.mydomain.com"
   mas_cluster_issuer: "inst1-cloudflare-le-prod"

@@ -22,7 +22,7 @@ spec:
   dns_provider: "cloudflare"
   mas_domain: "mysubdomain.mydomain.com"
   cloudflare_email: "youremail@ibm.com"
-  cloudflare_apitoken_secret: "cloudflare_apitoken_secret" #see advanced doc link for setup
+  cloudflare_apitoken_secret: "cloudflare-apitoken-secret" #see advanced doc link for setup
   cloudflare_zone: "mydomain.com"
   cloudflare_subdomain: "mysubdomain"
   mas_cluster_issuer: "inst1-cloudflare-le-prod"

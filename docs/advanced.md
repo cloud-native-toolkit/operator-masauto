@@ -36,13 +36,13 @@ Current automation supports both IBM CIS or Cloudflare DNS.  This automation ope
 1. If using Cloudflare:
 
 ```shell
-  oc create secret generic "cloudflare_apitoken_secret" -n masauto-operator-system --from-literal="apitoken=<your-apitoken-goes-here>"
+  oc create secret generic "cloudflare-apitoken-secret" -n masauto-operator-system --from-literal="apitoken=<your-apitoken-goes-here>"
 ``` 
 
 2. If using IBM CIS:
 
 ```shell
-  oc create secret generic "cis_apikey_secret" -n masauto-operator-system --from-literal="apikey=<your-apikey-goes-here>"
+  oc create secret generic "cis-apikey-secret" -n masauto-operator-system --from-literal="apikey=<your-apikey-goes-here>"
 ```
 
 3.  See the samples [directory](/samples) for a sample core CR with either CIS or Cloudflare DNS and letsencrypt.
