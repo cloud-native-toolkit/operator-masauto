@@ -38,7 +38,9 @@ Reading the general MAS installation guidance for additional requirements per MA
 
 3.  Create a ibm-entitlement-key secret
 
-`oc create secret generic "ibm-entitlement-key" -n masauto-operator-system --from-literal="username=cp" --from-literal="password=<your-ibm-entitlement-key-goes-here>" `
+```shell
+oc create secret generic "ibm-entitlement-key" -n masauto-operator-system --from-literal="username=cp" --from-literal="password=<your-ibm-entitlement-key-goes-here>"
+```
 Note: your entitlement key can be found [here](https://myibm.ibm.com/products-services/containerlibrary) 
 
 4.  When deploying any of the applications, it is best to use the **yaml** view on the operator page so you can edit the storage classes appropriately for your cluster and cloud platform.  You may need to add the cluster ingress certificate secret name to the yaml file before you deploy.  See the **Troubleshooting** section below under ingress.
@@ -53,6 +55,7 @@ The default setup will install on a single cluster.  The following advanced conf
 - Installing Manage with an External DB.
 - Installing multiple instances of MAS and Applications on the same cluster.
 - Using Letsencrypt and DNS
+- Automating the App Point License apply during Install
 
 ### CP4D Important Requirement
 BEFORE installing CP4D you currently must have a *global* pull secret defined on the cluster with your IBM Entitlement Key. See CP4D [docs](https://www.ibm.com/docs/en/mas-cd/continuous-delivery?topic=configuring-global-image-pull-secret)
