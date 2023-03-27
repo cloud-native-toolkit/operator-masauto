@@ -37,7 +37,7 @@
         fail_msg: "One or more required cis properties are missing"
 
     - name: "Get cis apikey secret"
-      when: dns_provider == "cloudflare"
+      when: dns_provider == "cis"
       ignore_errors: true      
       kubernetes.core.k8s_info:
         api_version: v1
