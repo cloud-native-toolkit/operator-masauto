@@ -1,8 +1,3 @@
-# Adds Studio to an existing MAS Core 8.9.x
-#
-# Dependencies:
-# - Core is installed
-# - CP4D Foundation is installed
 apiVersion: masauto.ibm.com/v1alpha1
 kind: CP4D
 metadata:
@@ -11,18 +6,18 @@ metadata:
 annotations:
   ansible.operator-sdk/reconcile-period: "0s"  
 spec:
-  ibm_entitlement_secret: "ibm-entitlement-key" #secret where your ibm-entitlement-key is stored in operator namespace
-  cpd_primary_storage_class: "ocs-storagecluster-cephfs" #file
-  cpd_metadata_storage_class: "ocs-storagecluster-ceph-rbd" #block
+  ibm_entitlement_secret: "ibm-entitlement-key"
+  cpd_primary_storage_class: "ocs-storagecluster-cephfs"
+  cpd_metadata_storage_class: "ocs-storagecluster-ceph-rbd"
   cpd_product_version: "4.6.3"
   cpd_instance_namespace: "ibm-cpd"
-  install_cp4d_platform: "false" #(~1 1/2 hours)
+  install_cp4d_platform: "false"
 
-  install_watson_studio: "true" #(~3 hours)
+  install_watson_studio: "true"
   mas_instance_id: "inst1"
 
-  install_watson_machine_learning: "false" #(~2 1/2 hours)
-  install_analytics_engine: "false" #(~30 minutes)
-  install_watson_openscale: "false" #(~1 hour)
-  install_watson_discovery: "false" #(~1 hour) 
+  install_watson_machine_learning: "false"
+  install_analytics_engine: "false"
+  install_watson_openscale: "false"
+  install_watson_discovery: "false"
   install_spss_modeler: "false"
