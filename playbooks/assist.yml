@@ -1,4 +1,4 @@
-# Adds Assist latest release to an existing MAS Core 8.9.x + IoT 8.6.x installation
+# Adds Assist latest release to an existing MAS Core + IoT installation
 #
 # Assist will be configured to use the same db2 instance that IoT is using
 #
