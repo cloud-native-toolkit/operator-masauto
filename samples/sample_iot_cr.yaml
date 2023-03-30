@@ -19,10 +19,10 @@ spec:
   db2_dbname: "MASIOT"
   db2_meta_storage_class: "ocs-storagecluster-cephfs"
   db2_data_storage_class: "ocs-storagecluster-ceph-rbd"
-  db2_cpu_limits: "8000m"
-  db2_cpu_requests: "8000m"
-  db2_memory_limits: "32Gi"
-  db2_memory_requests: "32Gi"
+  db2_cpu_limits: "2000m"
+  db2_cpu_requests: "2000m"
+  db2_memory_limits: "24Gi"
+  db2_memory_requests: "24Gi"
   db2_instance_dbm_config: {
     INSTANCE_MEMORY: "70"
   }

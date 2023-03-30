@@ -1,9 +1,9 @@
 # Maximo Application Suite (MAS) Install Automation OpenShift Operator
-Currently using MAS Ansible: v12.15.2
+Currently using MAS Ansible: v12.16.1
 
 ![GitHub Workflow Status (with branch)](https://img.shields.io/github/actions/workflow/status/cloud-native-toolkit/operator-masauto/docker-build.yaml) ![GitHub Release Date](https://img.shields.io/github/release-date/cloud-native-toolkit/operator-masauto)
 
-**This will default to latest v8.9.x of MAS**
+**This will default to latest v8.10.x of MAS**
 (Note: to install older versions of MAS, change the appropriate channel definitions in the CR that is being deployed)
 
 This creates an operator that will run the MAS Product Lab ansible tasks to install MAS and it's applications.  Suitable defaults are provided to install everything in a single cluster.  Other common installation patterns can be found in the [samples](/samples) directory of this repository.  
