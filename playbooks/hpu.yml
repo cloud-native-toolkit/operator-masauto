@@ -17,6 +17,8 @@
     - ibm.cloudcollection
 
   vars:
+    cr_kind: "HPU"
+
     # Cluster-wide dependencies for MAS 
     ibm_entitlement_key: "{{ ibm_entitlement_key }}"
 
@@ -32,7 +34,7 @@
 
   pre_tasks:
     # Check if HPU is already installed first.
-    - include_tasks: "{{ playbook_dir }}/../tasks/preinstall_check_hpu.yml"
+    - include_tasks: "{{ playbook_dir }}/../tasks/preinstall_check.yml"
 
     # Lookup entitlement key via secret if it's declared and the ibm_entitlement_key isn't
     - include_tasks: "{{ playbook_dir }}/../tasks/lookup_entitlement.yml"
@@ -55,3 +57,14 @@
       vars:
         mas_entitlement_key: "{{ ibm_entitlement_key }}"
     - role: ibm.mas_devops.suite_app_config
+
+  post_tasks:
+    # Set ready status to true
+    - name: "Set ready status of CR to True"
+      k8s_status:
+        api_version: masauto.ibm.com/v1alpha1
+        kind: "{{ cr_kind }}"
+        name: "{{ ansible_operator_meta.name }}"
+        namespace: "{{ ansible_operator_meta.namespace }}"
+        status:
+          Ready: "True"
