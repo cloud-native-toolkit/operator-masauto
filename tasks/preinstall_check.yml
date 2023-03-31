@@ -7,13 +7,13 @@
         kind: "{{ cr_kind }}"
       register: cr_instance_lookup
 
-    - name: "Check if CR is already in completed state"
+    - name: "End play if ready is True for CR"
       when: (cr_instance_lookup.resources[0].status.Ready is defined) and
             (cr_instance_lookup.resources[0].status.Ready == "True")
       meta: end_play      
 
     # Install isn't completed so set Ready status to False for CR
-    - name: "Set CR status of Ready to false if not completed"
+    - name: "Set CR status of Ready to false when not completed"
       k8s_status:
         api_version: masauto.ibm.com/v1alpha1
         kind: "{{ cr_kind }}"
