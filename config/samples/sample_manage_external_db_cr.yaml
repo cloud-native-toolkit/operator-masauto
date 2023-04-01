@@ -6,11 +6,11 @@ metadata:
 annotations:
   ansible.operator-sdk/reconcile-period: "0s"    
 spec:
-  ibm_entitlement_secret: "ibm-entitlement-key" #secret where your ibm-entitlement-key is stored in operator namespace  
+  ibm_entitlement_secret: "ibm-entitlement-key"
   mas_instance_id: "inst1"
   mas_workspace_id: "masdev"
   mas_app_id: "manage"
-  mas_app_channel: "8.5.x"
+  mas_app_channel: "8.6.x"
   configure_external_db: "true"
   ssl_enabled: true
   db_pem_configmap: "ca-pemstore"
@@ -24,7 +24,7 @@ spec:
   mas_app_settings_tablespace: "MAXDATA"
   mas_app_settings_indexspace: "MAXINDEX"
 
-  mas_config_scope: "wsapp"  # recommend keeping db for manage at workspace-application scope by default
+  mas_config_scope: "wsapp"
   mas_appws_bindings_jdbc: "workspace-application"
 
   mas_app_settings_demodata: "true"
@@ -33,16 +33,3 @@ spec:
       version: latest
     health:
       version: latest
-
-#  mas_jdbc_url samples
-#
-#  DB2:
-#   mas_jdbc_url: "jdbc:db2://dbserverxx:50000/MANAGE"
-#   mas_jdbc_url: "jdbc:db2://123.456.78.90:50001/MANAGE:sslConnection=true;sslVersion=TLSv1.2;"  if SSL enabled
-#
-#  Oracle:
-#   mas_jdbc_url: "jdbc:oracle:thin:@dbserverxx:1521:maximo"
-#
-#  SQL Server:
-#   mas_jdbc_url: "jdbc:sqlserver://;serverName=dbserverxx;portNumber=1433;databaseName=msdbxx;integratedSecurity=false;sendStringParametersAsUnicode=false;selectMethod=cursor;encrypt=false;trustServerCertificate=false;"
-#   mas_jdbc_url: "jdbc:sqlserver://;serverName=dbserverxx;portNumber=1433;databaseName=msdbxx;integratedSecurity=false;sendStringParametersAsUnicode=false;selectMethod=cursor;encrypt=true;trustServerCertificate=true;" if SSL enabled

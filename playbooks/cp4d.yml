@@ -1,4 +1,4 @@
-# Adds CP4D to an existing MAS Core 8.9.x
+# Adds CP4D to an existing MAS Core
 #
 # Dependencies:
 # - Core is installed
@@ -14,6 +14,8 @@
     - ibm.cloudcollection
 
   vars:
+    cr_kind: "CP4D"
+    
     # Cluster-wide dependencies for MAS 
     ibm_entitlement_key: "{{ ibm_entitlement_key }}"
 
@@ -35,7 +37,7 @@
 
   pre_tasks:
     # Check for current install of CP4D components
-    - include_tasks: "{{ playbook_dir }}/../tasks/preinstall_check_cp4d.yml"
+    - include_tasks: "{{ playbook_dir }}/../tasks/preinstall_check.yml"
 
     # Lookup entitlement key via secret if it's declared and the ibm_entitlement_key isn't
     - include_tasks: "{{ playbook_dir }}/../tasks/lookup_entitlement.yml"
@@ -98,3 +100,14 @@
         cpd_service_name: spss
 
     - role: ibm.mas_devops.suite_config
+
+  post_tasks:
+    # Set ready status to true
+    - name: "Set ready status of CR to True"
+      k8s_status:
+        api_version: masauto.ibm.com/v1alpha1
+        kind: "{{ cr_kind }}"
+        name: "{{ ansible_operator_meta.name }}"
+        namespace: "{{ ansible_operator_meta.namespace }}"
+        status:
+          Ready: "True"
