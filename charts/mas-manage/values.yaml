@@ -31,6 +31,19 @@ database:
   db_pem_configmap: ""
   mas_jdbc_user: ""
   mas_jdbc_password_secret: ""
+  ##  mas_jdbc_url: the jdbc url for the existing DB that will be used for MAS Manage
+  ##
+  ##  == Samples ==
+  ##  DB2:
+  ##   mas_jdbc_url: "jdbc:db2://dbserverxx:50000/MANAGE"
+  ##   mas_jdbc_url: "jdbc:db2://123.456.78.90:50001/MANAGE:sslConnection=true;sslVersion=TLSv1.2;"  if SSL enabled
+  ##
+  ##  Oracle:
+  ##   mas_jdbc_url: "jdbc:oracle:thin:@dbserverxx:1521:maximo"
+  ##
+  ##  SQL Server:
+  ##   mas_jdbc_url: "jdbc:sqlserver://;serverName=dbserverxx;portNumber=1433;databaseName=msdbxx;integratedSecurity=false;sendStringParametersAsUnicode=false;selectMethod=cursor;encrypt=false;trustServerCertificate=false;"
+  ##   mas_jdbc_url: "jdbc:sqlserver://;serverName=dbserverxx;portNumber=1433;databaseName=msdbxx;integratedSecurity=false;sendStringParametersAsUnicode=false;selectMethod=cursor;encrypt=true;trustServerCertificate=true;" if SSL enabled
   mas_jdbc_url: ""
 
   db2_schema: ""

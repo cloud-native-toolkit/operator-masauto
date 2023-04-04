@@ -12,3 +12,5 @@ oc create configmap tmp \
   --dry-run=client \
   -o yaml | \
 yq eval 'del(.apiVersion) | del(.kind) | del(.metadata)' - >> "${TEMPLATE_DIR}/configmap.yaml"
+
+echo "{{- end }}" >> "${TEMPLATE_DIR}/configmap.yaml"

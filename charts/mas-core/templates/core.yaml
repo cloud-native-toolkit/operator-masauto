@@ -10,6 +10,7 @@ metadata:
   labels:
     {{- include "mas-core.labels" . | nindent 4 }}
 spec:
+  # secret where your ibm-entitlement-key is stored in operator namespace
   ibm_entitlement_secret: {{ include "mas.ibm_entitlement_secret" . }}
   mas_instance_id: {{ include "mas.mas_instance_id" . }}
   mas_workspace_id: {{ include "mas.mas_workspace_id" . }}
@@ -29,6 +30,7 @@ spec:
   mas_cluster_issuer: {{ .Values.dns_provider.mas_cluster_issuer | quote }}
   {{- if eq .Values.dns_provider.name "cloudflare" }}
   cloudflare_email: {{ .Values.dns_provider.email | quote }}
+  # see advanced doc link for setup
   cloudflare_apitoken_secret: {{ .Values.dns_provider.api_token_secret | quote }}
   cloudflare_zone: {{ .Values.dns_provider.zone | quote }}
   cloudflare_subdomain: {{ .Values.dns_provider.subdomain | quote }}

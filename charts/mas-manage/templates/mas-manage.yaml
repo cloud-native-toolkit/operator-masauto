@@ -14,12 +14,14 @@ metadata:
   labels:
     {{- include "masauto-manage.labels" . | nindent 4 }}
 spec:
+  # secret where your ibm-entitlement-key is stored in operator namespace
   ibm_entitlement_secret: {{ include "mas.ibm_entitlement_secret" . }}
   mas_instance_id: {{ include "mas.mas_instance_id" . }}
   mas_workspace_id: {{ include "mas.mas_workspace_id" . }}
   mas_app_id: manage
   mas_app_channel: {{ .Values.mas_app_channel | default "8.6.x" | quote }}
-  mas_config_scope: {{ .Values.mas_config_scope | default "wsapp" }}  # recommend keeping db for manage at workspace-application scope by default
+  # recommend keeping db for manage at workspace-application scope by default
+  mas_config_scope: {{ .Values.mas_config_scope | default "wsapp" }}
   mas_appws_bindings_jdbc: {{ .Values.mas_appws_jdbc_binding | default "workspace-application" }}
 
   mas_app_settings_demodata: {{ .Values.mas_app_settings_demodata | quote }}
@@ -39,6 +41,19 @@ spec:
   db_instance_id: {{ .Values.database.db2_instance_name | default "db2w-manage" }}
   mas_jdbc_user: {{ default "db2inst1" .Values.database.mas_jdbc_user }}
   mas_jdbc_password_secret: {{ default "manage-jdbc-credentials" .Values.database.mas_jdbc_password_secret }}
+  ##  mas_jdbc_url: the jdbc url for the existing DB that will be used for MAS Manage
+  ##
+  ##  == Samples ==
+  ##  DB2:
+  ##   mas_jdbc_url: "jdbc:db2://dbserverxx:50000/MANAGE"
+  ##   mas_jdbc_url: "jdbc:db2://123.456.78.90:50001/MANAGE:sslConnection=true;sslVersion=TLSv1.2;"  if SSL enabled
+  ##
+  ##  Oracle:
+  ##   mas_jdbc_url: "jdbc:oracle:thin:@dbserverxx:1521:maximo"
+  ##
+  ##  SQL Server:
+  ##   mas_jdbc_url: "jdbc:sqlserver://;serverName=dbserverxx;portNumber=1433;databaseName=msdbxx;integratedSecurity=false;sendStringParametersAsUnicode=false;selectMethod=cursor;encrypt=false;trustServerCertificate=false;"
+  ##   mas_jdbc_url: "jdbc:sqlserver://;serverName=dbserverxx;portNumber=1433;databaseName=msdbxx;integratedSecurity=false;sendStringParametersAsUnicode=false;selectMethod=cursor;encrypt=true;trustServerCertificate=true;" if SSL enabled
   mas_jdbc_url: {{ required "database.mas_jdbc_url value is required" .Values.database.mas_jdbc_url }}
 
   mas_app_settings_db2_schema: {{ default "MANAGE" .Values.database.db2_schema }}

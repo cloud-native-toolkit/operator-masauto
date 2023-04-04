@@ -1,3 +1,4 @@
+{{- if .Values.masLicense.secretName }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -101,3 +102,4 @@ data:
 
       echo "Done checking for resource: ${NS}/${GITOPS_TYPE}/${NAME}"
     }
+{{- end }}
