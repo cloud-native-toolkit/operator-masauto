@@ -1,0 +1,22 @@
+---
+# Source: masauto-operator/templates/subscription.yaml
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: masauto-operator
+  namespace: masauto-operator-system
+  annotations:
+    argocd.argoproj.io/sync-wave: "-10"
+    helm.sh/hook-weight: "-10"
+  labels:
+    helm.sh/chart: masauto-operator-0.1.0
+    app.kubernetes.io/name: masauto-operator
+    app.kubernetes.io/instance: masauto-operator
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  channel: alpha
+  installPlanApproval: Automatic
+  name: masauto-operator
+  source: ecosystem-engineering-catalog
+  sourceNamespace: openshift-marketplace

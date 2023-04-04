@@ -19,6 +19,10 @@ if [[ -z "${SECRET_NAME}" ]]; then
   exit 1
 fi
 
+if [[ -z "${TARGET_SECRET}" ]]; then
+  TARGET_SECRET="sls-bootstrap"
+fi
+
 set -ex
 
 # wait for secret
@@ -28,5 +32,5 @@ check_k8s_resource "${CURRENT_NAMESPACE}" secret "${SECRET_NAME}" || exit 1
 check_k8s_namespace "${NAMESPACE}" || exit 1
 
 oc get secret "${SECRET_NAME}" -o json | \
-  jq --arg NS "${NAMESPACE}" '{"apiVersion":.apiVersion,"type":.type,"kind":.kind,"metadata":{"name":.metadata.name,"namespace":$NS},"data":.data}' | \
+  jq --arg NS "${NAMESPACE}" --arg NAME "${TARGET_SECRET}" '{"apiVersion":.apiVersion,"type":.type,"kind":.kind,"metadata":{"name":$NAME,"namespace":$NS},"data":.data}' | \
   oc apply -f -

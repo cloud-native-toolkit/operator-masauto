@@ -1,4 +1,30 @@
 ---
+# Source: mas-core/templates/serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: mas-core
+  namespace: masauto-operator-system
+  labels:
+    helm.sh/chart: mas-core-0.2.0
+    app.kubernetes.io/name: mas-core
+    app.kubernetes.io/instance: mas-core
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+  annotations:
+    argocd.argoproj.io/sync-wave: "-100"
+    helm.sh/hook-weight: "-100"
+---
+# Source: mas-core/templates/license-secret.yaml
+apiVersion: v1
+kind: Secret
+type: Opaque
+metadata:
+  name: sls-bootstrap
+stringData:
+  licensingId: hostId
+  licensingKey: license
+---
 # Source: mas-core/templates/configmap.yaml
 apiVersion: v1
 kind: ConfigMap
@@ -108,6 +134,51 @@ data:
       echo "Done checking for resource: ${NS}/${GITOPS_TYPE}/${NAME}"
     }
 ---
+# Source: mas-core/templates/license-job.yaml
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: license-job
+  namespace: masauto-operator-system
+  annotations:
+    ansible.operator-sdk/reconcile-period: "0s"
+    argocd.argoproj.io/sync-wave: "-5"
+    helm.sh/hook-weight: "-5"
+  labels:
+    helm.sh/chart: mas-core-0.2.0
+    app.kubernetes.io/name: mas-core
+    app.kubernetes.io/instance: mas-core
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  template:
+    metadata:
+      labels:
+        run: mas-core
+    spec:
+      serviceAccountName: mas-core
+      volumes:
+        - name: scripts
+          configMap:
+            name: mas-core
+            defaultMode: 0777
+      containers:
+        - image: quay.io/cloudnativetoolkit/cli-tools-core:v1.1-v1.6.1
+          name: toolkit
+          env:
+            - name: CURRENT_NAMESPACE
+              value: mob-assist-dev
+            - name: NAMESPACE
+              value: ibm-sls
+            - name: SECRET_NAME
+              value: sls-bootstrap
+          volumeMounts:
+            - mountPath: /scripts
+              name: scripts
+          command:
+            - /scripts/copy-secret.sh
+      restartPolicy: Never
+---
 # Source: mas-core/templates/core.yaml
 apiVersion: masauto.ibm.com/v1alpha1
 kind: Core
@@ -137,10 +208,3 @@ spec:
     first_name: yourfirstname
     last_name: yourlastname
   uds_storage_class: ocs-storagecluster-ceph-rbd
-  dns_provider: "cloudflare"
-  mas_domain: "mysubdomain.mydomain.com"
-  mas_cluster_issuer: "inst1-cloudflare-le-prod"
-  cloudflare_email: "youremail@ibm.com"
-  cloudflare_apitoken_secret: "cloudflare-apitoken-secret"
-  cloudflare_zone: "mydomain.com"
-  cloudflare_subdomain: "mysubdomain"

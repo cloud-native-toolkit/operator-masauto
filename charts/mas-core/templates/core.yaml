@@ -22,3 +22,15 @@ spec:
     first_name: {{ required "The uds_contact_first_name value is required" .Values.uds_contact_first_name }}
     last_name: {{ required "The uds_contact_last_name value is required" .Values.uds_contact_last_name }}
   uds_storage_class: {{ required "The uds_storage_class value is required" .Values.uds_storage_class }}
+
+  {{- if and .Values.dns_provider .Values.dns_provider.name }}
+  dns_provider: {{ .Values.dns_provider.name | quote }}
+  mas_domain: {{ printf "%s.%s" .Values.dns_provider.subdomain .Values.dns_provider.zone | quote }}
+  mas_cluster_issuer: {{ .Values.dns_provider.mas_cluster_issuer | quote }}
+  {{- if eq .Values.dns_provider.name "cloudflare" }}
+  cloudflare_email: {{ .Values.dns_provider.email | quote }}
+  cloudflare_apitoken_secret: {{ .Values.dns_provider.api_token_secret | quote }}
+  cloudflare_zone: {{ .Values.dns_provider.zone | quote }}
+  cloudflare_subdomain: {{ .Values.dns_provider.subdomain | quote }}
+  {{- end }}
+  {{- end }}

@@ -1,0 +1,66 @@
+---
+# Source: masauto-operator/templates/namespace.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: masauto-operator
+---
+# Source: masauto-operator/templates/ibm-entitlement-secret.yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: ibm_entitlement_secret
+  namespace: masauto-operator-system
+  annotations:
+    argocd.argoproj.io/sync-wave: "-10"
+    helm.sh/hook-weight: "-10"
+  labels:
+    helm.sh/chart: masauto-operator-0.1.0
+    app.kubernetes.io/name: masauto-operator
+    app.kubernetes.io/instance: masauto-operator
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+stringData:
+  username: cp
+  password: replace with ibm_entitlement_key
+---
+# Source: masauto-operator/templates/operator-group.yaml
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: masauto-operator-system-operator-group
+  namespace: masauto-operator-system
+  annotations:
+    argocd.argoproj.io/sync-wave: "-12"
+    helm.sh/hook-weight: "-12"
+  labels:
+    helm.sh/chart: masauto-operator-0.1.0
+    app.kubernetes.io/name: masauto-operator
+    app.kubernetes.io/instance: masauto-operator
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  targetNamespaces:
+    - masauto-operator-system
+---
+# Source: masauto-operator/templates/subscription.yaml
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: masauto-operator
+  namespace: masauto-operator-system
+  annotations:
+    argocd.argoproj.io/sync-wave: "-10"
+    helm.sh/hook-weight: "-10"
+  labels:
+    helm.sh/chart: masauto-operator-0.1.0
+    app.kubernetes.io/name: masauto-operator
+    app.kubernetes.io/instance: masauto-operator
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+spec:
+  channel: alpha
+  installPlanApproval: Automatic
+  name: masauto-operator
+  source: ecosystem-engineering-catalog
+  sourceNamespace: openshift-marketplace

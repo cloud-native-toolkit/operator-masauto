@@ -54,7 +54,7 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 Create the name of the service account to use
 */}}
 {{- define "mas-core.serviceAccountName" -}}
-{{- if .Values.serviceAccount.create }}
+{{- if .Values.masLicense.serviceAccount.create }}
 {{- default (include "mas-core.fullname" .) .Values.masLicense.serviceAccount.name }}
 {{- else }}
 {{- default "default" .Values.masLicense.serviceAccount.name }}

@@ -32,5 +32,15 @@ masLicense:
     imageName: "quay.io/cloudnativetoolkit/cli-tools-core"
     imageTag: "v1.1-v1.6.1"
   secretName: ""
+  hostId: ""
+  licenseKey: ""
 
 mas_annotations: "mas.ibm.com/operationalMode=production"
+
+dns_provider:
+  name: ""
+  zone: ""
+  subdomain: ""
+  email: ""
+  api_token_secret: ""
+  mas_cluster_issuer: ""

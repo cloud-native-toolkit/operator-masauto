@@ -1,0 +1,8 @@
+
+dns_provider:
+  name: cloudflare
+  zone: mydomain.com
+  subdomain: mysubdomain
+  email: youremail@ibm.com
+  api_token_secret: cloudflare-apitoken-secret
+  mas_cluster_issuer: inst1-cloudflare-le-prod

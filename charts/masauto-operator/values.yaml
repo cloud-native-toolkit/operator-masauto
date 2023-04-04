@@ -14,6 +14,7 @@ operator_namespace: ""
 ibm_entitlement_secret: ""
 
 create_operator_group: true
+create_namespace: false
 
 channel: "alpha"
 

@@ -1,0 +1,7 @@
+ibm_entitlement_secret: ibm-entitlement-key
+mongodb_storage_class: ocs-storagecluster-ceph-rbd
+uds_storage_class: ocs-storagecluster-ceph-rbd
+
+uds_contact_email: youremail@us.ibm.com
+uds_contact_first_name: yourfirstname
+uds_contact_last_name: yourlastname

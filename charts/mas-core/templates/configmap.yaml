@@ -2,10 +2,8 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ include "mas-core.fullname" . }}
-  namespace: {{ include "operator.namespace" . }}
   annotations:
     argocd.argoproj.io/sync-wave: "-6"
-    helm.sh/hook-weight: "-6"
   labels:
   {{- include "mas-core.labels" . | nindent 4 }}
 data:
@@ -31,6 +29,10 @@ data:
       exit 1
     fi
 
+    if [[ -z "${TARGET_SECRET}" ]]; then
+      TARGET_SECRET="sls-bootstrap"
+    fi
+
     set -ex
 
     # wait for secret
@@ -40,7 +42,7 @@ data:
     check_k8s_namespace "${NAMESPACE}" || exit 1
 
     oc get secret "${SECRET_NAME}" -o json | \
-      jq --arg NS "${NAMESPACE}" '{"apiVersion":.apiVersion,"type":.type,"kind":.kind,"metadata":{"name":.metadata.name,"namespace":$NS},"data":.data}' | \
+      jq --arg NS "${NAMESPACE}" --arg NAME "${TARGET_SECRET}" '{"apiVersion":.apiVersion,"type":.type,"kind":.kind,"metadata":{"name":$NAME,"namespace":$NS},"data":.data}' | \
       oc apply -f -
   helper-functions.sh: |
     #!/usr/bin/env bash
@@ -94,7 +96,7 @@ data:
         local pod_name=$(kubectl get pods -n "${NS}" | grep "${NAME}" | sed -E "s/^([^ ]+).*/\1/g")
 
         kubectl logs -n "${NS}" "${pod_name}"
-        kubectl wait --for=condition=complete "job/${NAME}" -n "${NS}" || exit 1
+        kubectl wait --for=condition=complete "job/${NAME}" -n "${NS}" --timeout=90m || exit 1
       fi
 
       echo "Done checking for resource: ${NS}/${GITOPS_TYPE}/${NAME}"
