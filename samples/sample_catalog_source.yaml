@@ -1,19 +1,8 @@
----
-# Source: ecosystem-engineering-catalog/templates/catalog-source.yaml
 apiVersion: operators.coreos.com/v1alpha1
 kind: CatalogSource
 metadata:
   name: ecosystem-engineering-catalog
   namespace: openshift-marketplace
-  annotations:
-    argocd.argoproj.io/sync-wave: "-15"
-    helm.sh/hook-weight: "-15"
-  labels:
-    helm.sh/chart: ecosystem-engineering-catalog-0.1.0
-    app.kubernetes.io/name: ecosystem-engineering-catalog
-    app.kubernetes.io/instance: ecosystem-engineering-catalog
-    app.kubernetes.io/version: "v0.16.0"
-    app.kubernetes.io/managed-by: Helm
 spec:
   displayName: ecosystem-engineering-catalog
   publisher: IBM
