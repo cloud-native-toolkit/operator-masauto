@@ -1,0 +1,16 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: {{ include "masauto-operator.name" . }}
+  namespace: {{ include "operator.namespace" . }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "-10"
+    helm.sh/hook-weight: "-10"
+  labels:
+    {{- include "masauto-operator.labels" . | nindent 4 }}
+spec:
+  channel: {{ .Values.channel | default "alpha" }}
+  installPlanApproval: Automatic
+  name: {{ include "masauto-operator.name" . }}
+  source: {{ include "catalog.name" . }}
+  sourceNamespace: {{ include "catalog.namespace" . }}

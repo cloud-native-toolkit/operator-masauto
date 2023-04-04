@@ -1,0 +1,36 @@
+# Default values for mas-core.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+global:
+  ibm_entitlement_secret: ""
+  mas_instance_id: inst1
+  mas_workspace_id: masdev
+  operator_namespace: masauto-operator-system
+
+ibm_entitlement_secret: ""
+mas_instance_id: ""
+mas_workspace_id: ""
+operator_namespace: ""
+
+mas_channel: "8.10.x"
+mas_workspace_name: "MAS Development"
+mongodb_storage_class: ""
+uds_storage_class: ""
+
+uds_contact_email: ""
+uds_contact_first_name: ""
+uds_contact_last_name: ""
+
+masLicense:
+  targetNamespace: ibm-sls
+  serviceAccount:
+    name: "mas-core"
+    create: true
+    annotations: {}
+  image:
+    imageName: "quay.io/cloudnativetoolkit/cli-tools-core"
+    imageTag: "v1.1-v1.6.1"
+  secretName: ""
+
+mas_annotations: "mas.ibm.com/operationalMode=production"

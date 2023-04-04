@@ -1,0 +1,18 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: CatalogSource
+metadata:
+  name: {{ include "catalog.name" . }}
+  namespace: {{ include "catalog.namespace" . }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "-15"
+    helm.sh/hook-weight: "-15"
+  labels:
+    {{- include "catalog.labels" . | nindent 4 }}
+spec:
+  displayName: {{ include "catalog.name" . }}
+  publisher: IBM
+  sourceType: grpc
+  image: {{ printf "%s:%s" (.Values.image.repository | default "quay.io/cloudnativetoolkit/ecosysengineer-catalog") (.Values.image.tag | default "latest") }}
+  updateStrategy:
+    registryPoll:
+      interval: 90m

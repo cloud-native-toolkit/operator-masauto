@@ -1,0 +1,57 @@
+# Add Manage latest application to an existing MAS Core 8.8.x installation
+#
+# Dependencies:
+# - Core
+#
+apiVersion: masauto.ibm.com/v1alpha1
+kind: Manage
+metadata:
+  name: masauto-manage
+  annotations:
+    ansible.operator-sdk/reconcile-period: "0s"
+    argocd.argoproj.io/sync-wave: "5"
+    helm.sh/hook-weight: "5"
+  labels:
+    {{- include "masauto-manage.labels" . | nindent 4 }}
+spec:
+  ibm_entitlement_secret: {{ include "mas.ibm_entitlement_secret" . }}
+  mas_instance_id: {{ include "mas.mas_instance_id" . }}
+  mas_workspace_id: {{ include "mas.mas_workspace_id" . }}
+  mas_app_id: manage
+  mas_app_channel: {{ .Values.mas_app_channel | default "8.6.x" | quote }}
+  mas_config_scope: {{ .Values.mas_config_scope | default "wsapp" }}  # recommend keeping db for manage at workspace-application scope by default
+  mas_appws_bindings_jdbc: {{ .Values.mas_appws_jdbc_binding | default "workspace-application" }}
+
+  mas_app_settings_demodata: {{ .Values.mas_app_settings_demodata | quote }}
+  mas_appws_components:
+    base:
+      version: latest
+    health:
+      version: latest
+
+  {{- if .Values.database.external }}
+  configure_external_db: "true"
+  ssl_enabled: {{ default true .Values.database.ssl_enabled }}
+  {{- if .Values.database.db_pem_configmap }}
+  db_pem_configmap: {{ .Values.database.db_pem_configmap }}
+  {{- end }}
+
+  db_instance_id: {{ .Values.database.db2_instance_name | default "db2w-manage" }}
+  mas_jdbc_user: {{ default "db2inst1" .Values.database.mas_jdbc_user }}
+  mas_jdbc_password_secret: {{ default "manage-jdbc-credentials" .Values.database.mas_jdbc_password_secret }}
+  mas_jdbc_url: {{ required "database.mas_jdbc_url value is required" .Values.database.mas_jdbc_url }}
+
+  mas_app_settings_db2_schema: {{ default "MANAGE" .Values.database.db2_schema }}
+  mas_app_settings_tablespace: {{ default "MAXDATA" .Values.database.tablespace }}
+  mas_app_settings_indexspace: {{ default "MAXINDEX" .Values.database.indexspace }}
+  {{- else }}
+  configure_external_db: "false"
+  db2_instance_name: {{ .Values.database.db2_instance_name | default "db2w-manage" }}
+  db2_memory_requests: "3Gi"
+  db2_database_db_config: {
+    LOGARCHMETH1: "OFF"
+  }
+  db2_dbname: {{ .Values.database.db2_dbname | default "MANAGE" }}
+  db2_meta_storage_class: {{ required "database.db2_meta_storage_class value is required" .Values.database.db2_meta_storage_class }}
+  db2_data_storage_class: {{ required "database.db2_data_storage_class value is required" .Values.database.db2_data_storage_class }}
+  {{- end }}

@@ -1,0 +1,101 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "mas-core.fullname" . }}
+  namespace: {{ include "operator.namespace" . }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "-6"
+    helm.sh/hook-weight: "-6"
+  labels:
+  {{- include "mas-core.labels" . | nindent 4 }}
+data:
+  copy-secret.sh: |
+    #!/bin/bash
+
+    SCRIPT_DIR=$(cd $(dirname "$0"); pwd -P)
+
+    source "${SCRIPT_DIR}/helper-functions.sh"
+
+    if [[ -z "${NAMESPACE}" ]]; then
+      echo "NAMESPACE not set" &>2
+      exit 1
+    fi
+
+    if [[ -z "${CURRENT_NAMESPACE}" ]]; then
+      echo "CURRENT_NAMESPACE not set" &>2
+      exit 1
+    fi
+
+    if [[ -z "${SECRET_NAME}" ]]; then
+      echo "SECRET_NAME not set" &>2
+      exit 1
+    fi
+
+    set -ex
+
+    # wait for secret
+    check_k8s_resource "${CURRENT_NAMESPACE}" secret "${SECRET_NAME}" || exit 1
+
+    # wait for namespace
+    check_k8s_namespace "${NAMESPACE}" || exit 1
+
+    oc get secret "${SECRET_NAME}" -o json | \
+      jq --arg NS "${NAMESPACE}" '{"apiVersion":.apiVersion,"type":.type,"kind":.kind,"metadata":{"name":.metadata.name,"namespace":$NS},"data":.data}' | \
+      oc apply -f -
+  helper-functions.sh: |
+    #!/usr/bin/env bash
+
+    check_k8s_namespace () {
+      local NS="$1"
+
+      count=0
+      until kubectl get namespace "${NS}" 1> /dev/null 2> /dev/null || [[ $count -eq 60 ]]; do
+        echo "Waiting for namespace: ${NS}"
+        count=$((count + 1))
+        sleep 60
+      done
+
+      if [[ $count -eq 60 ]]; then
+        echo "Timed out waiting for namespace: ${NS}" >&2
+        exit 1
+      else
+        echo "Found namespace: ${NS}. Sleeping for 30 seconds to wait for everything to settle down"
+        sleep 30
+      fi
+    }
+
+    check_k8s_resource () {
+      local NS="$1"
+      local GITOPS_TYPE="$2"
+      local NAME="$3"
+
+      echo "Checking for resource: ${NS}/${GITOPS_TYPE}/${NAME}"
+
+      count=0
+      local limit=60
+      until kubectl get "${GITOPS_TYPE}" "${NAME}" -n "${NS}" 1> /dev/null 2> /dev/null || [[ $count -gt $limit ]]; do
+        echo "Waiting for ${GITOPS_TYPE}/${NAME} in ${NS}"
+        count=$((count + 1))
+        sleep 60
+      done
+
+      if [[ $count -gt $limit ]]; then
+        echo "Timed out waiting for ${GITOPS_TYPE}/${NAME}" >&2
+        kubectl get "${GITOPS_TYPE}" -n "${NS}"
+        exit 1
+      fi
+
+      kubectl get "${GITOPS_TYPE}" "${NAME}" -n "${NS}" -o yaml
+
+      if [[ "${GITOPS_TYPE}" =~ deployment|statefulset|daemonset ]]; then
+        kubectl rollout status "${GITOPS_TYPE}" "${NAME}" -n "${NS}" || exit 1
+      elif [[ "${GITOPS_TYPE}" == "job" ]]; then
+        kubectl get pods -n "${NS}" | grep "${NAME}"
+        local pod_name=$(kubectl get pods -n "${NS}" | grep "${NAME}" | sed -E "s/^([^ ]+).*/\1/g")
+
+        kubectl logs -n "${NS}" "${pod_name}"
+        kubectl wait --for=condition=complete "job/${NAME}" -n "${NS}" || exit 1
+      fi
+
+      echo "Done checking for resource: ${NS}/${GITOPS_TYPE}/${NAME}"
+    }

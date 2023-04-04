@@ -1,0 +1,24 @@
+apiVersion: masauto.ibm.com/v1alpha1
+kind: Core
+metadata:
+  name: masauto-core
+  namespace: {{ include "operator.namespace" . }}
+  annotations:
+    ansible.operator-sdk/reconcile-period: "0s"
+    argocd.argoproj.io/sync-wave: "-5"
+    helm.sh/hook-weight: "-5"
+  labels:
+    {{- include "mas-core.labels" . | nindent 4 }}
+spec:
+  ibm_entitlement_secret: {{ include "mas.ibm_entitlement_secret" . }}
+  mas_instance_id: {{ include "mas.mas_instance_id" . }}
+  mas_workspace_id: {{ include "mas.mas_workspace_id" . }}
+  mas_channel: {{ .Values.mas_channel | default "8.9.x" }}
+  mas_workspace_name: {{ .Values.mas_workspace_name | default "MAS Development" }}
+  mas_annotations: {{ .Values.mas_annotations | default "mas.ibm.com/operationalMode=production" }}
+  mongodb_storage_class: {{ required "The mongodb_storage_class value is required" .Values.mongodb_storage_class }}
+  uds_contact:
+    email: {{ required "The uds_contact_email value is required" .Values.uds_contact_email }}
+    first_name: {{ required "The uds_contact_first_name value is required" .Values.uds_contact_first_name }}
+    last_name: {{ required "The uds_contact_last_name value is required" .Values.uds_contact_last_name }}
+  uds_storage_class: {{ required "The uds_storage_class value is required" .Values.uds_storage_class }}
