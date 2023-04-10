@@ -1,0 +1,55 @@
+# Default values for mas-core.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+global:
+  ## operator_namespace: the namespace where the masauto operator will be/has been installed. Unless you have a special use case, this value should be `masauto-operator-system`
+  operator_namespace: masauto-operator-system
+  ## ibm_entitlement_secret: the name of the secret where your ibm-entitlement-key is stored in operator namespace
+  ibm_entitlement_secret: ""
+  ## mas_instance_id: the id for the mas instance that has been/will be created
+  mas_instance_id: inst1
+  ## mas_workspace_id: the id of the mas workspace that has been/will be created
+  mas_workspace_id: masdev
+
+## operator_namespace: the namespace where the masauto operator will be/has been installed
+operator_namespace: ""
+## ibm_entitlement_secret: the name of the secret where your ibm-entitlement-key is stored in operator namespace
+ibm_entitlement_secret: ""
+## mas_instance_id: the id for the mas instance that has been created
+mas_instance_id: ""
+## mas_workspace_id: the id of the mas workspace that has been/will be created
+mas_workspace_id: ""
+
+mas_channel: "8.10.x"
+mas_workspace_name: "MAS Development"
+mongodb_storage_class: ""
+uds_storage_class: ""
+
+uds_contact_email: ""
+uds_contact_first_name: ""
+uds_contact_last_name: ""
+
+masLicense:
+  targetNamespace: ibm-sls
+  serviceAccount:
+    name: "mas-core"
+    create: true
+    annotations: {}
+  image:
+    imageName: "quay.io/cloudnativetoolkit/cli-tools-core"
+    imageTag: "v1.1-v1.6.1"
+  secretName: ""
+  hostId: ""
+  licenseKey: ""
+
+mas_annotations: "mas.ibm.com/operationalMode=production"
+
+## CloudFlare DNS configuration
+dns_provider:
+  name: ""
+  zone: ""
+  subdomain: ""
+  email: ""
+  api_token_secret: ""
+  mas_cluster_issuer: ""

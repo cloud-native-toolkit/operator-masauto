@@ -1,0 +1,15 @@
+{{- if .Values.create_operator_group }}
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: {{ printf "%s-operator-group" (include "operator.namespace" .) }}
+  namespace: {{ include "operator.namespace" . }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "-12"
+    helm.sh/hook-weight: "-12"
+  labels:
+    {{- include "masauto-operator.labels" . | nindent 4 }}
+spec:
+  targetNamespaces:
+    - {{ include "operator.namespace" . }}
+{{- end}}

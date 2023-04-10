@@ -1,28 +1,39 @@
+---
+# Source: mas-core/templates/core.yaml
 apiVersion: masauto.ibm.com/v1alpha1
 kind: Core
 metadata:
-  name: masauto-core-cloudflare
+  name: masauto-core
   namespace: masauto-operator-system
-annotations:
-  ansible.operator-sdk/reconcile-period: "0s"    
+  annotations:
+    ansible.operator-sdk/reconcile-period: "0s"
+    argocd.argoproj.io/sync-wave: "-5"
+    helm.sh/hook-weight: "-5"
+  labels:
+    helm.sh/chart: mas-core-0.2.0
+    app.kubernetes.io/name: mas-core
+    app.kubernetes.io/instance: mas-core
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
 spec:
-  mas_channel: "8.10.x"
-  ibm_entitlement_secret: "ibm-entitlement-key" #secret where your ibm-entitlement-key is stored in operator namespace
-  mas_instance_id: "inst1"
-  mas_workspace_id: "masdev"
-  mas_workspace_name: "MAS Development"
-  mas_annotations: "mas.ibm.com/operationalMode=production"
-  mongodb_storage_class: "ocs-storagecluster-ceph-rbd"
+  # secret where your ibm-entitlement-key is stored in operator namespace
+  ibm_entitlement_secret: ibm-entitlement-key
+  mas_instance_id: inst1
+  mas_workspace_id: masdev
+  mas_channel: 8.10.x
+  mas_workspace_name: MAS Development
+  mas_annotations: mas.ibm.com/operationalMode=production
+  mongodb_storage_class: ocs-storagecluster-ceph-rbd
   uds_contact:
-    email: "youremail@us.ibm.com"
-    first_name: "yourfirstname"
-    last_name: "yourlastname"  
-  uds_storage_class: "ocs-storagecluster-ceph-rbd"
-
+    email: youremail@us.ibm.com
+    first_name: yourfirstname
+    last_name: yourlastname
+  uds_storage_class: ocs-storagecluster-ceph-rbd
   dns_provider: "cloudflare"
   mas_domain: "mysubdomain.mydomain.com"
+  mas_cluster_issuer: "inst1-cloudflare-le-prod"
   cloudflare_email: "youremail@ibm.com"
-  cloudflare_apitoken_secret: "cloudflare-apitoken-secret" #see advanced doc link for setup
+  # see advanced doc link for setup
+  cloudflare_apitoken_secret: "cloudflare-apitoken-secret"
   cloudflare_zone: "mydomain.com"
   cloudflare_subdomain: "mysubdomain"
-  mas_cluster_issuer: "inst1-cloudflare-le-prod"

@@ -1,0 +1,41 @@
+{{- if .Values.masLicense.secretName }}
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: license-job
+  namespace: {{ include "operator.namespace" . }}
+  annotations:
+    ansible.operator-sdk/reconcile-period: "0s"
+    argocd.argoproj.io/sync-wave: "-5"
+    helm.sh/hook-weight: "-5"
+  labels:
+    {{- include "mas-core.labels" . | nindent 4 }}
+spec:
+  template:
+    metadata:
+      labels:
+        run: {{ include "mas-core.name" . }}
+    spec:
+      serviceAccountName: {{ include "mas-core.serviceAccountName" . }}
+      volumes:
+        - name: scripts
+          configMap:
+            name: {{ include "mas-core.fullname" . }}
+            defaultMode: 0777
+      containers:
+        - image: {{ printf "%s:%s" .Values.masLicense.image.imageName .Values.masLicense.image.imageTag }}
+          name: toolkit
+          env:
+            - name: CURRENT_NAMESPACE
+              value: {{ .Release.Namespace }}
+            - name: NAMESPACE
+              value: {{ default "ibm-sls" .Values.masLicense.targetNamespace }}
+            - name: SECRET_NAME
+              value: {{ .Values.masLicense.secretName }}
+          volumeMounts:
+            - mountPath: /scripts
+              name: scripts
+          command:
+            - /scripts/copy-secret.sh
+      restartPolicy: Never
+{{- end }}

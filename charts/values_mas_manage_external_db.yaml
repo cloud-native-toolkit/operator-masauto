@@ -1,0 +1,4 @@
+ibm_entitlement_secret: ibm-entitlement-key
+database:
+  external: true
+  mas_jdbc_url: "mongodb://test"

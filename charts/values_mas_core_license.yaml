@@ -1,0 +1,4 @@
+masLicense:
+  secretName: sls-bootstrap
+  hostId: hostId
+  licenseKey: license
