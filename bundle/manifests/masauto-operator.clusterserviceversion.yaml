@@ -318,9 +318,9 @@ spec:
     Details\n## Prerequisites\nSee Maximo Application Suite prerequisites details
     [here](http://www.ibm.com/docs/SSRHPA_cd/appsuite/install/dependencies/index.html).\nThis
     will install components on a single cluster suitable for many scenarios.  More
-    Advanced installation scenarios with required setup can be found [here](https://github.com/cloud-native-toolkit/operator-masauto#advanced-setup-configurations).\nThis
+    Advanced installation scenarios with required setup instructions can be found [here](https://github.com/cloud-native-toolkit/operator-masauto#advanced-setup-configurations).\nThis
     Operator is tested with OCS/ODF storage on the cluster.  Other RWO and RWX storage
-    classes are supported and can be replaced when selecting the yaml view during
+    classes on a cluster are supported and can be replaced when selecting the yaml view during
     deployment.  The defaults are setup for OpenShift Container Storage on the cluster.
     If this isn't an option for your cluster, change the defaults in the yaml view
     before installing using this operator.\nAn IBM Entitled Registry key is also required.
@@ -329,11 +329,8 @@ spec:
     secret\n`oc create secret generic \"ibm-entitlement-key\" -n masauto-operator-system
     --from-literal=\"username=cp\" --from-literal=\"password=<your-ibm-entitlement-key-goes-here>\"
     ` Note: your entitlement key can be found [here](https://myibm.ibm.com/products-services/containerlibrary)
-    \n- When deploying any of the applications, it is best to use the yaml view on
-    the operator page so you  can edit the storage classes appropriately for your
-    cluster and cloud platform.\n- Deploy the Core first, then the remaining applications
-    as needed.\n- It is best to deploy the CP4D services individually starting with
-    the platform first. The CP4D foundation requires a **global** cluster pull secret;
+    \n- Deploy the Core first, then the remaining applications
+    as needed.\n- The CP4D foundation platform must be installed first, then the individual services. The CP4D foundation requires a **global** cluster pull secret;
     services can be installed all at once, setting the desired services to `true`
     just be aware some services take a long time to install.\n\n\nFor other helpful
     installation tips and common issues, please check [here](https://github.com/cloud-native-toolkit/operator-masauto#cp4d-important-requirement)

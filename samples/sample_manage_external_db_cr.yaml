@@ -1,6 +1,6 @@
 ---
 # Source: mas-manage/templates/mas-manage.yaml
-# Add Manage latest application to an existing MAS Core 8.8.x installation
+# Add Manage latest application to an existing MAS Core 8.10.x installation
 #
 # Dependencies:
 # - Core

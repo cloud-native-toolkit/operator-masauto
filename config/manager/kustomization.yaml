@@ -13,4 +13,4 @@ kind: Kustomization
 images:
 - name: controller
   newName: quay.io/cloudnativetoolkit/masauto
-  newTag: v2.9.0
+  newTag: v3.0.0-alpha1a
