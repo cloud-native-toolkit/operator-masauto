@@ -1,0 +1,116 @@
+name: Helm asset publish
+
+on:
+  release:
+    types:
+      - published
+
+jobs:
+  publish-assets:
+    runs-on: ubuntu-latest
+
+    strategy:
+      max-parallel: 1
+      matrix:
+        chart:
+          - ecosystem-engineering-catalog
+          - masauto-operator
+          - mas-core
+          - mas-manage
+
+    steps:
+      - name: Checkout release
+        uses: actions/checkout@v3
+        with:
+          ref: ${{ github.event.release.tag_name }}
+          path: release
+
+      - name: Install helm
+        uses: azure/setup-helm@v3
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup variables
+        id: variables
+        shell: bash
+        run: |
+          FULL_RELEASE_TAG=${{ github.event.release.tag_name }}
+          RELEASE_TAG=${FULL_RELEASE_TAG/v/}
+          
+          REPO_NAME=$(echo "${GITHUB_REPOSITORY}" | sed -E "s~.*/(.*)~\1~g")
+          CHART_NAME="${{ matrix.chart }}"
+          CHART_PATH="release/charts/${{ matrix.chart }}"
+          CHART_VERSION=$(cat "${CHART_PATH}/Chart.yaml" | grep -E "^version" | sed -E "s/version: //g")
+          CHART_PACKAGE="${CHART_NAME}-${CHART_VERSION}.tgz"
+          PACKAGE_DIR="packages"
+          
+          ASSET_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/releases/download/${FULL_RELEASE_TAG}"
+          REPO_URL="https://${GITHUB_REPOSITORY_OWNER}.github.io/${REPO_NAME}/index.yaml"
+          
+          echo "Release tag: ${RELEASE_TAG}"
+          echo "release-tag=$RELEASE_TAG" >> $GITHUB_OUTPUT
+          
+          echo "Chart name: ${CHART_NAME}"
+          echo "chart-name=$CHART_NAME" >> $GITHUB_OUTPUT
+          
+          echo "Chart version: ${CHART_VERSION}"
+          echo "chart-version=$CHART_VERSION" >> $GITHUB_OUTPUT
+          
+          echo "Chart path: ${CHART_PATH}"
+          echo "chart-path=$CHART_PATH" >> $GITHUB_OUTPUT
+          
+          echo "Chart package: ${CHART_PACKAGE}"
+          echo "chart-package=$CHART_PACKAGE" >> $GITHUB_OUTPUT
+          
+          echo "Package dir: ${PACKAGE_DIR}"
+          echo "package-dir=$PACKAGE_DIR" >> $GITHUB_OUTPUT
+          mkdir -p "${PACKAGE_DIR}"
+          
+          echo "Asset url: ${ASSET_URL}"
+          echo "asset-url=$ASSET_URL" >> $GITHUB_OUTPUT
+          
+          echo "Repo url: ${REPO_URL}"
+          echo "repo-url=$REPO_URL" >> $GITHUB_OUTPUT
+
+      - name: Build helm package
+        run: helm package ${{ steps.variables.outputs.chart-path }} -d ./${{ steps.variables.outputs.package-dir }}
+
+      - name: Upload helm package
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ github.event.release.upload_url }}
+          asset_path: ./${{ steps.variables.outputs.package-dir }}/${{ steps.variables.outputs.chart-package }}
+          asset_name: ${{ steps.variables.outputs.chart-package }}
+          asset_content_type: application/gzip
+
+      - name: Checkout gh-pages
+        uses: actions/checkout@v3
+        with:
+          ref: gh-pages
+          path: pages
+
+      - name: Generate helm index
+        run: |
+          helm repo index ${{ steps.variables.outputs.package-dir }} \
+            --url ${{ steps.variables.outputs.asset-url }} \
+            --merge ./pages/index.yaml
+
+      - name: Update repo index
+        run: |
+          cp ${{ steps.variables.outputs.package-dir }}/index.yaml pages/
+          
+          cd pages
+          
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add index.yaml
+          git commit -m "Update helm repo with release ${{ steps.variables.outputs.release-tag }}"
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: gh-pages
+          directory: pages
