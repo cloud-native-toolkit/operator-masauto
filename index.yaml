@@ -11,6 +11,17 @@ entries:
     urls:
     - https://github.com/cloud-native-toolkit/operator-masauto/releases/download/v3.0.1/ecosystem-engineering-catalog-0.1.0.tgz
     version: 0.1.0
+  mas-core:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2023-04-12T14:56:26.064531817Z"
+    description: A Helm chart for Kubernetes
+    digest: bd7449f661a7360901280bb8712da888915a8f7cc690ff3df614d23a8648ad07
+    name: mas-core
+    type: application
+    urls:
+    - https://github.com/cloud-native-toolkit/operator-masauto/releases/download/v3.0.1/mas-core-0.2.0.tgz
+    version: 0.2.0
   masauto-operator:
   - apiVersion: v2
     appVersion: 1.16.0
@@ -22,4 +33,4 @@ entries:
     urls:
     - https://github.com/cloud-native-toolkit/operator-masauto/releases/download/v3.0.1/masauto-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2023-04-12T14:56:08.095817998Z"
+generated: "2023-04-12T14:56:26.06385151Z"
