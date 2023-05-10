@@ -25,13 +25,13 @@ entries:
   mas-manage:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-04-27T19:47:05.830766636Z"
+    created: "2023-05-10T13:33:41.350365041Z"
     description: A Helm chart for Kubernetes
-    digest: 54895d6c628e25578fceedff5d9c5b2efb3d6724d205bcab9ae7aca48b30c128
+    digest: 959f555b6f2cf8ca389c7f69e8497775109ff2e5113ee9a16bc74e736bbfe69c
     name: mas-manage
     type: application
     urls:
-    - https://github.com/cloud-native-toolkit/operator-masauto/releases/download/v3.1.0/mas-manage-0.1.0.tgz
+    - https://github.com/cloud-native-toolkit/operator-masauto/releases/download/v3.2.0/mas-manage-0.1.0.tgz
     version: 0.1.0
   masauto-operator:
   - apiVersion: v2
@@ -44,4 +44,4 @@ entries:
     urls:
     - https://github.com/cloud-native-toolkit/operator-masauto/releases/download/v3.2.0/masauto-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2023-05-10T13:33:24.437003608Z"
+generated: "2023-05-10T13:33:41.349769133Z"
