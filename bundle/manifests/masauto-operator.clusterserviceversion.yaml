@@ -276,7 +276,7 @@ metadata:
     operatorframework.io/suggested-namespace: masauto-operator-system
     operators.operatorframework.io/builder: operator-sdk-v1.22.0-ocp
     operators.operatorframework.io/project_layout: ansible.sdk.operatorframework.io/v1
-  name: masauto-operator.v3.1.0
+  name: masauto-operator.v3.2.0
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
@@ -323,7 +323,7 @@ spec:
     classes are supported and can be replaced when selecting the yaml view during
     deployment.  The defaults are setup for OpenShift Container Storage on the cluster.
     If this isn't an option for your cluster, change the defaults in the yaml view
-    before installing using this operator.\nAn IBM Entitled Registry key is also required.
+    before installing with this operator.\nAn IBM Entitled Registry key is also required.
     \ See installation section for creating a secret to use the entitlement key.\n##
     Installing\n- Take the defaults for installing this operator.\n- Create a ibm-entitlement-key
     secret\n`oc create secret generic \"ibm-entitlement-key\" -n masauto-operator-system
@@ -406,7 +406,7 @@ spec:
                 env:
                 - name: ANSIBLE_GATHERING
                   value: explicit
-                image: quay.io/cloudnativetoolkit/masauto:v3.1.0
+                image: quay.io/cloudnativetoolkit/masauto:v3.2.0
                 imagePullPolicy: Always
                 livenessProbe:
                   httpGet:
@@ -461,4 +461,4 @@ spec:
   provider:
     name: IBM US Ecosystem Engineering
     url: https://modules.cloudnativetoolkit.dev/
-  version: 3.1.0
+  version: 3.2.0
