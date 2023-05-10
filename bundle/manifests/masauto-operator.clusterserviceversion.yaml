@@ -323,7 +323,7 @@ spec:
     classes are supported and can be replaced when selecting the yaml view during
     deployment.  The defaults are setup for OpenShift Container Storage on the cluster.
     If this isn't an option for your cluster, change the defaults in the yaml view
-    before installing using this operator.\nAn IBM Entitled Registry key is also required.
+    before installing with this operator.\nAn IBM Entitled Registry key is also required.
     \ See installation section for creating a secret to use the entitlement key.\n##
     Installing\n- Take the defaults for installing this operator.\n- Create a ibm-entitlement-key
     secret\n`oc create secret generic \"ibm-entitlement-key\" -n masauto-operator-system
