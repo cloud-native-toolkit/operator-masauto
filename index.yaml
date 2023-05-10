@@ -36,12 +36,12 @@ entries:
   masauto-operator:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-04-27T19:46:31.384882571Z"
+    created: "2023-05-10T13:32:41.964808907Z"
     description: A Helm chart for Kubernetes
-    digest: ec358b5e5033008d9c75ad2ceec217982f75a023c2c68674788eb3f41254826c
+    digest: 9d451e057dc3de179430ca51f855a8b986465fe89eb09ca0c8ee3dd8ff444c85
     name: masauto-operator
     type: application
     urls:
-    - https://github.com/cloud-native-toolkit/operator-masauto/releases/download/v3.1.0/masauto-operator-0.1.0.tgz
+    - https://github.com/cloud-native-toolkit/operator-masauto/releases/download/v3.2.0/masauto-operator-0.1.0.tgz
     version: 0.1.0
-generated: "2023-05-10T13:31:52.596627488Z"
+generated: "2023-05-10T13:32:41.964203701Z"
