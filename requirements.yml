@@ -12,4 +12,4 @@ collections:
   - name: ibm.cloudcollection
     version: ">=1.37.1,<2.0.0"
   - name: ibm.mas_devops
-    version: "13.7.0"
+    version: "13.11.0"
